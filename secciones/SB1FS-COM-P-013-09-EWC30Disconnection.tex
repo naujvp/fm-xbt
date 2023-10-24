@@ -1,0 +1,95 @@
+\renewcommand{\procid}		{SB1FS-COM-P-013}
+\renewcommand{\subprocid}	{SB1FS-COM-P-013-09}
+\renewcommand{\procname}	{Tests Setup break}
+
+\newpage
+\subsection{\subprocid{} \procname{}}
+\label{sec:ewc29tcdisconnection}	
+
+\begin{table}[H]
+	\centering
+	\footnotesize
+	\begin{tabular}{|L{3.0cm}|L{13.0cm}|}\hline
+		\textbf{Task ID} & \subprocid{} \\\hline
+		\textbf{Task name} & \procname \\\hline
+		\textbf{Task description}   & This task includes:
+		\begin{minipage}[t]{\linewidth}
+		\begin{itemize}[nosep,after=\strut]
+		   \item CEGSE power off.
+		   \item Disconnection of BB cables between EWC30 and ad-hoc box.
+		   \item Disconnection of RF cables.
+		\end{itemize}
+		\end{minipage} \\\hline
+		\textbf{Task purpose} & 
+		Disconnect the EWC30 from the CEGSE and remove the connections made for the test.\\\hline
+		\textbf{Success criteria} &
+		\begin{minipage}[t]{\linewidth}
+			\begin{itemize}[nosep,after=\strut]
+				\item EWC30 BB interfaces are not connected.
+				\item EWC30 RF output is charge with 50 ohms load.
+			\end{itemize}
+		\end{minipage}
+		\\ \hline
+		\textbf{Test Setup} &
+		\begin{minipage}[t]{\linewidth}
+			\begin{itemize}[nosep,after=\strut]
+				\item \comEgse{}{} to DUT base-band electrical connections according to figure \ref{fig:ewc30_bb}
+				\item General setup according to figure \ref{fig:data-setup1} without any optional connections.
+			\end{itemize}
+		\end{minipage}
+		\\\hline
+		\textbf{Duration} & 45 minutes.\\\hline	
+		\textbf{Data sets required} & -\\\hline
+		\textbf{Prerequisites} & 
+		\begin{minipage}[t]{\linewidth}
+			\begin{itemize}[nosep,after=\strut]
+				\item \preReqPro
+				\item Hardware: The necessary items are shown in the table \ref{tab:req-items}.
+			\end{itemize} 
+		\end{minipage}\\\hline
+	\end{tabular}
+	\caption{Procedure \subprocid{} \ description. } \label{tb:\subprocid{}}
+\end{table}
+
+\setcounter{Sec}{0}\setcounter{Step}{0}
+\report{}{}{}
+\begin{stepstable}{\subprocid{} \procname{}}
+	\ExecutorRecord{}
+	\SectionHeaderWithReset{\comEgse{}{} power off (PXI and Ad-Hoc Box)}
+		%\TurnOnOffVbusXBand{off}{}
+		\StopCegseSW{}
+		\TurnOnOffPSU{off}
+		\DisablePowerSupplyOutput
+		\TurnOffMainSwitch
+		\PowerOffPxi
+		\DisconnectPxaExternalFreqReference{PXA}{\notskip{}}
+
+	\SectionHeaderWithReset{Disconnection of BB Interfaces}
+
+		\DisconnectHarnessFromDevice{EWC30}{\NuevoHarnessDos}{J100}
+		\DisconnectHarnessFromEMIEMCFilter{\NuevoHarnessDos}{output}
+		\DisconnectHarnessFromEMIEMCFilter{\NuevoHarnessUno}{input}
+		\DisconnectHarnessFromDevice{\adbox}{\NuevoHarnessUno}{J100}
+%		\DisconnectDutPortToAdHocBoxPort{EWC30}{H-EGSE-DUT-J1\string_001}{J100}	{J100}{\notskip{}}
+		\DisconnectDutPortToAdHocBoxPort{EWC30}{H-EGSE-DUT-J2\string_001}{J200}	{J200}{\notskip{}}
+		\DisconnectDutPortToAdHocBoxPort{EWC30}{H-EGSE-DUT-J3\string_001}{J201A and J201B}{J201}{\notskip{}}
+
+	\SectionHeaderWithReset{Disconnection of RF Interfaces}
+		\DisconnectWTenCableBetweenDsnFilterAndXBandDut{W10}
+		\DisconnectWTwoCableToDsnFilter{W2}
+		\DisconnectRfLoopCableBetweenXBandPortAndCouplerPort{W3}{\notskip{}}
+		\DisconnectRfCableFromInOutPortOfCegse{XRF4.02}
+		%\DisconnectRfCableFromInterfaceXBand{XRF4.02}
+		\DisconnectCableFromDcBlock{XRF4.02}{}
+	
+	\SectionHeaderWithReset{Final Steps}
+		\GetTempAndHumidityFromDatalogger
+
+\end{stepstable}
+\begin{longtable}{|p{17.0cm}|}
+	\endfirsthead
+	\endfoot
+	\caption{\subprocid{} procedure.}
+\end{longtable}
+
+

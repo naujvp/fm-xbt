@@ -1,0 +1,148 @@
+\setcounter{Sec}{0}
+\setcounter{Step}{0}
+\renewcommand{\subprocid}{{\procid}-01}
+\renewcommand{\procname}	{Electrical Verifications and Instruments Initializations}
+\newcommand{\procnameOne}	{\procid-01\ Electrical Verifications and Instruments Initializations}
+
+\subsection{\subprocid\ \procname.}\label{sec:electrical}
+
+\begin{table}[H]
+	\centering
+	\footnotesize
+	\begin{tabular}{|L{3.0cm}|L{13.0cm}|}\hline
+		\textbf{Task ID} & \subprocid{} \\\hline
+		\textbf{Task name} & \procname{} \\\hline
+		\textbf{Task description} & This task includes:
+		\begin{minipage}[t]{\linewidth}
+			\begin{itemize}[nosep,after=\strut]
+				\item Verification of grounding of all racks and AC power sockets to use.
+				\item Verification of the facilities AC supply voltages.
+				\item RF TestBed deployment.
+				\item Preparation of PXA.
+				\item Preparation of oscilloscope.
+				\item Connection of PXI, RF TestBed and PXA to the \fmr{} network.
+				\item RDP Connections from thin clients. See table \ref{tb:rdp}. 
+			\end{itemize}
+		\end{minipage} \\
+		\hline
+		\textbf{Task purpose} & Prepare \comEgse, \fmr{} and instruments for the execution of 
+		aliveness, functional and performace tests of the communication system.\\
+		\hline
+		\textbf{Success criteria} & All electrical verifications are correct. Instruments powered-on and ready to perform measurements.\\
+		\hline
+		\textbf{Test Setup} & -\\
+		\hline
+		\textbf{Duration} & 60 minutes.\\
+		\hline
+		\textbf{Data sets required} & -\\
+		\hline
+		\textbf{Prerequisites} & 
+		\begin{minipage}[t]{\linewidth}
+			\begin{itemize}[nosep,after=\strut] 
+				\item GS-GSE-FM (R) initialized according to GS-GSE test procedures (\refAD{fm-ver-delta-pro}) or  user manual (\refRD{gs-gse-fm}). % GS-GSE test procedures (\refAD{fm-ver-delta-pro}) or 
+				\item GS-GSE-FM (R) configured according to Control Configuration Document (\refAD{gse-cfg-r}) and with their modified RF interfaces 
+				(\refAD{reportFMRMod}).
+				\item \comEgse{}{} initialized according to \comEgse{}{} user manual (\refAD{cegse}).
+				\item RF TestBed powered off and only connected to facilities GND.
+				\item Hardware: The necessary items are shown in the table \ref{tab:req-items} 
+			\end{itemize} 
+		\end{minipage}\\
+		\hline
+	\end{tabular}
+	\caption{Procedure \subprocid{} \ description. } \label{tb:electrical}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\scriptsize
+	\begin{tabular}{|L{2.5cm}|L{2.5cm}|L{2.5cm}|L{2cm}|L{2cm}|}
+		\hline
+		\textbf{Name}                   & \textbf{OW used}             & \textbf{IP}             & \textbf{User}          & \textbf{Password}  \\ \hline
+		\comEgse{}             & OW Data A  & \comEgseIP{}   & EGSE COM      & Conae1234 \\ \hline%DUT MandC
+		%TestBed-Cortex CRT-Q-D & OW TMTC A  & \crtTBIP{}     & cortex        & cortex    \\ \hline%S-Band Noise generation
+		TestBed-Cortex HDR-XXL & OW TMTC A  & \hdrTBIP{}     & cortex        & cortex    \\ \hline%X-Band Noise generation
+		GS-GSE.WIN8            & OW TMTC A  & \vmWinIP{}     & admin         & Sb1.C0n43 \\ \hline%SBMA and XBMA
+		%TM\&TC Modem           & OW TMTC A  & \crtIP{}       & cortex        & cortex    \\ \hline%TM downlink
+		Data Demodulator       & OW TMTC A  & \hdrIP{}       & cortex        & cortex    \\ \hline%Data Downlink 
+		GS-GSE.MGMT            & OW TMTC A  & \vmTestingIP{} & administrator & Sb1.C0n43 \\ \hline%GS flows execution
+		%GS-GSE.WIN8            & OW TMTC A  & \vmWinIP{}     & admin         & Sb1.C0n43 \\ \hline%SBMA
+		%TM\&TC Modem           & OW TMTC A  & \crtIP{}       & cortex        & cortex    \\ \hline%TC uplink 
+	\end{tabular}
+	\caption{Initial RDP connections.}
+	\label{tb:rdp} 
+\end{table}
+\newpage
+
+\report{}{}{}
+
+\begin{stepstable}{\subprocid{} \procname{}}
+	\ExecutorRecord
+	\SessionIdRecord
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% ELECTRICAL VERIFICATIONS
+	\SectionHeaderWithReset{Grounding and AC power verification}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\CheckPowerSupplyVoltageOn{Instrumentation bench}{}{}
+    \InstallAndVerifyGroundOfPXA
+	\InstallAndVerifyGroundOfOscilloscope
+	%\PowerOnOscilloscope
+
+       
+	\VerifyGroundCEGSE{}
+	    \VerifyGroundTB
+	%\VerifyGroundAux{}
+	%\VerifyGround{\rckttBB}{\rckttRF}{N}
+	%\VerifyGround{\rckdtBB}{\rckttRF}{N}
+	\VerifyGround{\rckttBB}{\rckttRF}{R}
+	\VerifyGround{\rckdtBB}{\rckttRF}{R}
+	\CheckPowerSupplyVoltageOn{Rack \comEgse}{}{}
+    \CheckPowerSupplyVoltageOn{\rackRfTestBed}{}{}
+	%\CheckPowerSupplyVoltageOn{\rckaux}{}{}
+	%\CheckPowerSupplyVoltageOn{\rckttRF}{\rckttBB}{ of \textbf{\gse-FM (N)}}
+	%\CheckPowerSupplyVoltageOn{\rckdtRF}{\rckdtBB}{ of \textbf{\gse-FM (N)}}
+	\CheckPowerSupplyVoltageOn{\rckttRF}{\rckttBB}{ of \textbf{\gse-FM (R)}}
+	\CheckPowerSupplyVoltageOn{\rckdtRF}{\rckdtBB}{ of \textbf{\gse-FM (R)}}
+
+    \SectionHeaderWithReset{Installation of the Instruments}
+		\ConnectExternalReferenceSignalToPXI
+		\ConnectDcBlockToPxi
+		\PowerOnPXA
+		\ConnectPxaExternalFreqReferenceTo{the Power Splitter Data of \fmr{}}{REF1.01}{PXA}
+		\StartVSASoftware
+		\VerifyVsaRfInput
+		\ConfigurePxaAsSpectrumAnalyzer
+		\ConnectDcBlockToPxa
+		\PowerOnOscilloscope
+    
+	\SectionHeaderWithReset{RF TestBed deploy }
+		%TODO: preguntar a juan cual verificacion de las siguientes se hace
+    	%\VerifyIfAndRfConnectiosOfDataTestBed
+		%\VerifyIfAndRfConnectiosOfDataTestBedOneChannelTest
+		\VerifyIfAndRfConnectiosOfDataTestBedOneChannelTest
+
+		\ConnectTestBedToPowerSupply
+		\TurnOnPDUTestBed
+		\TurnOnDataTestBedComponents
+    
+	\SectionHeaderWithReset{Network connections}
+		\ConnectCegseToGseNetwork
+		\ConnectPxaToGseNetwork
+		\ConnectTestBedToGseNetwork{\fmr{}}
+
+	\SectionHeaderWithReset{Remote Connections from Thin Client}
+		\RDPToPXIFromThinClient{\thinDT A}
+		\RDPToMgmtFromThinClient{\thinTT A}
+		\RdpToCortexHdrFromThinClientTTA
+		\RdpToCortexHdrTBFromThinClientTTA
+		\RDPToSbaVmFromThinClientA
+
+	\SectionHeaderWithReset{CEGSE NTP Client}
+		\ConfigureNtpClientInCegse
+	
+\end{stepstable}
+\begin{longtable}{|p{17.0cm}|}
+\endfirsthead
+\endfoot
+\caption{Procedure \subprocid \ table.} 
+
+\end{longtable}

@@ -1,0 +1,31 @@
+Tables \ref{table:sbdl1} and \ref{table:sbdl2} shown SBDL loops cables connections.\\
+
+\begin{table}[H]
+    \begin{tabular}{lccclccc}
+        Output              & Connector & Pin+ & Pin- & Input                  & Connector & Pin+ & Pin- \\\hline
+        I\_TX\_LCL\_INHIBIT & DB-50     & 4    & 21   & O\_DATA\_VALID\_M      & DB-37     & 9    & 28   \\
+        I\_UART\_TX\_IN     & DB-50     & 1    & 18   & O\_RF\_LOCK\_STATUS\_M & DB-37     & 10   & 29   \\
+        I\_RX\_LCL\_INHIBIT & DB-37     & 8    & 27   & O\_STATUS\_1           & DB-50     & 3    & 20   \\
+        I\_UART\_RX\_IN     & DB-37     & 12   & 31   & O\_STATUS\_2           & DB-50     & 2    & 19   \\
+        I\_DATA\_TX         & DB-50     & 6    & 23   & O\_DATA\_RX\_M         & DB-37     & 6    & 25   \\
+        I\_CLOCK\_TX        & DB-50     & 7    & 24   & O\_CLOCK\_RX\_M        & DB-37     & 7    & 26   \\
+        %\caption{SBDL Test Loop Cable 1.}
+        
+    \end{tabular}
+    \caption{SBDL Test Loop cable 1}
+    \label{table:sbdl1}
+\end{table}
+
+\begin{table}[H]
+    \begin{tabular}{lccclccc}
+        Output              & Connector & Pin+ & Pin- & Input                  & Connector & Pin+ & Pin- \\\hline
+        I\_TX\_LCL\_INHIBIT & DB-50     & 4    & 21   & O\_DATA\_VALID\_R      & DB-37     & 4    & 23   \\
+        I\_UART\_TX\_IN     & DB-50     & 1    & 18   & O\_RF\_LOCK\_STATUS\_R & DB-37     & 3    & 22   \\
+        I\_RX\_LCL\_INHIBIT & DB-37     & 8    & 27   & O\_COH\_NON\_COH       & DB-50     & 32   & 49   \\
+        I\_UART\_RX\_IN     & DB-37     & 12   & 31   & O\_RANGING\_STATUS     & DB-50     & 33   & 50   \\
+        I\_DATA\_TX         & DB-50     & 6    & 23   & O\_DATA\_RX\_R         & DB-37     & 2    & 21   \\
+        I\_CLOCK\_TX        & DB-50     & 7    & 24   & O\_CLOCK\_RX\_R        & DB-37     & 1    & 20   \\
+    \end{tabular}
+    \caption{SBDL Test Loop cable 2}
+    \label{table:sbdl2}
+\end{table}

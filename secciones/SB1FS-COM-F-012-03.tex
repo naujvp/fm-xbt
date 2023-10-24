@@ -1,0 +1,57 @@
+%% **************************** Sub Test-03 ****************************
+\setcounter{Sec}{0}
+\setcounter{Step}{0}
+
+\renewcommand{\subprocid}{{\procid}-03}
+\renewcommand{\procname}{Tests setup break}
+
+\newpage
+\subsection{\subprocid\ \procname}
+
+
+\begin{stepstable}{\subprocid{} \procname{}}
+	\ExecutorRecord
+
+	\SectionHeaderWithReset{\comEgse power off (PXI and Ad-Hoc Box)}
+		%\VerifyOffVbusXBand{TX}
+		\VerifyStopCegseSW
+
+		% \TurnOnOffVbusSBand{TX}{off}
+		% \TurnOnOffVbusSBand{RX}{off}
+		% \StopCegseSW
+		\TurnOnOffPSU{off}
+		\DisablePowerSupplyOutput
+		\TurnOffMainSwitch
+		\PowerOffPxi	
+		\DisconnectExternalReferenceSignalToPXIXB
+
+	\SectionHeaderWithReset{Disconnection of BB interfaces}
+
+		\DisconnectHarnessFromDevice{EWC30}{\NuevoHarnessDos}{J100}
+		\DisconnectHarnessFromEMIEMCFilter{\NuevoHarnessDos}{output}
+		\DisconnectHarnessFromEMIEMCFilter{\NuevoHarnessUno}{input}
+		\DisconnectHarnessFromDevice{\adbox}{\NuevoHarnessUno}{J100}
+		%\DisconnectDutPortToAdHocBoxPort{EWC30}{H-EGSE-DUT-J1\string_001}{J100}	{J100}
+		\DisconnectDutPortToAdHocBoxPort{EWC30}{H-EGSE-DUT-J2\string_001}{J200}	{J200}
+		\DisconnectDutPortToAdHocBoxPort{EWC30}{H-EGSE-DUT-J3\string_001}{J201A and J201B}{J201}
+	
+
+
+
+	\SectionHeaderWithReset{Disconnection of RF Interfaces}
+	\DisconnectWTenCableBetweenDsnFilterAndXBandDut{W10}
+	\DisconnectWTwoCableToDsnFilter{W2}
+	\DisconnectRfLoopCableBetweenXBandPortAndCouplerPort{W3}{\notskip{}}
+	\DisconnectRfCableFromInOutPortOfCegse{XRF4.02}
+	\DisconnectRfCableFromInterfaceXBand{XRF4.02}
+	
+	\SectionHeaderWithReset{Final Steps}
+		\GetTempAndHumidityFromDatalogger		
+
+\end{stepstable}
+\begin{longtable}{|p{17.0cm}|}
+	\endfirsthead
+	\endfoot
+	\caption{Procedure \subprocid \ table.} \label{tb:proc:003-03}
+\end{longtable}
+

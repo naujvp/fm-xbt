@@ -1,0 +1,391 @@
+\renewcommand{\procid}		{SB1FS-COM-P-013}
+\renewcommand{\subprocid}	{SB1FS-COM-P-013-07}
+\renewcommand{\procname}	{\TestPerfBer}
+
+\newpage
+\subsection{SB1FS-COM-P-013-07 BER measurement}
+\label{sec:data-one-channel}
+
+\renewcommand{\foldername}{cortex-screenshot-013-07}
+
+\begin{table}[H] 
+	\centering
+	\footnotesize
+	\begin{tabular}{|L{3.0cm}|L{13.0cm}|}\hline
+		\textbf{Task ID}            & \subprocid{}\\\hline
+		\textbf{Task name}          & \procname{}\\\hline
+	 	\textbf{Task description} &
+In this test the EWC30 TX is set in Modulation mode. RF TestBed is configured as X-Band Noise generator. 
+The modulated signal entering the \gse-FM (R) through a [X-Band] interface is added to the noise entering through other [X-Band] interface in the \gse-FM (R) itself. 
+Noise level is adjusted to different test levels of Eb/N0 (seen at the cortex). 
+For each test level, demodulation parameters in the Cortex and Vector script are recorded.
+\\\hline  %This test case use the Cortex HDR configuration selected in previous test.
+
+		\textbf{Task purpose} & The purpose of this test is to evaluate BER for different levels of Eb/N0.\\%The purpose of this test is to evaluate new cortex configuration for different levels of Eb/N0.\\
+		\hline
+		\textbf{Success criteria} & Measurements performed for all Eb/N0 levels.
+		\\\hline
+		\textbf{Test Setup} &
+		\begin{minipage}[t]{\linewidth}
+		\begin{itemize}[nosep,after=\strut]
+		\item \comEgse{}{} to DUT base-band electrical connections according to figure \ref{fig:ewc30_bb}
+		\item General setup according to figure \ref{fig:data-setup1} % and the following optional connections:
+	\end{itemize}
+	\end{minipage}
+	\\\hline
+	\textbf{Duration} & 280 minutes\\\hline
+	\textbf{Data sets required} &
+	\begin{minipage}[t]{\linewidth}
+			\begin{itemize}[nosep,after=\strut]
+				\item \comEgse{} PXI nominal configuration file for EWC30 (\texttt{INIT\_FILE\_EWC30.ini}).
+				\item Oscilloscope configuration files in \texttt{osc-config} folder
+				\item Data files for modulation: 
+					\begin{itemize}[nosep,after=\strut]
+						\item Data-4429200\_600s\_VCh01\_wPN.bin.
+					\end{itemize}
+				\item Data RF TestBed:
+					\begin{itemize}[nosep,after=\strut]
+						\item SB1GS-Testbed\_XB\_NoiseGenerator\_v1.0.mcs
+					\end{itemize}
+				\item Data RF Cortex HDR of \fmr{}:
+					\begin{itemize}[nosep,after=\strut]
+						\item data52050
+					\end{itemize}	
+				 \item GS-GSE File:
+				 	\begin{itemize}[nosep,after=\strut]
+						\item UpConverter01\_TB-FM\_v1.0.py
+				 	\end{itemize}	
+			    \item Vector-0.9.4 script installed in \vmTesting.
+
+				\end{itemize}
+			\end{minipage}\\\hline
+			\textbf{Prerequisites} & 
+			\begin{minipage}[t]{\linewidth}
+				\begin{itemize}[nosep,after=\strut]
+					\item \preReqPro
+					\item Hardware: The necessary items are shown in the table \ref{tab:req-items}.
+				\end{itemize} 
+			\end{minipage}\\\hline
+		\end{tabular}
+	\caption{Procedure \subprocid{} description. } \label{tb:ewctxfilter}
+\end{table}
+
+
+\newpage\setcounter{Sec}{0}\setcounter{Step}{0}
+\report{}{}{}
+\begin{stepstable}{\subprocid{} \procname{}}
+
+	\ExecutorRecord{}
+
+	\SectionHeaderWithReset{Environmental temperature and humidity}
+		\RegisterTemp
+		\RegisterHumidity
+
+	\SectionHeaderWithReset{GS-GSE Preparation}
+	\RemoveAttInterfaceGSE{1}{1}{XRF3.12}
+	\RemoveAttInterfaceGSE{2}{2}{XRF3.13}
+
+	\EnableControlInXbmaOf{\fmr{}}
+	\EnableNOneInterfaceXBand{ }
+	\EnableNTwoInterfaceXBand{ }
+	\SetXbmaAttenuationTo{0}
+	\ConfigureXBandDownConverterOne{0}
+	\ConfigureXBandDownConverterTwo{0}
+	%\VerifyXBandDownConverterOne
+	%\VerifyXBandDownConverterTwo
+	\CreateScreenShotsFolderOnCortexHdrGse{\foldername{}}
+	\ConfigureCortexHdrGse %{SB1GS-GSE-FM-N\_RF\_v<x.y>.mcs}{\versionNote{}}{CFG}
+	\ClearStorageInCortexHdr
+
+	 	\ConfigureCortexHdrForBERMeasurementOnChannel{1}
+	\end{stepstable}
+	\begin{stepstable}{\subprocid{} \procname{}}	
+	 	\OpenMcsWindowsInCortexHdrGseForOneChannelTest
+
+	 \SectionHeaderWithReset{Data TestBed setting and connection}
+	 	\ConfigureXBandUpConverterNOneRfTestBed{0 dB}{OFF}{UpConverter01\_TB-FM\_v1.0.py}
+	 	\ConfigureCortexHdrRfTestBed{SB1GS-Testbed\_XB\_NoiseGenerator\_v1.0.mcs}
+		\OpenMcsWindowsCortexHdrTestBed
+	 	\VerifyIfAndRfConnectiosOfDataTestBedOneChannelTest
+	 	\ConnectRfCableToNTwoInterfaceXBand{SRF3.02}
+	 	\ConnectCableToRFOutputOfUpconverterTestBed{SRF3.02}
+	 	\EnableRfOutputXbandUpconverterTestBed
+
+
+	 \SectionHeaderWithReset{EGSE Settings}
+	 	%\SetCegseVariableAttenuatorTo{1 dB}{5 dB}
+	 	\SetCegseVariableAttenuatorTo{10 dB}{20 dB}
+
+	 \SectionHeaderWithReset{CEGSE SW Initialization}
+	 	\StartCegseSW{EWC30}{Nominal}{INIT\string_FILE\string_EWC30.ini}{}
+		 \SectionHeaderWithReset{DUT power on}
+		 \VerifyDutAlarms{EWC30}{}
+		 \TakeNoteDutTemperaturesXBand{}
+		 \TurnOnOffVbusXBand{on}{}
+		 \VerifyRxSecondaryVoltageRFXBand
+		 \VerifyRxSecondaryVoltageNUMXBand 
+		 \VerifyTemperature{O\string_TX\string_TEMP1}{}
+		 \LoadOscilloscopeConfigFile{EWC30-TX-RUN.set}{}
+		 \TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28\ V}{< 282 mA}{}
+		 \VerifyTxStatusXBand{Standby}
+
+
+	 \SectionHeaderWithReset{Data transmission 1}
+	 	\VerifyTemperature{O\string_TX\string_TEMP1}{}
+	 	\SendStoredFileWithDurationXBand{Data-4429200\_600s\_VCh01\_wPN.bin}{I\string_STBY\string_2\string_OPE\string_M}{10 minutes}
+		 \VerifyTxStatusXBand{Modulation}
+		 \VerifyClkLockedStatus{ON}
+		 \VerifyRfOutputPowerTmXBand{$\approx$ 3.2}
+		 \TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28\ V}{$\approx$ \ValueCurrentDUTTX A}{\notaCorrienteEstimada}
+
+	 \SectionHeaderWithReset{Eb/N0 $\approx$ 6 dB measurement}
+	 	\AdjustRfNoisePowerInCortexHdrTestBed{-103 dBm/Hz}{6 dB} %-107dBm/Hz
+	 	\RestartIFRInCortexHdr{1}
+	 	\VerifyLockedInCortexHdr{1}
+	    \ResetVectorInCortexHDR{1}
+	 	\ResetBERCounterOfCortexHdr{1}
+		\StartIngestionInCortexHdrForTwoMinute
+	 	\TakeScreenShotInCortexHdrGse{\foldername{}}{ebno6.png}
+	 	\MeasureRfDataCharacteristicsOnCortexWithBer{1}
+	 	\VerifyNumberOfFramesReceivedVCOneInCortexHdr{1}{885840}
+		 \VectorStar
+		 \VectorVerify
+		 \VectorStop
+	 	\ChangeTxStatusToXBand{Standby}{M}{}
+	     \StartDataRFFlow{600}
+		 \WaitForDataFlowExecution
+	 	\LoginToCCM
+		\GoToProductsOnCCM
+	 	\FindXBandProductOnCCM{}
+	 	\DownloadIdentifiedProductFromCCM{ebno6}
+	 	\EstimateBerFromData{ebno6}
+		\VectorGetEVM{Eb/N0 $\approx$ 6 dB}
+		\WaitUntilTxFinishedOnCegse
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% mediciones de EBN0 5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+        \SectionHeaderWithReset{Data transmission 2}
+	 	\VerifyTemperature{O\string_TX\string_TEMP1}{}
+	 	\SendStoredFileWithDurationXBand{Data-4429200\_600s\_VCh01\_wPN.bin}{I\string_STBY\string_2\string_OPE\string_M}{10 minutes}
+		 \VerifyTxStatusXBand{Modulation}
+		 \VerifyClkLockedStatus{ON}
+		%\end{stepstable}
+		%\begin{stepstable}{\subprocid{} \procname{}}
+		 \VerifyRfOutputPowerTmXBand{$\approx$ 3.2}
+
+	 \SectionHeaderWithReset{Eb/N0 $\approx$ 5 dB measurement}
+	 	\AdjustRfNoisePowerInCortexHdrTestBed{}{5 dB} %-107dBm/Hz
+	 	\RestartIFRInCortexHdr{1}
+	 	\VerifyLockedInCortexHdr{1}
+	    \ResetVectorInCortexHDR{1}
+	 	\ResetBERCounterOfCortexHdr{1}
+		\StartIngestionInCortexHdrForTwoMinute
+	 	\TakeScreenShotInCortexHdrGse{\foldername{}}{ebno5.png}
+	 	\MeasureRfDataCharacteristicsOnCortexWithBer{1}
+	 	\VerifyNumberOfFramesReceivedVCOneInCortexHdr{1}{885840}
+		 \VectorStar
+		 \VectorVerify
+		 \VectorStop
+	 	\ChangeTxStatusToXBand{Standby}{M}{}
+	     \StartDataRFFlow{600}
+		 \WaitForDataFlowExecution
+	 	\LoginToCCM
+		\GoToProductsOnCCM
+	 	\FindXBandProductOnCCM{}
+	 	\DownloadIdentifiedProductFromCCM{ebno5}
+	 	\EstimateBerFromData{ebno5}
+		\VectorGetEVM{Eb/N0 $\approx$ 5 dB}
+		\WaitUntilTxFinishedOnCegse
+     
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% mediciones de EBN0 4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\SectionHeaderWithReset{Data transmission 3}
+\VerifyTemperature{O\string_TX\string_TEMP1}{}
+\SendStoredFileWithDurationXBand{Data-4429200\_600s\_VCh01\_wPN.bin}{I\string_STBY\string_2\string_OPE\string_M}{10 minutes}
+\VerifyTxStatusXBand{Modulation}
+\VerifyClkLockedStatus{ON}
+\VerifyRfOutputPowerTmXBand{$\approx$ 3.2}
+\end{stepstable}
+\begin{stepstable}{\subprocid{} \procname{}}
+\SectionHeaderWithReset{Eb/N0 $\approx$ 4 dB measurement}
+\AdjustRfNoisePowerInCortexHdrTestBed{}{4 dB} %-107dBm/Hz
+\RestartIFRInCortexHdr{1}
+\VerifyLockedInCortexHdr{1}
+\ResetVectorInCortexHDR{1}
+\ResetBERCounterOfCortexHdr{1}
+\StartIngestionInCortexHdrForTwoMinute
+\TakeScreenShotInCortexHdrGse{\foldername{}}{ebno4.png}
+\MeasureRfDataCharacteristicsOnCortexWithBer{1}
+\VerifyNumberOfFramesReceivedVCOneInCortexHdr{1}{885840}
+\VectorStar
+\VectorVerify
+\VectorStop
+\ChangeTxStatusToXBand{Standby}{M}{}
+%\StartDataFlow
+\StartDataRFFlow{600}
+%\StartDataFlow{1}{600}
+\WaitForDataFlowExecution
+%	\WaitForDataFlowExecution{1}{10}
+\LoginToCCM
+\GoToProductsOnCCM
+\FindXBandProductOnCCM{}
+\DownloadIdentifiedProductFromCCM{ebno4}
+\EstimateBerFromData{ebno4}
+\VectorGetEVM{Eb/N0 $\approx$ 4 dB}
+\WaitUntilTxFinishedOnCegse
+	
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% mediciones de EBN0 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\SectionHeaderWithReset{Data transmission 4}
+\VerifyTemperature{O\string_TX\string_TEMP1}{}
+\SendStoredFileWithDurationXBand{Data-4429200\_600s\_VCh01\_wPN.bin}{I\string_STBY\string_2\string_OPE\string_M}{10 minutes}
+\VerifyTxStatusXBand{Modulation}
+\VerifyClkLockedStatus{ON}
+\VerifyRfOutputPowerTmXBand{$\approx$ 3.2}
+
+\end{stepstable}
+\begin{stepstable}{\subprocid{} \procname{}}
+\SectionHeaderWithReset{Eb/N0 $\approx$ 3 dB measurement}
+\AdjustRfNoisePowerInCortexHdrTestBed{}{3 dB} %-107dBm/Hz
+\RestartIFRInCortexHdr{1}
+\VerifyLockedInCortexHdr{1}
+\ResetVectorInCortexHDR{1}
+\ResetBERCounterOfCortexHdr{1}
+\StartIngestionInCortexHdrForTwoMinute
+\TakeScreenShotInCortexHdrGse{\foldername{}}{ebno3.png}
+\MeasureRfDataCharacteristicsOnCortexWithBer{1}
+\VerifyNumberOfFramesReceivedVCOneInCortexHdr{1}{885840}
+\VectorStar
+\VectorVerify
+\VectorStop
+\ChangeTxStatusToXBand{Standby}{M}{}
+%\StartDataFlow
+\StartDataRFFlow{600}
+%\StartDataFlow{1}{600}
+\WaitForDataFlowExecution
+%	\WaitForDataFlowExecution{1}{10}
+\LoginToCCM
+\GoToProductsOnCCM
+\FindXBandProductOnCCM{}
+\DownloadIdentifiedProductFromCCM{ebno3}
+\EstimateBerFromData{ebno3}
+\VectorGetEVM{Eb/N0 $\approx$ 3 dB}
+\WaitUntilTxFinishedOnCegse
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% mediciones de EBN0 2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\SectionHeaderWithReset{Data transmission 5}
+\VerifyTemperature{O\string_TX\string_TEMP1}{}
+\SendStoredFileWithDurationXBand{Data-4429200\_600s\_VCh01\_wPN.bin}{I\string_STBY\string_2\string_OPE\string_M}{10 minutes}
+\VerifyTxStatusXBand{Modulation}
+\VerifyClkLockedStatus{ON}
+\VerifyRfOutputPowerTmXBand{$\approx$ 3.2}
+
+\end{stepstable}
+\begin{stepstable}{\subprocid{} \procname{}}
+\SectionHeaderWithReset{Eb/N0 $\approx$ 2 dB measurement}
+\AdjustRfNoisePowerInCortexHdrTestBed{}{2 dB} %-107dBm/Hz
+\RestartIFRInCortexHdr{1}
+\VerifyLockedInCortexHdr{1}
+\ResetVectorInCortexHDR{1}
+\ResetBERCounterOfCortexHdr{1}
+\StartIngestionInCortexHdrForTwoMinute
+\TakeScreenShotInCortexHdrGse{\foldername{}}{ebno2.png}
+\MeasureRfDataCharacteristicsOnCortexWithBer{1}
+\VerifyNumberOfFramesReceivedVCOneInCortexHdr{1}{885840}
+\VectorStar
+\VectorVerify
+\VectorStop
+\ChangeTxStatusToXBand{Standby}{M}{}
+%\StartDataFlow
+\StartDataRFFlow{600}
+%\StartDataFlow{1}{600}
+\WaitForDataFlowExecution
+%	\WaitForDataFlowExecution{1}{10}
+\LoginToCCM
+\GoToProductsOnCCM
+\FindXBandProductOnCCM{}
+\DownloadIdentifiedProductFromCCM{ebno2}
+\EstimateBerFromData{ebno2}
+\VectorGetEVM{Eb/N0 $\approx$ 2 dB}
+\WaitUntilTxFinishedOnCegse
+
+
+	 \SectionHeaderWithReset{Report tables}
+	 \CompleteReportTable{Data demodulation table}{}
+	 \SectionHeaderWithReset{DUT Power off}
+	  \TurnOnOffVbusXBand{off}{}
+
+	 \SectionHeaderWithReset{CEGSE SW shutdown}
+	 	\StopCegseSW{}
+
+	 \SectionHeaderWithReset{Collect Evidences}
+
+	%\CopyPxaScreenShotsToCegseForEvidences%{pxa-screenshot and pxa-recording}
+	% 	\DeletePxaScreenShotsOnPxa
+ 	\CopyCegseLogsForEvicences{}{}
+    \CopyCortexHdrScreenShotsToCegseForEvidences{\foldername{}}
+	%\end{stepstable}
+		
+	%\begin{stepstable}
+    \CopyFilesToCEGEFromMgmt{Eb/E0 $\approx$ 6}
+	 % \CompleteReportTable{Data demodulation table (VSA)}{}
+
+	 \SectionHeaderWithReset{Final Steps}
+	 \SetChannelToReduntanSideOnXbmaOf{\fmr{}}{1}
+	 \SetChannelToReduntanSideOnXbmaOf{\fmr{}}{2}
+	 \ConfigureXBandDownConverterOne{6}
+	 \ConfigureXBandDownConverterTwo{4}
+	 \CloseCortexConfigFileHdrGse
+%\CloseCortexConfigFile
+\CloseConfigurationMenuXBandUpconverterTestBed
+\DisableNoiseGenerationInCortexHdrTestBed
+
+	 
+	 	%\SetCegseVariableAttenuatorTo{1 dB}{0 dB}
+	 	\SetCegseVariableAttenuatorTo{10 dB}{0 dB}
+			
+	
+		
+
+		\DisconnectRfCableFromInOutPortOfCegse{XRF4.02}{\notskip{}}
+	 	\DisconnectRfCableFromXBandTestPortOf{XRF4.02}{}
+		\DisconnectCableFromRFOutputOfUpconverterTestBed{SRF3.02}{}
+		\DisconnectRfCableFromXBandTestPortOf{SRF3.02}{}
+
+
+		\ConnectAttInterfaceGSE{1}{1}{XRF3.12}
+		\ConnectAttInterfaceGSE{2}{2}{XRF3.13}
+
+	 	\RegisterTemp
+	 	\RegisterHumidity
+
+
+\end{stepstable}
+\begin{longtable}{|p{17.0cm}|}
+	\endfirsthead
+	\endfoot
+	\caption{\subprocid{} procedure.}
+\end{longtable}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|}\hline
+\multirow{2}{*}{ Eb/No } & \multirow{2}{*}{ Figure } & \multirow{2}{*}{ BER from file } & \multicolumn{5}{|c|}{Cortex HDR} \\\cline{4-8}
+& & & BER & IF Level & EVM & Amplitude Error & Phase Error \\\hline
+6 & & & & & & & \\\hline
+5 & & & & & & & \\\hline
+4 & & & & & & & \\\hline
+3 & & & & & & & \\\hline
+2 & & & & & & & \\\hline
+\end{tabular} 
+	\caption{Data demodulation table.}
+	\label{tab:data-demod-cortex}
+\end{table}

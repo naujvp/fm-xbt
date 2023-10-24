@@ -1,0 +1,105 @@
+0,0,ExecutorRecord
+Record DUT's S/N
+1,0,
+1,0,//////////////Environmental temperature and humidity/////////////////
+1,1,RegisterTempAndHumidity
+1,3,ConfigDatalogger
+2,0,
+2,0,//////////////Verification of CEGSE setup./////////////////
+2,2,VerifyPowerSupplyConfiguration
+3,0,
+3,0,//////////////Connection of EMI/EMC filter to ad-hoc box/////////////////
+4,0,
+4,0,//////////////CEGSE SW Initialization/////////////////
+4,1,StartCegseSW, CGF-FILE: EWC30 "no alarm" "INIT_FILE_NO_ALARM_EWC30.ini"
+5,0,
+5,0,//////////////EWC30 Vbus verification/////////////////
+5,7,ConnectBOB  DB-9 to J201B
+5,8,ConnectBOB DB-25 to J200 
+5,9,ConnectBOB DB-37 to J201A
+6,0,
+6,0,//////////////TSM interfaces aliveness/////////////////
+7,0,
+7,0,//////////////CEGSE power off (PXI and Ad-Hoc Box)/////////////////
+7,2,StopCegseSW
+7,3,TurnOnOffPSU, ACTION=off
+7,4,DisablePowerSupplyOutput
+7,5,TurnOffMainSwitch
+7,6,PowerOffPxi
+8,0,
+8,0,//////////////HV-HPC interfaces aliveness/////////////////
+8,1,HVHPCAliveness,PIN(+)=1 PIN(-)=6 BOB=DB-9 SIGNAL=I_STBY_2_OPE_M
+8,2,HVHPCAliveness,PIN(+)=2 PIN(-)=7 BOB=DB-9 SIGNAL=I_OPE_2_STBY_R
+8,3,HVHPCAliveness,PIN(+)=3 PIN(-)=8 BOB=DB-9 SIGNAL=I_STBY_2_OPE_R
+8,4,HVHPCAliveness,PIN(+)=4 PIN(-)=9 BOB=DB-9 SIGNAL=I_OPE_2_STBY_M
+9,0,
+9,0,//////////////ASM interfaces aliveness/////////////////
+9,1,AsmAliveness,PIN(+)= 3 PIN(-)=22 BOB=DB-37 SIGNAL=SEC_V_RF
+9,2,AsmAliveness,PIN(+)=11 PIN(-)=29 BOB=DB-37 SIGNAL=SEC_V_NUM
+9,3,AsmAliveness,PIN(+)=12 PIN(-)=30 BOB=DB-37 SIGNAL=OUTPUT_PWR
+10,0,
+10,0,//////////////BDM interfaces aliveness/////////////////
+10,1,BdmAliveness,1,20,DB-37,O_CLK_LOCKED
+10,2,BdmAliveness,2,21,DB-37,O_MMU_CLK_STATUS
+10,3,BdmAliveness,4,23,DB-37,O_TX_STATUS
+11,0,
+11,0,//////////////LVDS interfaces aliveness/////////////////
+11,1,LvdsAliveness,PIN(+)= 3 PIN(-)=15 BOB=DB-25 SIGNAL=I_MMU_DATA_7
+11,2,LvdsAliveness,PIN(+)= 4 PIN(-)=16 BOB=DB-25 SIGNAL=I_MMU_DATA_6
+11,3,LvdsAliveness,PIN(+)= 5 PIN(-)=17 BOB=DB-25 SIGNAL=I_MMU_DATA_5
+11,4,LvdsAliveness,PIN(+)= 6 PIN(-)=18 BOB=DB-25 SIGNAL=I_MMU_DATA_4
+11,5,LvdsAliveness,PIN(+)= 7 PIN(-)=19 BOB=DB-25 SIGNAL=I_MMU_DATA_3
+11,6,LvdsAliveness,PIN(+)= 8 PIN(-)=20 BOB=DB-25 SIGNAL=I_MMU_DATA_2
+11,7,LvdsAliveness,PIN(+)= 9 PIN(-)=21 BOB=DB-25 SIGNAL=I_MMU_DATA_1
+11,8,LvdsAliveness,PIN(+)=10 PIN(-)=22 BOB=DB-25 SIGNAL=I_MMU_DATA_0
+11,9,LvdsAliveness,PIN(+)=11 PIN(-)=23 BOB=DB-25 SIGNAL=I_MMU_CLK
+11,10,DisconnectBOB, BOB=DB-9
+11,11,DisconnectBOB, BOB=DB-25
+11,12,DisconnectBOB, BOB=DB-37
+12,0,
+12,0,//////////////GS-GSE{} configuration and verification/////////////////
+12,4,VerifyXBandDownConverterOne
+12,5,VerifyXBandDownConverterTwo
+12,6,ConfigureCortexHdrGse
+12,7,ClearStorageInCortexHdr
+13,0,
+13,0,//////////////Instruments setup/////////////////
+13,1,ConnectMeasurementProbesToOscilloscopeForXBand
+13,2,ConnectMeasurementProbesToAdHocBoxForXBand
+14,0,
+14,0,//////////////DUT Connection/////////////////
+14,1,VerifyGroundOfXBandDut
+14,2,VerifyGroundOfXBandDut
+14,3,ConnectWTenCableBetweenDsnFilterAndXBandDut, CABLE=W10
+14,4,ConnectWTwoCableToDsnFilter,CABLE=W2
+15,0,
+15,0,//////////////BB harness connection to DUT/////////////////
+16,0,
+16,0,//////////////Mount CEGSE mechanical support in CEGSE/////////////////
+16,1,disconnectGroundOfXBandDut
+16,2,disconnetGroundOfXBandDut
+16,4,ConnectGroundOfXBandDut
+16,5,disconnetGroundOfXBandDut
+16,6,VerifyGroundOfCegsePowerSupply
+17,0,
+17,0,//////////////BB harness connection to Ad-hoc box/////////////////
+17,4,TakePhotosOfDutConnections
+18,0,
+18,0,//////////////RF connection to CEGSE and GS-GSE/////////////////
+18,1,ConnectRfLoopCableBetweenXBandPortAndCouplerPort,CABLE=W3
+18,2,ConnectRfCableToNOneInterfaceXBand,CABLE=XRF4.02
+18,3,ConnectRfCableToInOutPortOfCegse
+19,0,
+19,0,//////////////Power-on CEGSE{}/////////////////
+19,1,TurnOnMainSwitch
+19,2,VerifyPowerSupplyConfiguration
+19,3,EnablePowerSupplyOutput
+19,4,TurnOnOffPSU, ACTION=on
+19,5,PowerOnPxi
+19,6,RDPToPXIFromThinClient,IP=192.168.75.211. USR=EGSE COM PSW=Conae1234
+20,0,
+20,0,//////////////Collect Evidences/////////////////
+20,1,CopyCegseLogsForEvicences, FROM: C:/Users/EGSE COM/Desktop/LOGs/<session_ID>/{SB1FS-COM-F-012}-01 TO:C:/Users/EGSE COM/Documents/COMM-SS-FM/<session_ID>/
+21,0,
+21,0,//////////////Final Steps/////////////////
+21,1,RegisterTempAndHumidity

@@ -1,0 +1,205 @@
+\begin{landscape}
+	
+	\section{Test elements list} \label{an:items-list}
+	
+	Table \ref{tab:req-items} shown all hardware items required for the execution of test procedures of this documents.\\
+%	First part of the table belongs to tools, safety and auxiliary components. Second part belongs to measure instruments and its components. Third part belongs to Testbed components, and the last part correspond to CEGSE components.\\
+	{\tiny
+		\begin{longtable}
+			{|C{2.2cm}|C{2.5cm}|C{2.5cm}|C{1.8cm}|C{2.5cm}|C{2.5cm}|C{1.5cm}|C{5cm}|}\caption{Required hardware items for procedures  execution.}
+			\label{tab:req-items}\\
+                                                \hline \rowcolor{gris}
+			\textbf{ID} & \textbf{Name}                 & \textbf{Type} & \textbf{Brand}  & \textbf{P/N} & \textbf{S/N} & \textbf{ID CONAE}             & \textbf{Comments}                                                                        \\\hline
+			\endhead
+
+% TORQUE WRENCH
+ %- &Point hex key L-wrench &L-wrench &- &- &- &- &L-wrench with 1/16" Bit for connectors of Data [LVDS] interface. \\\hline
+ %- &Point hex key L-wrench &L-wrench &- &- &- &- &L-wrench with 5/64" Bit for connectors of Data [LVDS] interface. \\\hline
+ - &5/64" or 2 mm Hex bit.& Hex bit &- &- &- &- &5/64" or 2 mm Hex bit for 1/4" hex socket \\\hline
+ %- &1/8" or 3.175 mm Hex bit.&Hex bit &- &- &- &- &1/8" or 3.175 mm Hex bit for 1/4" hex socket \\\hline
+ %- &5/64" or 2 mm Hex bit.& Hex bit &- &- &- &- &5/64" or 2 mm Hex bit for 1/4" hex socket \\\hline
+
+ - &N Torque Wrench &Torque Wrench &Pasternack &PE5011-6 &- &- &Fixed Click Type Torque Wrench With 13/16" Bit For N, SC Connectors Pre-set to 14 in-lbs. \\\hline
+ - &SMA Torque Wrench &Torque Wrench &Maury &8799D1 &- &- &Torque Wrench With 5/16" Bit For SMA, SC Connectors Pre-set to 5 in-lbs. \\\hline
+ - &Fixed wrench &Fixed wrench &- &- &- &- &To perform RF connections. \\\hline
+ - &Screwdriver for slotted screws &Screwdriver &- &- &- &- &To perform connectors adjustments. \\\hline
+
+ - &Antistatic wrist strap &Safety accessory &- &- &- &- &For operator, instrument and equipment safety. \\\hline
+
+% Grounding and AC power verification 
+ - &Multimeter &Instrument &Agilent &U1232A &MY53110041 &- &True RMS Multimeter. \\\hline
+
+% PXA y DC BLOCK. 
+PXA &Spectrum Analyzer &Instrument &Agilent &N9030A &MY53310573 &021016 &- Keysight N9030A PXA Signal Analyzer \newline- N9030A 3Hz-13.6GHz \newline-RT1 Real-time analysis up to 160 MHz BW, basic detection 89600 VSA PathWave Vector Signal Analysis v. 22.21 \newline- 89601B-200 Basic vector signal analysis, transportable license \newline- 89601B-AYA Vector modulation analysis, transportable license. \\\hline
+DC Block &DC Block on Inner Conductor N male to N Female &DC Block &Pasternack &PE8213 &- &- &Instrument safety recommendation (PXA). \\\hline
+
+% PXI DC BLOCK. 
+DC Block& DC Block on Inner Conductor SMA male to SMA Female & DC Block & Pasternack  & PE8210  & -& - & For instrument safety recommendation (PXI).                                                                      \\\hline
+
+% cspell:disable-next-line
+% OSCILOSCOPIO y PUNTAS.
+ - &Oscilloscope                    &Instrument &Tektronix &DPO3054  &CO21329 &019203 &Instrument to measure electrical signals. \\\hline
+ - &Oscilloscope differential probe &Instrument &Tektronix &TDP0500  &B012833 &-      &Used to measure voltage values. \\\hline
+%- &Oscilloscope differential probe &Instrument &Tektronix &TDP0500  &B012838 &-      &Used to measure voltage values. \\\hline
+ - &Oscilloscope current probe      &Instrument &Tektronix &TCP0030A &C000884 &-      &Used to measure current values. \\\hline
+% - &Oscilloscope current probe      &Instrument &Tektronix &TCP0030A &C000895 &-      &Used to measure current values. \\\hline
+
+% Test Cable \#1 &Auxiliary wires for Breakout Board &Adapter cable &- &- &- &- &Wires used to connect ad-hoc box to Breakout Board terminals. \\\hline
+
+% 47 KOhm Resistor
+- & 47 KOhm Resistor &Connection Board & - & - & - & - & With wire and connector compatible with BOB. For electrical test of TSM Interface. \\\hline
+
+
+% Break Out BOXs
+ - & DB9 Breakout Board &Connection Board &Silver Engineering Inc (SEI) &SE-01021-11 &6351 &022265 &With nine compatible bridges. For electrical and functional test of HV-HPC Interface. \\\hline
+%- &DB15 Breakout Board &Connection Board &Silver Engineering Inc (SEI) &SE-01022-11 &6353 &022267 &With fifteen compatible bridges. For electrical and functional test of the TMTC BB interface. \\\hline
+ - &DB25 Breakout Board &Connection Board &Silver Engineering Inc (SEI) &SE-01023-11 &6357 &022271 &With twenty five compatible bridges. For electrical and functional test of the LVDS interface. \\\hline
+ - &DB37 Breakout Board &Connection Board &Silver Engineering Inc (SEI) &SE-01024-11 &6359 &022273 &With thirty-seven compatible bridges. For electrical and functional test of the TSM, ASM and BDM interface. \\\hline
+
+% Extension Cables Break Out Box
+  TestCableDB9 & Auxiliary wires for Breakout Board &Adapter cable &- &- &- &- &Wires used to connect ad-hoc box to Breakout Board terminals. \\\hline
+%TestCableDB15 & Auxiliary wires for Breakout Board &Adapter cable &- &- &- &- &Wires used to connect ad-hoc box to Breakout Board terminals. \\\hline
+ TestCableDB25 & Auxiliary wires for Breakout Board &Adapter cable &- &- &- &- &Wires used to connect ad-hoc box to Breakout Board terminals. \\\hline
+ TestCableDB37 & Auxiliary wires for Breakout Board &Adapter cable &- &- &- &- &Wires used to connect ad-hoc box to Breakout Board terminals. \\\hline
+ 
+%  cspell:disable-next-line
+% NO SE USA DB-50 EN ENSAYOS EWC30-FM
+% AUX MEASUREMENT BOX &DB50 Breakout Board &Connection Board &Veng S.A. &SEBOB50V120813 &- &- &With fifty compatible bridges. For electrical and functional test of the TMTC BB interface. \\\hline
+ &EMI/EMC filter &- &Veng &- &- &- &- To filter ripple of the current and voltage of the DUT.\\\hline
+
+% RF TEST BED
+ RACK20 &Rack &- &SKB cases &3SKB-R914U24 &- &016598 &-Belongs to TestBed \newline-TestBed rack to hold tests components. \\\hline
+ GLS10-TB &Ethernet Switch &Switch &D-Link &DES-1024D &- &012821 &-Belongs to TestBed \newline-To connect network components. \\\hline
+ PDU30 &Power Distribution Unit &- &- &- &- &- &-Belongs to TestBed \newline-Contains circuit breaker 15A. \\\hline
+ XUP01-TB &X-Band Up-converter &Frequency Converter &Zodiac &SM01022979B &4005892003 &023920 &-Belongs to TestBed \newline-It is used to frequency conversion in Data tests. \\\hline
+ %XDOWN01-TB &X-Band Down-converter &Frequency Converter &Zodiac &SM01026656B &4005339003 &021020 &-Belongs to TestBed \newline-It is used to frequency conversion in Data tests. \\\hline
+ HDR10 &Cortex HDR-XXL &Modulator, demodulator and processor &Zodiac Aerospace &SM01022661B &13032 &021374 &-Belongs to TestBed \newline-To perform Data tests. \\\hline
+% CRT10 &Cortex CRT-Q-D &Modulator, demodulator and processor &Zodiac Aerospace &SM01037243D &17114 &024945 &-Belongs to TestBed \newline-To perform TM and TC tests. \\\hline
+ ATT10.01 &Fixed Attenuator SMA male to SMA female &Attenuator &Pasternack &PE7005-10 &- &- &-Belongs to TestBed \newline-It is used to prevent RF power levels and/or achieve test condition values. \\\hline
+
+% ATT10.03 &Fixed Attenuator SMA male to SMA female &Attenuator &Pasternack &PE7005-10 &- &- &-Belongs to TestBed \newline-It is used to prevent RF power levels and/or achieve test condition values. \\\hline
+% ADP10.01 &N f to N f Adapter &Adapter &Pasternack &PE9006 &- &- &-Belongs to TestBed \newline-To connect PE304-60-06 with PE302-60-06 in TM Noise generation tests. \\\hline
+% ADP10.02 &N f to N f Adapter &Adapter &Pasternack &PE9006 &- &- &-Belongs to TestBed \newline-To connect SRF4.51 with PE304-60-01 in Data Dual Channel tests. \\\hline
+% PE304-60-06 &N m to SMA m 1.5m Harness &RF Auxiliary Harness &Pasternack &PE304-60 &- &- &-Belongs to TestBed \newline-To connect Cortex CRT-Q-D (through UL 1 out) with TestBed TM OUT port. \\\hline
+% PE302-60-06 &N m to N m 1.5m Harness &RF Auxiliary Harness &Pasternack &PE302-60 &- &- &-Belongs to TestBed \newline-To connect TestBed TM OUT port with SB N2 (N) port. \\\hline
+ PE300-60-03 &SMA m to SMA m 1.5m Harness &RF Auxiliary Harness &Pasternack &PE300-60 &- &- &-Belongs to TestBed \newline-To connect Cortex HDR-XXL (through J50 IF OUT) with TestBed XBUC (through ATT10.01) \newline-To connect TestBed XBDC with TestBed XBUC (through ATT10.01). \\\hline
+% PE304-60-01 &N m to SMA m 1.5m Harness &RF Auxiliary Harness &Pasternack &PE304-60 &- &- &-Belongs to TestBed \newline-To connect SRF4.51 (through ADP10.02 adapter) and TestBed X-Band Down-converter (through ATT10.03) \\\hline
+% ATT18.01 &Fixed Attenuator N male to N female &Attenuator &Pasternack &PE7015-20 &- &- &-Belongs to TestBed \newline-It is used to prevent RF power levels and/or achieve test condition values. \\\hline
+% ATT19.01 &Fixed Attenuator N male to N female &Attenuator &Pasternack &PE7015-10 &- &- &-Belongs to TestBed \newline-It is used to prevent RF power levels and/or achieve test condition values. \\\hline
+% SRF4.51 &N m to SMA m 15m Harness &RF Auxiliary Harness &UTiFLEX &UFA210A-0-5905-30070U &- &- &-Belongs to TestBed \newline-To connect DWL TP port with the PXA \newline-To connect TC TP (R) port with the PXA \newline-To connect DWL TP port with PE304-60-01 (through ADP10.02). \\\hline
+
+%XRF4.01 &N m to N m 5m Harness &RF Auxiliary Harness &UTiFLEX &UFB197C-0-1969-7GU7GU &- &- &-Belongs to TestBed \newline-To connect TM TP (N) port with the PXA \newline-To connect XB TP (N) port with the PXA. \\\hline
+
+% o IN/OUT Port of CEGSE o N1/N2 port of GS-GSE-FM(R)
+XRF4.02 &N m to N m 5m Harness &RF Auxiliary Harness &UTiFLEX &UFB197C-0-1969-7GU7GU &- &- &-Belongs to TestBed \newline-To connect CEGSE IN/OUT port with SB N1 (N) \newline-To connect CEGSE IN/OUT port with XB N1 (N). \\\hline
+
+% cspell:disable-next-line
+% Sumar Ruido desde GSE Testbed a GS-GSE-FM(R)
+SRF3.02 &N m to SMA m 10m Harness &RF Auxiliary Harness &UTiFLEX &UFA 210A-0-3937-70U300 &- &- &-Belongs to TestBed \newline-To connect XBUC TB outport with XB N1/N2 (N). \\\hline
+
+%DWL Test Port of CEGSE to PXA
+XRF3.60 &N m to N m 5m Harness &RF Auxiliary Harness &UTiFLEX &UFB197C-0-1969-7GU7GU &- &- &-Belongs to TestBed \newline-To connect CEGSE IN/OUT port with SB N1 (N) \newline-To connect CEGSE IN/OUT port with XB N1 (N). \\\hline
+
+% cspell:disable-next-line
+% NO SE USA TIME SERVER EN ENSAYOS EWC30-FM
+% TS10-LAB &Time Server &Time Server &Simmetricom &1510-602 &1508C45718 &022987 &It is used to time reference, GPS locked. \\\hline
+% SBB6.14 &BNC m to BNC m 0.5m Harness &Ref Harness &Southwire/Coleman &991043 RG 58/U &- &- &To connect loop in Time Server. \\\hline
+
+% REF1.02 &BNC m to BNC m 3m Harness &Ref Harness &Southwire/Coleman &991043 RG 58/U &- &- &To connect the 10 MHz reference signal to the PXA. \\\hline
+% SBB4.17 &BNC m to SMA m 6m Harness &Ref Harness &HUBER+SUHNER &RG174/11BNC/11SMA &- &- &To connect the 10 MHz reference signal to the PXA. \\\hline
+
+% External reference para PXA.
+REF1.01 &BNC m to BNC m 6m Harness &Ref Harness &- &E119932 RG174/U &- &- &To connect the 10 MHz reference signal to the PXA. \\\hline
+
+% External reference para PXI.
+SBB4.18 &BNC m to SMA m 6m Harness &Ref Harness &HUBER+SUHNER &RG174/11BNC/11SMA &- &- &To connect the 10 MHz reference signal to the PXA. \\\hline
+% ATT10.10 &Fixed Attenuator SMA male to SMA female &Attenuator &Pasternak &PE7161-10 &- &- &To connect the 10 MHz reference signal to the PXA. \\\hline
+% ATT1.10 &Fixed Attenuator SMA male to SMA female &Attenuator &Pasternak &PE7161-1 &- &- &To connect the 10 MHz reference signal to the PXA. \\\hline
+% ATT10.11 &Fixed Attenuator SMA male to SMA female &Attenuator &Pasternak &PE7161-10 &- &- &To connect the 10 MHz reference signal to the PXA. \\\hline
+% ATT1.11 &Fixed Attenuator SMA male to SMA female &Attenuator &Pasternak &PE7161-1 &- &- &To connect the 10 MHz reference signal to the PXA. \\\hline
+%W1 &SMA m to SMA m 37.6cm Harness &RF Auxiliary Harness &UTiFLEX &MCJ088D-0-0148-300300TV &MFR64639 225312-016 &- &-Belongs to CEGSE \newline-To connect J300 (through CS\#1) port of the EWC29 with the EWC29 port in DUT plate. \\\hline
+W2 &SMA m to SMA m 55.1cm Harness &RF Auxiliary Harness &UTiFLEX &MCJ088D-0-0217-300300TV &MRF64639 225314-044&- &-Belongs to CEGSE \newline-To connect OUT (through CS\#4) port of the DSN Filter with the EWC30 port in DUT plate. \\\hline
+W3 &SMA m to SMA m 20cm Harness &RF Auxiliary Harness &UTiFLEX &MCJ088D-0-0079-300300TV &MFR64639 225309-002 &- &-Belongs to CEGSE \newline-To connect EWC29 port in DUT plate with the COUPLER port in DUT plate. \newline-To connect EWC30 port in DUT plate with the COUPLER port in DUT plate. \\\hline
+W4 &SMA m to SMA m 37.6cm Harness &RF Auxiliary Harness &UTiFLEX &MCJ088D-0-0148-300300TV &MFR64639 225312-026 &-Belongs to CEGSE \newline- &To connect COUPLER port in DUT plate with the IN port (through AD\#1) in Bi-Directional Coupler. \\\hline
+W5 &SMA m to SMA m 50cm Harness &RF Auxiliary Harness &UTiFLEX &MCJ088D-0-0197-3Q03Q0 &MFR64639 351640-080 &- &-Belongs to CEGSE \newline-To connect Fixed Attenuator (through AD\#2) with 1dB step Variable Attenuator port. \\\hline
+W6 &N m to SMA m 80cm Harness &RF Auxiliary Harness &UTiFLEX &UT-141-FORM-0315-380580/A &MFR 64639 380910-007 &- &-Belongs to CEGSE \newline-To connect 10dB step Variable Attenuator port with CEGSE IN/OUT port in DUT plate. \\\hline
+W7 &SMA f to SMA m 34.8cm Harness &RF Auxiliary Harness &UTiFLEX &MCJ088D-0-0137-38V320 PM &MFR64639 345487-048 MB48 &- &-Belongs to CEGSE \newline-To connect OUT CPL port in Bi-Directional Coupler with UPL TP port in DUT plate. \\\hline
+W8 &SMA f to SMA m 34.8cm Harness &RF Auxiliary Harness &UTiFLEX &MCJ088D-0-0137-38V320 PM &MFR64639 345487-042 MB42 &- &-Belongs to CEGSE \newline-To connect IN CPL port in Bi-Directional Coupler with DWL TP port in DUT plate. \\\hline
+%W9 &SMA m to SMA m 50cm Harness &RF Auxiliary Harness &UTiFLEX &MCJ088D-0-0197-3Q03Q0 &MFR64639 351640-077 & &-Belongs to CEGSE \newline-To connect 1dB step Variable Attenuator port with 10dB step Variable Attenuator (through AD\#3). \\\hline
+W10 &SMA m to SMA m 50cm Harness &RF Auxiliary Harness &UTiFLEX &MCJ088D-0-0197-3Q03Q0 &MFR64639 351640-017 &- &-Belongs to CEGSE \newline-To connect J103 port (through CS\#2) of EWC30 with IN port (through CS\#3) of the DSN Filter. \\\hline
+ZGBDC35-93HP &Bi-Directional Coupler &Coupler &MiniCircuits &ZGBDC35-93HP &285 &- &-Belongs to CEGSE \newline-35dB Bi-Directional Coupler 900MHz to 9000MHz up to 250W. \\\hline
+BW-N20W20+ &20dB Fixed attenuator &Attenuator &MiniCircuits &BW-N20W20+ &- &- &-Belongs to CEGSE \newline-20dB fixed attenuator DC to 18GHz up to 20W. \\\hline
+%4741 &1dB step Variable attenuator &Attenuator &Narda &4741 &1938 &- &-Belongs to CEGSE \newline-1dB step Variable attenuator 0-9dB DC-18GHz 2W max. input power. \\\hline
+8496B-001 &10dB step Variable attenuator &Attenuator &Keysight &8496B-001 &- &- &-Belongs to CEGSE \newline-10 dB step Variable attenuator 0-110dB DC-18GHz 1W max. input power. \\\hline
+
+% CS\#1 &Saver SMA m to SMA f &Saver &SV Microwave &95077 &- &- &-Belongs to CEGSE \newline-To connect J300 port in RF interface of EWC29. \\\hline
+
+AD\#1 &N m to SMA f adapter &Adapter &Pasternack &PE91337 &- &- &-Belongs to CEGSE \newline-To connect W4 cable with IN port in Bi-Directional Coupler. \\\hline
+AD\#2 &N m to SMA f adapter &Adapter &Pasternack &PE91337 &- &- &-Belongs to CEGSE \newline-To connect Fixed attenuator with W5 cable. \\\hline
+AD\#3 &N m to SMA f adapter &Adapter &Pasternack &PE91337 &- &- &-Belongs to CEGSE \newline-To connect W9 cable with 1dB step Variable Attenuator port. \\\hline
+Adapter\#1 &Adapter SMA f to SMA f &Adapter &Pasternack &PE9312 &- &- &-Belongs to CEGSE \newline-To connect in the DUT plate in the Coupler position. \\\hline
+% Adapter\#2 &Adapter SMA f to SMA f &Adapter &Pasternack &PE9312 &- &- &-Belongs to CEGSE \newline-To connect in the DUT plate in the position EWC29. \\\hline
+Adapter\#3 &Adapter SMA f to SMA f &Adapter &Pasternack &PE9312 &- &- &-Belongs to CEGSE \newline-To connect in the DUT plate in the position EWC30. \\\hline
+
+% LOAD 50 OHMS N
+% LD\#1 &50 Ohm Load N m &Load &Pasternack &PE6035 &- &- &-Belongs to CEGSE \newline-To load Cortex CRT-Q-D. DC to 18000 MHz, up to 10W. \\\hline
+% LD\#2 &50 Ohm Load N m &Load &Pasternack &PE6035 &- &- &-Belongs to CEGSE \newline-To load IN/OUT port in DUT plate. DC to 18000 MHz, up to 10W. \\\hline
+
+% LOAD 50 OHMS SMA.
+% LD\#3 &50 Ohm Load SMA m &Load &Pasternack &PE6036 &- &- &-Belongs to CEGSE \newline-To load EWC30 port in DUT plate. DC to 18000 MHz, up to 10W. \\\hline
+% LD\#4 &50 Ohm Load SMA m &Load &Pasternack &PE6081 &- &- &-Belongs to CEGSE \newline-To load EWC29 port in DUT plate. DC to 18000 MHz, up to 2W. \\\hline
+% LD\#5 &50 Ohm Load SMA m &Load &MiniCircuits &ANNE-50+ &- &- &-Belongs to CEGSE \newline-To load DWL TP port in DUT plate. DC to 18000 MHz, up to 1W. \\\hline
+% LD\#6 &50 Ohm Load SMA m &Load &MiniCircuits &ANNE-50+ &- &- &-Belongs to CEGSE \newline-To load UPL TP port in DUT plate. DC to 18000 MHz, up to 1W. \\\hline
+
+
+% harness del EWC-30. Revisar el harness del Filtro.
+%\hl{H-EGSE-DUT-J1\_001} &DB15 m to MDM15 m 0.9m Harness &Data BB Harness &- &- &- &- &-Belongs to CEGSE \newline-To connect \hl{J100 of EWC30 with J100 of ad-hoc box}. \\\hline
+{\NuevoHarnessUno} &DB15 m to DB15 f 1m Harness &Data BB Harness &- &- &- &- &-Belongs to CEGSE \newline-To connect J100 of CEGSE with Input of EMI/EMC filter. \\\hline
+{\NuevoHarnessDos} &DB15 m to MDM15 m 0.5m (or 0.8m) Harness &Data BB Harness &- &- &- &- &-Belongs to CEGSE \newline-To connect Output of EMI/EMC filter with J100 of EWC30. \\\hline
+{\NuevoHarnessTres} & MDM15 f to DB15 f 0.25m (or 0.5m) Harness &Data BB Harness &- &- &- &- &-Belongs to CEGSE \newline-To verify EMI/EMC filter. \\\hline
+
+
+
+
+H-EGSE-DUT-J2\_001 &DB25 m to MDM25 m 0.9m Harness &Data BB Harness &- &- &- &- &-Belongs to CEGSE \newline-To connect J200 of EWC30 with J200 of ad-hoc box. \\\hline
+H-EGSE-DUT-J3\_001 &DB37 m and DB9 m to MDM37 m 0.9m Harness &Data BB Harness &- &- &- &- &-Belongs to CEGSE \newline-To connect J201 of EWC30 with J201A and J201B of ad-hoc box. \\\hline
+
+% harness del EWC-29.
+% H-EGSE-DUT-J4\_001 &DB25 m to MDM9 m and MDM9 m 0.9m Harness &TMTC BB Harness &- &- &- &- &-Belongs to CEGSE \newline-To connect J100 and J101 of EWC29 with J204 of ad-hoc box. \\\hline
+% H-EGSE-DUT-J5\_001 &DB37 m to MDM9 f and MDM25 f 0.9m Harness &TMTC BB Harness &- &- &- &- &-Belongs to CEGSE \newline-To connect J200 and J201 of EWC29 with J202 of ad-hoc box. \\\hline
+% H-EGSE-DUT-J6\_001 &DB50 m and DB15 m to MDM25 f and MDM21 f 0.9m Harness &TMTC BB Harness &- &- &- &- &-Belongs to CEGSE \newline-To connect J203 and J204 of the EWC29 with J203A and J203B of ad-hoc box. \\\hline
+
+%SAVERS EWC-29
+% - &Saver MDM9 &Saver &Glenair CA &196-09-26-062 REV &MWDM2L-9USP1 &- &-Belongs to CEGSE \newline-To connect J100 port in BB interface of EWC29. \\\hline
+% - &Saver MDM9 &Saver &Glenair CA &196-09-26-062 REV &MWDM2L-9USP1 &- &-Belongs to CEGSE \newline-To connect J101 port in BB interface of EWC29. \\\hline
+% - &Saver MDM9 &Saver &Glenair CA &196-09-26-062 REV &MWDM2L-9USP1 &- &-Belongs to CEGSE \newline-To connect J201 port in BB interface of EWC29. \\\hline
+% - &Saver MDM21 &Saver &Glenair CA &196-21-26-062 REV &MWDM2L-21USP1 &- &-Belongs to CEGSE \newline-To connect J204 port in BB interface of EWC29. \\\hline
+
+% CONNECTOR SAVERS EWC30
+%CS\#2 &Saver SMA m to SMA f &Saver &SV Microwave &95077 &- &- &-Belongs to CEGSE \newline-To connect J103 port in RF interface of EWC30. \\\hline
+%CS\#3 &Saver SMA m to SMA f &Saver &SV Microwave &95077 &- &- &-Belongs to CEGSE \newline-To connect IN port of DSN Filter. \\\hline
+%CS\#4 &Saver SMA m to SMA f &Saver &SV Microwave &95077 &- &- &-Belongs to CEGSE \newline-To connect OUT port of DSN Filter. \\\hline
+
+%SAVERS XTX FM1
+ - &Saver MDM 15 pts &Saver & C\&K    & 340104102B 15PS    & - &- &-Belongs to XTX FM1 \newline-To connect to J100 port of EWC30. \\\hline
+ - &Saver MDM 25 pts &Saver & C\&K    & 340104104B 25PS    & - &- &-Belongs to XTX FM1 \newline-To connect to J200 port of EWC30. \\\hline
+ - &Saver MDM 37 pts &Saver & C\&K    & 340104106B 37PS    & - &- &-Belongs to XTX FM1 \newline-To connect to J201 port of EWC30. \\\hline
+ CS\#2  - &Saver SMA        &Saver & Radiall & 3402 0030 2B101    & - &- &-Belongs to XTX FM1 \newline-To connect to J103 port of EWC30. \\\hline
+
+ %SAVERS XTX FM2
+ - &Saver MDM 15 pts &Saver & C\&K    & 340104102B 15PS    & - &- &-Belongs to XTX FM2 \newline-To connect to J100 port of EWC30. \\\hline
+ - &Saver MDM 25 pts &Saver & C\&K    & 340104104B 25PS    & - &- &-Belongs to XTX FM2 \newline-To connect to J200 port of EWC30. \\\hline
+ - &Saver MDM 37 pts &Saver & C\&K    & 340104106B 37PS    & - &- &-Belongs to XTX FM2 \newline-To connect to J201 port of EWC30. \\\hline
+ CS\#2  - &Saver SMA        &Saver & Radiall & 3402 0030 2B101    & - &- &-Belongs to XTX FM2 \newline-To connect to J103 port of EWC30. \\\hline
+
+ % cspell:disable-next-line
+% Materiales necesarios para aliveness de CEGSE para el caso de EWC29.
+%LOOP1 &DB37 m to DB50 m 0.5m Harness &TMTC BB Harness &- &- &- &- &-Belongs to CEGSE \newline-To perform aliveness tests, connect J202 of the EWC29 with J203A of the EWC29. \\\hline
+%LOOP2 &DB37 m to DB50 m 0.5m Harness &TMTC BB Harness &- &- &- &- &-Belongs to CEGSE \newline-To perform aliveness tests, connect J202 of the EWC29 with J203A of the EWC29. \\\hline
+
+ - &Pen-drive &Informatic &- &- &- &- &Previously formatted in FAT32 format. \\\hline
+ - &Auxiliary Notebook &Informatic &- &- &- &- &With Windows SO, TR7 for Windows and T\&D Graph installed (Datalogger programs). \\\hline 
+
+	\end{longtable}
+	}
+\end{landscape}

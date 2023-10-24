@@ -1,0 +1,2641 @@
+% Date: 2013/06/01
+% Description:
+% asume: fuente 11pt, hoja A4
+%% Modificacion 2011/12/28
+%% Modificacion 2011/12/29 %doc referencia header tabla
+%% --					   %caratula .... 
+%% Modificacion 2012/01/04 %Caratula CONAE
+%% Modificacion 2012/02/13 %Se agrego tipo de documento PROCEDIMIENTO
+						   %Modificaciones Lista de distribucion, Historial de cambios, Documentos de referencia y tablas ProcEx.
+%% Modificacion 2012/02/14 %Se agrego tipo de documento PLAN
+%% Modificacion 2012/02/24 %Se corrigi\'o el gencaratulaReprote agregando la capacidad de \lang
+%% Modificacion 2012/03/02 %Se revisaron y corrigieron las caratulas con ambos idiomas
+%% Modificacion 2012/03/06 %Se cambio el tama�o de la letra de las tablas ProcEx. De tiny a scriptsize.
+%% Modificacion 2012/03/07 %Se agregaron comandos exclusivos par DDD y SUM como: \addlogmessage, \addTrace  y \cmpDesc
+%% Modificacion 2012/03/29 %Se corrigio la caratula CONAE para que el doble Titulo lo ponga cuando se setea idioma Espa�ol.
+%% Modificacion 2012/03/30 %Se corrigio los textos de \caption para las tablas y figuras tanto para idioma Ingl�s como Espa�ol. Se corrigi� para formato CONAE en Espa�ol la generaci�n de car�tula para todos los tipos definidos.
+%% Modificacion 2012/09/13 %Se corrigio los textos del gencaratulaPlan con la versi�n de dos idiomas
+%% Modificacion 2012/10/09 %Se actualiz\'o el titulo de la caratula de CONAE de "CONAE Ground Segment & Applications" por "CONAE Ground Segment & Operations"
+%% Modificacion 2012/12/10 %Se corrije la caratula (no se pone el tipo de doc sino que debe ir incluido en el titulo), 
+			    %Se arregla el documentChanges: t�tulo cambia por DOCUMENT CHANGES RECORD y se saca el caption (CONAE compatible).
+			    %Achico un poco el \vspace del \signautre para que entren m�s firmas en una sola p�gina.
+			    %Se agrega el comando para reiniciar el contador de tablas y figuras por cada "section" y "subsection" del documento.
+			    %Se actualiza las imagenes utilizadas en los logos nuevos Logos de Ascentio y su representacion
+%% Modificacion 2013/06/01 % Caratula CONAE linea 451 donde dice "CONAE Ground Segment & Operations" debe decir "SAOCOM Ground Segment & Operations"
+%Modificacion 2015/05/07 se actualiza la dirección postal.
+%Modificacion 2016/06/16 se elimina \addConfigTag duplicado. 
+% 			 Repetir cabera de la tabla logmessages cuando se pasa de página.
+%% Modificacion 2016/11/07 %Se genera la nueva caratula, se quitan las páginas en blanco y la sección 1.8 de resumen
+%% Modificacion 2017/01/06 %Se actualiza caratula con la versión del doc
+
+\NeedsTeXFormat{LaTeX2e}
+
+\ProvidesPackage{ascentiodoc-nodate}[2011/11/08]
+\RequirePackage[pdftex]{graphicx}
+\RequirePackage{verbatim}
+\RequirePackage{array}
+\RequirePackage{longtable}
+\RequirePackage{supertabular} %% Tablas proccessss
+\RequirePackage{soul}
+\RequirePackage{lastpage}
+\RequirePackage{pdflscape}
+\usepackage{fancyhdr}
+\usepackage{colortbl}
+\usepackage{color}
+\usepackage{multirow}
+\usepackage[spanish, es-noshorthands, activeacute]{babel}
+%% Tabla apaisada
+\usepackage{rotating} 
+\usepackage{caption}
+%% highlighted text \hl{text}
+\usepackage{lscape} 
+\usepackage{float}
+% Permite jugar con algunas cosas que aparecieron en el PDF final
+\usepackage[colorlinks, breaklinks=true, linkcolor=black, citecolor=black, filecolor=black,	urlcolor=black]{hyperref}    
+			
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{graphics}
+\usepackage{etoolbox}
+
+%%\usepackage[usenames,dvipsnames]{pstricks}
+%%\RequirePackage{newclude}
+%%\RequirePackage{hyperref}
+%%\RequirePackage{supertabular}
+%\RequirePackage{ifthen}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Tabla de contenidos
+%% Espaciado indices
+\usepackage{tocloft}
+\setlength{\cftfignumwidth}{4.5em}
+\setlength{\cfttabnumwidth}{4.5em}
+\setlength{\parindent}{0in}
+
+
+\newboolean{asc_doc}
+\setboolean{asc_doc}{true}
+
+\DeclareOption{conae}{
+	\setboolean{asc_doc}{false}
+}
+
+\DeclareOption{ascentio}{
+	\setboolean{asc_doc}{true}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Options: Language Settings 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newboolean{es}
+
+\DeclareOption{es}{%
+    \setboolean{es}{true}
+}
+\DeclareOption{en}{%
+    \setboolean{es}{false}
+}
+\DeclareOption*{%
+   \PackageWarning{ascentio}{Unknown option �\CurrentOption�. Language defaults to 'en'}%
+}
+\ProcessOptions\relax
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \lang{texto en ingles}{texto en espa�ol}                                            %%
+%% if (es==true) then text in spanish                                                  %%
+%% else default: text in english                                                       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\lang}[2]{
+    %%\ifthenelse{\boolean{es}}{#2}{#1}
+	\ifbool{es}{#2}{#1}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\formatD}[2]{
+    %%\ifthenelse{\boolean{asc_doc}}{#1}{#2}
+	\ifbool{asc_doc}{#1}{#2}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Variables para uso multiple
+%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Variables
+\let\Titulo\relax
+\let\Sumario\relax
+\let\CodigoDoc\relax
+\let\VersionDoc\relax
+\let\EstadoDoc\relax
+\let\AutorDoc\relax
+\let\FechaDoc\relax
+\let\AmbitoConae\relax
+\let\TipoConae\relax
+\let\TituloEng\relax
+\let\ConaeDocType\relax
+
+%% Comandos para definir la variable
+\def\titulo#1{\def\Titulo{#1}}
+\def\sumario#1{\def\Sumario{#1}}
+\def\codigoDoc#1{\def\CodigoDoc{#1}}
+\def\versionDoc#1{\def\VersionDoc{#1}}
+\def\estadoDoc#1{\def\EstadoDoc{#1}}
+\def\autorDoc#1{\def\AutorDoc{#1}}
+\def\fechaDoc#1{\def\FechaDoc{#1}}
+\def\ambitoConae#1{\def\AmbitoConae{#1}}
+\def\tipoConae#1{\def\TipoConae{#1}}
+\def\tituloEn#1{\def\TituloEn{#1}}
+\def\conaeDocType#1{\def\ConaeDocType{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Codigo para detectar error, Si falta definir alguna variable
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\se{\let\ifsetuperror\iftrue}
+\def\ifsetuperror{%
+	\let\ifsetuperror\iffalse
+	\ifx\Titulo\relax\se\errhelp={Falta definir el \titulo{}.}\fi
+	\ifx\Sumario\relax\se\errhelp={Falta definir el \sumario{}.}\fi	
+	\ifx\CodigoDoc\relax\se\errhelp={Falta definir el \codigoDoc{} del documento.}\fi
+	\ifx\VersionDoc\relax\se\errhelp={Falta definir la \versionDoc{} del documento.}\fi
+	\ifx\EstadoDoc\relax\se\errhelp={Falta definir el \estadoDoc{} del documento.}\fi
+	\ifx\AutorDoc\relax\se\errhelp={Falta definir el \autorDoc{} del documento.}\fi
+	\ifx\FechaDoc\relax\se\errhelp={Falta definir el \fechaDoc{} del documento.}\fi	
+	
+	\ifbool{asc_doc}{
+	}{
+		\ifx\AmbitoConae\relax\se\errhelp={Falta definir el \ambitoConae{} del documento.}\fi
+		\ifx\TipoConae\relax\se\errhelp={Falta definir el \tipoConae{} del documento.}\fi
+		\ifx\TituloEn\relax\se\errhelp={Falta definir el \tituloEn{} del documento.}\fi		
+	}
+	
+	%\formatoD{}{ }
+	
+	%\edef\mlist{\the\intlist}\ifx\mlist\empty\se%
+	%\errhelp={Tenes que proveer al menos un \integrante{nombre}{lu}{email}.}\fi
+	\expandafter\ifsetuperror
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Tabla de contenidos                                                                 %%
+%% Lista de imagenes                                                                   %%
+%% Lista de tablas                                                                     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\tablaDeContedidos}{
+	\lang{ \renewcommand{\contentsname}{ TABLE OF CONTENTS } }
+		 { \renewcommand{\contentsname}{TABLA DE CONTENIDOS} }
+
+	\begin{center}
+		\tableofcontents
+	\end{center}	
+}
+
+\newcommand{\listaDeFiguras}{
+	\lang{ \renewcommand{\listfigurename}{ LIST OF FIGURES } }
+		 { \renewcommand{\listfigurename}{LISTA DE FIGURAS} }
+
+	\begin{center}
+		\listoffigures
+	\end{center}		
+}
+
+\newcommand{\listaDeTablas}{
+	\lang{ \renewcommand{\listtablename}{ LIST OF TABLES } }
+		 { \renewcommand{\listtablename}{LISTA DE TABLAS} }
+
+	\begin{center}
+		\listoftables
+	\end{center}		
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% \setMetaData establece la metadata al archivo PDF Resultante.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\setMetaData}{
+
+	\pdfinfo{
+		/Title (\Titulo)
+		/Summary (\Sumario)
+		/Creator (TeX)
+		/Producer (pdfTeX)
+		/Author (\AutorDoc)
+		/CreationDate (\today)
+		/Version (\VersionDoc)
+		/Status (\EstadoDoc)
+		/Codigo (\CodigoDoc)
+	}
+
+%	\hypersetup{}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Formato para las paginas y nombre personalizados                                   %%
+%%                                                                                     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\formatoPaginaLabel}{
+    % dimensiones de pagina para el resto del documento
+    \addtolength{\textheight}{-6cm}
+    \addtolength{\voffset}{-2cm}
+    \addtolength{\textheight}{4cm}
+    \setlength\oddsidemargin{0in}
+    \setlength\evensidemargin{0in}
+	\ifbool{es}{
+			\renewcommand{\tablename}{Tabla}	
+			\renewcommand{\figurename}{Figura}
+		}
+		{
+			\renewcommand{\tablename}{Table}	
+			\renewcommand{\figurename}{Figure}				
+		}
+	
+	%\addtocontents{toc}{\protect\thispagestyle{fancy}}
+	\makeatletter
+	\let\ps@plain\ps@fancy
+	\makeatother
+
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% bla \tbdhl bla bla bla.                                                             %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\tbdhl}{\hl{TBD}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Definicion de colores tablas y textos                                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{gris}{rgb}{0.65,0.65,0.65}
+\definecolor{headerText}{rgb}{1.0,1.0,1.0}               
+\definecolor{ccolor}{rgb}{0.86,0.86,0.86}
+\definecolor{cgrey}{rgb}{1,1,1}
+\definecolor{conae}{rgb}{0.8,1.0,1.0}						
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \ascTecSA Escribe el nombre de la empresa.                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ascTecSA}{Ascentio Technologies SA}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \addImagen{escala}{path imagen}{caption}{referencia (fig:"algo") }                  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addImagen}[4]{
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=#1]{#2}
+		\ifbool{es}{
+			\renewcommand{\figurename}{Figura}		
+		}
+		{
+			\renewcommand{\figurename}{Figure}				
+		}
+		\caption{#3}
+		\label{#4}
+	\end{figure}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Environment and commands for the front page, signatures, etc.                       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% inicializacion: usar en preambulo                                                   %%
+%% uso:  \encabezado                                                                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\encabezado}{
+	\ifsetuperror\errmessage{Faltan definir datos del documento! Ingresar 'h' para mas informacion.}\fi
+	
+    % fuente de documento en arial
+	\renewcommand{\rmdefault}{phv} 
+	\renewcommand{\sfdefault}{phv} 
+    
+    \setlength{\unitlength}{1cm}     %% unidad usada en el ambiente picture
+	\addtolength{\textheight}{6cm}   %% dimensiones de pagina 
+	\addtolength{\textwidth}{4.5cm}  %% dimensiones de pagina 
+	\pagestyle{fancy}
+	
+	
+	\formatD{
+		\encabezadoASC
+	}{
+		\conaeinit{ \CodigoDoc }{ \Titulo }{ \FechaDoc }
+	}
+
+	\setMetaData	
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Header y Footer                                                            %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%	Foramto Ascentio          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\encabezadoASC}{
+    \lhead{\CodigoDoc (Ver. \VersionDoc) \\ \FechaDoc }
+	\chead{} 
+	\rhead{\includegraphics[scale=0.12]{figuras/ascentio/ascentio2.png}} 
+	\renewcommand{\footrulewidth}{1pt}
+	\lfoot{\Titulo}
+	\cfoot{  } 
+	\rfoot{{\makebox(2,0.6){\raggedleft \textbf{\textsl{\thepage \ \lang{of}{de} \ \pageref{LastPage}}}}}}
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% Esquema de numeracion: figuras y tablas de ascentio.%%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% Reiniciar contador de figuras y tablas en cada secci�n/subsecci�n
+	\@addtoreset{figure}{section}
+	\@addtoreset{figure}{subsection}
+	\@addtoreset{table}{section}
+	\@addtoreset{table}{subsection}
+% 	\renewcommand{\thefigure}{\thesubsection-\alph{figure}}
+% 	\renewcommand{\thetable}{\thesubsection-\alph{table}}
+    	\renewcommand{\thefigure}{\thesubsubsection-\arabic{figure}}
+	\renewcommand{\thetable}{\thesubsubsection-\arabic{table}}   
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%% Altura de las columnas en el abiente tabular        %%
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\renewcommand{\arraystretch}{1.5}
+	\renewcommand{\tabcolsep}{0.2cm}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%	Formato CONAE             %% \conaeinit{Codigo asignado}{Titulo}{fecha}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\conaeinit}[3]{
+    \lhead{\includegraphics[scale=0.3]{figuras/conae/conae_logo.png} \textbf{\textsl{#1}} \hspace{0.5cm} \textbf{\textsl{#2}}\hspace{1.75cm}  }
+    \chead{}
+    \rhead{\textbf{\textsl{{#3}}}}
+    \lfoot{}
+    \cfoot{}
+    \rfoot{\textbf{\textsl{\lang{Page}{P\'agina} \thepage~\lang{of}{de} \pageref{LastPage}}}}
+    % titulo tabla de contenidos. Problemas con comando \lang...
+        \ifthenelse{\boolean{es}}{\renewcommand{\contentsname}{TABLA DE CONTENIDOS}}{\renewcommand{\contentsname}{TABLE OF CONTENTS}}
+    
+    \@addtoreset{figure}{section}
+    \@addtoreset{figure}{subsection}
+    \@addtoreset{table}{section}
+    \@addtoreset{table}{subsection}
+    % esquema de numeracion de figuras
+    \renewcommand{\thefigure}{\thesubsubsection.-\alph{figure}}
+    % esquema de numeracion de tablas
+    \renewcommand{\thetable}{\thesubsubsection.-\alph{table}}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Caratula Documentacion													   									%%
+%% Generacion de la caratula para cualquier tipo de documentos menos los       									%%
+%%	descriptos mas abajo 	  												   									%%
+%% use:                                                                        									%%
+%% \genCaratulaGenerico{TextoaMostrar}                                         									%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\genCaratula}[1]{
+    \thispagestyle{empty}
+    \formatD{
+		\fcolorbox{white}{cgrey}{\makebox(17,5){}}
+   		\put(0,5.5){\line(-1,0){17.50}}		
+		\put(-17,4){\parbox[t]{17cm}{\LARGE{\lang{ASCENTIO TECHNOLOGIES S.A. OFFICIAL DOCUMENT}{DOCUMENTO OFICIAL ASCENTIO TECHNOLOGIES S.A.}} } }
+		\put(-12.5,2.7){\parbox[t]{21cm}{
+				\textbf{\lang{ID:}{C\'ODIGO:}} \CodigoDoc \ - v\VersionDoc \\\\			
+				\textbf{\lang{TITLE:}{T\'ITULO:}} \parbox[t]{10cm}{\LARGE{\Titulo}} \\\\		
+				\textbf{\lang{SUMMARY:}{SUMARIO:}} \parbox[t]{10cm}{\Sumario} \\\\
+				}
+		}
+   		\put(-17,0.8){\includegraphics[scale=0.3]{figuras/ascentio/ascentio1.png}}
+   	\hrule 
+   	\bigskip
+	}
+	{
+	    \begin{picture}(17,25)(0.9,-0.4)
+		%Se saca el tipo de doc de los parametros, pues debe ir incluido en el titulo del doc. Hay que arreglar el conaetitle para que tome menos parametros.
+		\conaetitle{\AmbitoConae}{\TipoConae}{\TituloEn}{}{\AutorDoc}{\CodigoDoc}{\FechaDoc}{\Titulo}{}
+		    \end{picture}
+	}
+
+    % fuente para el resto del documento
+    \normalsize
+
+    % dimensiones de pagina para el resto del documento	
+	\formatoPaginaLabel
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%	Formato Ascentio          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% entorno para flujo de aprovacion	                                                   %%
+%% uso:                                                                                %%
+%% \begin{approvalFlow}                                                                %%
+%% ...                                                                                 %%
+%% \end{approvalFlow}                                                                  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{approvalFlow}{
+%    \bigskip
+%    \bigskip
+%    \large
+	\textrm{ \textbf{\lang{APPROVAL FLOW}{FLUJO DE APROBACI\'ON}} }
+    \normalsize
+    \renewcommand{\arraystretch}{1.5}
+		\begin{longtable}{|m{2cm}|m{4.5cm}|m{5.0cm}|m{4.0cm}|}
+		\hline
+		\rowcolor{gris}
+		\formatD{
+			\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{STATE}{ESTADO}}}} &
+			\parbox[c]{4.5cm}{\centering{\color{headerText}\textbf{\lang{ASSIGNEE ROLE}{ROL RESPONSABLE}}}} &
+			\parbox[c]{5.0cm}{\centering{\color{headerText}\textbf{\lang{ACTION performed by}{ACCI\'ON ejecutada por:}}}} &		
+			\parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{\lang{COMPLETED DATE}{FECHA COMPLETITUD}}}} \\
+		}{
+			\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{STATE}{ESTADO}}}} &
+			\parbox[c]{4.5cm}{\centering{\color{headerText}\textbf{\lang{ASSIGNEE ROLE}{ROL RESPONSABLE}}}} &
+			\parbox[c]{5.0cm}{\centering{\color{headerText}\textbf{\lang{ACTION performed by}{ACCI\'ON ejecutada por:}}}} &		
+			\parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{\lang{COMPLETED DATE}{FECHA COMPLETITUD}}}} \\	
+		}	
+		\hline
+		\endfirsthead
+	
+		%This is the header for the remaining page(s) of the table...
+		\multicolumn{4}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+		\hline 	
+		\rowcolor{gris}
+		
+		\formatD{
+			\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{STATE}{ESTADO}}}} &
+			\parbox[c]{4.5cm}{\centering{\color{headerText}\textbf{\lang{ASSIGNEE ROLE}{ROL RESPONSABLE}}}} &
+			\parbox[c]{5.0cm}{\centering{\color{headerText}\textbf{\lang{ACTION performed by}{ACCI\'ON ejecutada por:}}}} &		
+			\parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{\lang{COMPLETED DATE}{FECHA COMPLETITUD}}}} \\
+		}{
+			\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{STATE}{ESTADO}}}} &
+			\parbox[c]{4.5cm}{\centering{\color{headerText}\textbf{\lang{ASSIGNEE ROLE}{ROL RESPONSABLE}}}} &
+			\parbox[c]{5.0cm}{\centering{\color{headerText}\textbf{\lang{ACTION performed by}{ACCI\'ON ejecutada por:}}}} &		
+			\parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{\lang{COMPLETED DATE}{FECHA COMPLETITUD}}}} \\	
+		}
+		\hline	
+		\endhead
+	
+		%This is the footer for all pages except the last page of the table...
+		\multicolumn{4}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+		\endfoot
+
+		%This is the footer for the last page of the table...
+		%%\hline \hline
+		\endlastfoot
+}{
+
+	\end{longtable}
+
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%	Formato CONAE             %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \conaetitle{Ambito}{Campo}{Titulo}{Tipo}{Lista de Autores}{Codigo asignado}{fecha} {tituloEn} #4>Manual de Usuario
+%% agregado parametro titulo ingles al final.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\conaetitle}[9]{   
+    \fcolorbox{black}{conae}{\makebox(17,25){}}
+    \put(-17,24.5){\parbox[t]{17cm}{\begin{center}\LARGE\textbf{SAOCOM Ground Segment \& Operations}\end{center}}}
+    \put(-17,22){\parbox[t]{17cm}{\begin{center}\huge {#1} -- {#2}\end{center}}}
+    \put(-17,17.5){\parbox[t]{17cm}{\begin{center}\Huge\textbf{{#3}}\end{center}}}
+    
+	%conae
+	\lang{
+	}{
+		\linethickness{1mm}
+		\put(-16,14.8){\line(3,0){15} }
+		\thinlines
+		\put(-17,14.5){\parbox[t]{17cm}{\begin{center}\Huge\textbf{{#4} -- {#8}}\end{center}}}
+	}
+	
+    \put(-17,9){\parbox[t]{17cm}{\begin{center}\Huge\textbf{\lang{}{[Spanish Version]}} \end{center}}}
+    \put(-16.5,5.5){\Large\textbf{\lang{Authors:}{Autores:} {#5}}}
+    \put(-16.5,4.75){\Large\textbf{\lang{Document Code:}{C\'odigo de documento:} {#6} }}
+    \put(-16.5,3.5){\Large\textbf{\lang{Date:}{Fecha:} {#7}}}
+    \put(0,2.4){\line(-1,0){17.25}}
+    \put(-14.5,2.4){\line(0,-1){2.5}}
+    \put(-17,0.5){\includegraphics[scale=0.7]{figuras/conae/conae_logo.png}}
+    \put(-6.5, 1.6){\Large\textsl{\textbf{COMISION NACIONAL DE}}}
+    \put(-7.0, 0.9){\Large\textsl{\textbf{ACTIVIDADES ESPACIALES}}}
+    \put(-3.9, 0.2){\LARGE\textsl{\textbf{ARGENTINA}}}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Agrega un responsable a la lista de aprovación                                      %%
+%% uso: \addApprovalFlow{State}{Responsable}{Action}{Date}                      		%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addApprovalAssignee}[4]{
+    {#1} & {#2} & {#3} & {#4} \\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Agrega un miembro de la lista de distribucion                                       %%
+%% uso: \addDistributionList{Organizacion}{Nombre}{Funcion}                      %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addDistributionList}[2]{
+    {#1} & {#2}  \\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% entorno para lista de distribucion                                                  %%
+%% uso:                                                                                %%
+%% \begin{distributionList}                                                            %%
+%% ...                                                                                 %%
+%% \end{distributionList}                                                              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{distributionList}{
+
+	\bigskip
+    \large
+	\textrm{ \textbf{\lang{DISTRIBUTION LIST}{LISTA DE DISTRIBUCI\'ON}} }
+
+    \normalsize
+    \renewcommand{\arraystretch}{1.5}
+
+		\begin{longtable}{|m{5cm}|m{11.0cm}|}
+		\hline
+		\rowcolor{gris}
+		\formatD{
+			\parbox[c]{5cm}{\centering{\color{headerText}\textbf{\lang{ORGANIZATION}{ORGANIZACI\'ON}}}} &
+			\parbox[c]{11.0cm}{\centering{\color{headerText}\textbf{\lang{ROLE}{ROL}}}}              \\	
+		}{
+			\parbox[c]{5cm}{\centering{\color{headerText}\textbf{\lang{ORGANIZATION}{ORGANIZACI\'ON}}}} &
+			\parbox[c]{11.0cm}{\centering{\color{headerText}\textbf{\lang{ROLE}{ROL}}}}              \\
+		}
+		
+		\hline
+		\endfirsthead
+	
+		%This is the header for the remaining page(s) of the table...
+		\multicolumn{2}{l}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+		\hline 	
+		\rowcolor{gris}
+		
+		\formatD{
+			\parbox[c]{5cm}{\centering{\color{headerText}\textbf{\lang{ORGANIZATION}{ORGANIZACI\'ON}}}} &
+			\parbox[c]{11.0cm}{\centering{\color{headerText}\textbf{\lang{ROLE}{ROL}}}}              \\	
+		}{
+			\parbox[c]{5cm}{\centering{\color{headerText}\textbf{\lang{ORGANIZATION}{ORGANIZACI\'ON}}}} &
+			\parbox[c]{11.0cm}{\centering{\color{headerText}\textbf{\lang{ROLE}{ROL}}}}              \\
+		}
+		\hline	
+		\endhead
+	
+		%This is the footer for all pages except the last page of the table...
+		\multicolumn{2}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+		\endfoot
+
+		%This is the footer for the last page of the table...
+		%%\hline \hline
+		\endlastfoot
+}{
+	\end{longtable}
+    \small
+		\formatD{\lang{Ascentio Technologies S.A. owns the copyright of this document which is supplied in  confidence and which shall not be used for any purpose other than that for which it is supplied and shall be only reproduced, copied or communicated, in whole or in part, for internal use of Ascentio Technologies S.A., directly or by third parties holding confidentiality agreements with Ascentio Technologies S.A. \\\\	
+		Printed copies of this document are not controlled copies}	
+		{Ascentio Technologies S.A. tiene los derechos sobre este documento, el cual es confidencial y no  ser\'a usado para ning\'un otro prop\'osito, salvo para el que fue suministrado y s\'olo podr\'a ser reproducido, copiado o transmitido, en todo o en parte, para el uso interno de Ascentio Technologies S.A., sea directamente o a trav\'es de terceros que mantengan acuerdos de confidencialidad con Ascentio Technologies S.A. \\\\
+		Las copias impresas del presente ejemplar no son copias controladas}
+		}{\lang{La Comisi\'on Nacional de Actividades Espaciales (CONAE) de Argentina tiene los derechos sobre este documento, el cual es confidencial y no ser\'a usado para ning\'un otro prop\'osito, salvo para el que fue suministrado y s\'olo podr\'a ser reproducido, copiado o transmitido, en todo o en parte, para el uso interno de CONAE, sea directamente o a trav\'es de terceros que mantengan acuerdos de confidencialidad con CONAE.\\
+		Cualquier otra persona diferente de la persona autorizada, que consiga el documento por haberlo encontrado o por otra causa, deber\'a enviarlo junto con su nombre y direcci\'on en un sobre cerrado a:}
+		{Comisi\'on Nacional de Actividades Espaciales (CONAE) from Argentina owns the copyright of this document which is supplied in confidence and which shall not be used for any purpose other than that for which it is supplied and shall be only reproduced, copied or communicated, in whole or in part, for internal use of CONAE, directly or by third parties holding confidentiality agreements with CONAE. \\ 
+		Any person other than the authorised holder obtaining possession of this document by finding or otherwise, should send it, together with his name and address, in a sealed envelope to:\\
+		Comisi\'on Nacional de Actividades Espaciales (CONAE)\\
+		Unidad de Garant\'ia de Calidad \\
+		Direcci\'on Ejecutiva y T\'ecnica \\
+		Av. Paseo Col\'on 751 \\
+		(1063) Capital Federal \\
+		ARGENTINA}
+		}%% fin \formatD
+	
+	\begin{center}
+		\lang{\textsl{Letter postage need not be prepaid to: Pedro Nolasco Rodriguez (N) 455 - 5800 Río Cuarto, Cba. - Argentina\\}}{Env\'{\i}ese a franquear en destino a: Pedro Nolasco Rodriguez (N) 455 - 5800 Río Cuarto, Cba. - Argentina\\}
+		
+	\end{center}
+	
+    \normalsize
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Agrega un linea de cambios de documento                                             %%
+%% uso: \addDocumentChange{Version}{Fecha}{Seccion}{Causa del cambio}                  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addDocumentChange}[4]{
+    {#1} & {#2} & {#3} & {#4} \\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Ambiente de registros de cambio de documento                                        %% 
+%% uso:                                                                                %%
+%% \begin{documentChanges}                                                             %%
+%% ...                                                                                 %%
+%% \end{documentChanges}                                                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{documentChanges}{
+    \large
+    \bigskip
+    \textrm{\textbf{\lang{DOCUMENT CHANGES RECORD}{HISTORIAL DE CAMBIOS}}}
+
+    %\noindent
+    %%%\lang{All changes and revisions to this document will be approved by the System Engineer, the Project Manager and the Quality Assurance Manager.}{Todos los cambios y revisiones de este documento ser\'an descritos brevemente en esta secci\'on.}
+    %\vspace{0.5cm}
+
+    \renewcommand{\arraystretch}{1.5}
+
+    \begin{longtable}{|c|c|m{2cm}|m{7cm}|}
+    \hline
+    \rowcolor{gris}
+	
+	\formatD{
+		\parbox[c]{2.5cm}{\centering{\color{headerText} \textbf{\lang{VERSION}{VERSI\'ON}}}} 	 &
+		\parbox[c]{2.00cm}{\centering{\color{headerText} \textbf{\lang{DATE}{FECHA}}}}           &
+		\parbox[c]{2.00cm}{\centering{\color{headerText} \textbf{\lang{SECTOR}{SECTOR}}}}        &
+		\parbox[c]{7.00cm}{\centering{\color{headerText} \textbf{\lang{COMMENTS}{COMENTARIOS}}}} \\
+	}{
+		\parbox[c]{2.5cm}{\centering{\textbf{\lang{Doc.\\Version}{Versi\'on\\del Doc.}}}}                 &
+		\parbox[c]{2.00cm}{\centering{\textbf{\lang{Date}{Fecha}}}}                                        &
+		\parbox[c]{2.00cm}{\centering{\textbf{\lang{Section}{Secci\'on}}}}                                 &
+		\parbox[c]{7.00cm}{\centering{\textbf{\lang{Reason for change}{Raz\'on del cambio o revisi\'on}}}} \\[1.5ex]
+	}
+    \hline
+	\endfirsthead
+	
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{4}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	\rowcolor{gris}
+	\formatD{
+		\parbox[c]{2.5cm}{\centering{\color{headerText} \textbf{\lang{VERSION}{VERSI\'ON}}}} 	 &
+		\parbox[c]{2.00cm}{\centering{\color{headerText} \textbf{\lang{DATE}{FECHA}}}}           &
+		\parbox[c]{2.00cm}{\centering{\color{headerText} \textbf{\lang{SECTOR}{SECTOR}}}}        &
+		\parbox[c]{7.00cm}{\centering{\color{headerText} \textbf{\lang{COMMENTS}{COMENTARIOS}}}} \\
+	}{
+		\parbox[c]{2.5cm}{\centering{\textbf{\lang{Doc.\\Version}{Versi\'on\\del Doc.}}}}                 &
+		\parbox[c]{2.00cm}{\centering{\textbf{\lang{Date}{Fecha}}}}                                        &
+		\parbox[c]{2.00cm}{\centering{\textbf{\lang{Section}{Secci\'on}}}}                                 &
+		\parbox[c]{7.00cm}{\centering{\textbf{\lang{Reason for change}{Raz\'on del cambio o revisi\'on}}}} \\[1.5ex]
+	}
+    \hline	
+	\endhead
+
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{4}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+	
+}{
+%	\caption{\lang{DOCUMENT CHANGES RECORD}{Historial de Cambios}}
+    \end{longtable}
+    \normalsize
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Environment and commands for the introduction section                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% agrega una abreviatura en el entorno asociado                                       %%
+%% uso:                                                                                %%
+%% \addAcronimo{Acron.}{Descripcion de acronimo}                                       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addAcronimo}[2]{
+    {#1} & {#2} \\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Ambiente de abreviaturas                                                            %%
+%% uso:                                                                                %%
+%% \begin{acronimo}                                                                    %%
+%% ...                                                                                 %%
+%% \end{acronimo}                                                                      %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{acronimo}{
+	
+%%	\lang{}{Los siguientes acr\'onimos y abreviaturas son utilizados en el presente documento y tienen precedencia sobre los definidos en otros documentos en caso de existir contraposici\'on o discrepancia.}
+    \vspace{0.1cm}
+    \begin{longtable}{|l|m{12cm}|}
+    \hline
+    \rowcolor{gris}
+	\formatD{
+		\parbox[c]{3cm}{\centering{\color{headerText}\textbf{\lang{ACRONYMS}{ACR\'ONIMOS}}}}       &
+		\parbox[c]{12cm}{\centering{\color{headerText}\textbf{\lang{DESCRIPTION}{DESCRIPCI\'ON}}}} \\
+	}{
+		\parbox[c]{3cm}{\textbf{Acr./Abr.}}                          &
+		\parbox[c]{12cm}{\textbf{\lang{Description}{Descripci\'on}}} \\	
+	}
+    \hline
+
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{2}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	
+	\rowcolor{gris}
+	\formatD{
+		\parbox[c]{3cm}{\centering{\color{headerText}\textbf{\lang{ACRONYMS}{ACR\'ONIMOS}}}}       &
+		\parbox[c]{12cm}{\centering{\color{headerText}\textbf{\lang{DESCRIPTION}{DESCRIPCI\'ON}}}} \\
+	}{
+		\parbox[c]{3cm}{\textbf{Acr./Abr.}}                          &
+		\parbox[c]{12cm}{\textbf{\lang{Description}{Descripci\'on}}} \\	
+	}
+    \hline	
+	\endhead
+
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{2}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+	
+}{
+	\caption{ \lang{Acronyms and Abbreviations}{Lista de Acr\'onimos y Abreviaturas}}
+	
+%%%%%%%%	\caption{\protect{\lang{Acronyms and abbreviations}{Lista de acr\'onimos y abreviaturas }}}
+	%\lang{\caption{ Acronyms and abbreviations }}{\caption{ Lista de acr\'onimos y abreviaturas }}
+	
+    \end{longtable}
+    \vspace{0.1cm}
+    \normalsize
+    \noindent
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Agrega un documento a la tabla de doc aplicables y de referencia                    %%
+%% uso: \addDocumento{ID}{codigo}{version}{fecha}{titulo}                              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% mmartini: No se usa #4 que es fecha
+%\newcommand{\addDocumento}[5]{
+%	\formatD{
+%		{#1} & {#2} & {#3} & {#4} & {#5} \\
+%	}{
+%		{#1} & {#2} & {#5} \\
+%	}    
+%    \hline
+%}
+\newcommand{\addDocumento}[5]{
+	\formatD{
+		{#1} & {#2} & {#3} & {#5} \\
+	}{
+		{#1} & {#2} & {#3} \\
+	}    
+    \hline
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% entorno de documentos aplicables                                                    %%
+%% uso:                                                                                %%
+%% \begin{AplicablesDocs}                                                              %%
+%% ...                                                                                 %%
+%% \end{AplicablesDocs}                                                                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{aplicablesDocs}{		
+	\formatD{
+	    \vspace{0.1cm}
+%		\begin{longtable}{|c|c|c|c|m{6.0cm}|} % mmartini: se remplaza por linea de abajo
+		\begin{longtable}{|c|c|c|m{8.0cm}|c|} % mmartini
+		\hline
+		\rowcolor{gris}
+		
+		\parbox[c]{1.0cm}{\centering{\color{headerText}\textbf{ID}}}                     &
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{CODE}{C\'ODIGO}}}}  &
+		\parbox[c]{1.0cm}{\centering{\color{headerText}\textbf{\lang{VER}{VER}}}}        &
+%		\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{DATE}{FECHA}}}}     &  % mmartini: se saca fecha
+		\parbox[c]{8.0cm}{\centering{\color{headerText}\textbf{\lang{TITLE}{T\'ITULO}}}} \\ % mmartini: 6.0 a 8.0 cm
+		\hline
+	
+		\endfirsthead
+
+		%This is the header for the remaining page(s) of the table...
+		\multicolumn{5}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+		\hline 	
+		\rowcolor{gris}
+		\parbox[c]{1.0cm}{\centering{\color{headerText}\textbf{ID}}} &
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{CODE}{C\'ODIGO}}}} &
+		\parbox[c]{1.0cm}{\centering{\color{headerText}\textbf{\lang{VER}{VER}}}} &		% mmartini: se saca fecha
+%		\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{DATE}{FECHA}}}} &	% mmartini: 6.0 a 8.0 cm
+		\parbox[c]{8.0cm}{\centering{\color{headerText}\textbf{\lang{TITLE}{T\'ITULO}}}} \\ %
+		\hline	
+		\endhead
+
+		%This is the footer for all pages except the last page of the table...
+		\multicolumn{5}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+		\endfoot
+
+		%This is the footer for the last page of the table...
+		%%\hline \hline
+		\endlastfoot
+	}{
+		\begin{longtable}{|m{2.0cm}|m{5.0cm}|m{8.0cm}|}
+		\hline
+		\rowcolor{gris}
+		
+		\parbox[c]{2.0cm}{\textbf{ID}}                     &
+		\parbox[c]{5.0cm}{\textbf{\lang{Code}{C\'odigo}}}  &
+		\parbox[c]{8.0cm}{\textbf{\lang{Title}{T\'itulo}}} \\
+		\hline
+	
+		\endfirsthead
+
+		%This is the header for the remaining page(s) of the table...
+		\multicolumn{3}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+		\hline 	
+		\rowcolor{gris}
+		
+		\parbox[c]{2.0cm}{\textbf{ID}}                     &
+		\parbox[c]{5.0cm}{\textbf{\lang{Code}{C\'odigo}}}  &
+		\parbox[c]{8.0cm}{\textbf{\lang{Title}{T\'itulo}}} \\
+		\hline	
+		\endhead
+
+		%This is the footer for all pages except the last page of the table...
+		\multicolumn{3}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+		\endfoot
+
+		%This is the footer for the last page of the table...
+		\endlastfoot
+	}
+}{
+	\caption{\lang{Applicable documents}{Documentos Aplicables}}
+    \end{longtable}
+
+    \normalsize
+    \vspace{0.1cm}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% entorno de documentos de referencia                                                 %%
+%% uso:                                                                                %%
+%% \begin{referenciaDocs}                                                              %%
+%% ...                                                                                 %%
+%% \end{referenciaDocs}                                                                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{referenciaDocs}{
+	\formatD{
+%		\begin{longtable}{|c|c|c|c|m{6.0cm}|}
+%		\hline
+%		\rowcolor{gris}
+%		\parbox[c]{1.0cm}{\centering{\color{headerText}\textbf{ID}}} &
+%		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{CODE}{C\'ODIGO}}}} &
+%		\parbox[c]{1.0cm}{\centering{\color{headerText}\textbf{\lang{VER}{VER}}}} &
+%		\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{DATE}{FECHA}}}} &
+%		\parbox[c]{6.0cm}{\centering{\color{headerText}\textbf{\lang{TITLE}{T\'ITULO}}}} \\
+%		\hline
+%		\begin{longtable}{|c|c|c|c|m{6.0cm}|} % mmartini: se remplaza por linea de abajo
+		\begin{longtable}{|c|c|c|m{8.0cm}|c|} % mmartini
+		\hline 
+		\rowcolor{gris} 
+		\parbox[c]{1.0cm}{\centering{\color{headerText}\textbf{ID}}} & 
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{CODE}{C\'ODIGO}}}} & 
+		\parbox[c]{1.0cm}{\centering{\color{headerText}\textbf{\lang{VER}{VER}}}} & 
+%		\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{DATE}{FECHA}}}}     &  % mmartini: se saca fecha
+		\parbox[c]{8.0cm}{\centering{\color{headerText}\textbf{\lang{TITLE}{T\'ITULO}}}} \\ % mmartini: 6.0 a 8.0 cm
+		\hline	
+		\endfirsthead
+
+		%This is the header for the remaining page(s) of the table...
+		\multicolumn{5}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+		\hline 	
+		\rowcolor{gris}
+		\parbox[c]{1.0cm}{\centering{\color{headerText}\textbf{ID}}} & 
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{CODE}{C\'ODIGO}}}} & 
+		\parbox[c]{1.0cm}{\centering{\color{headerText}\textbf{\lang{VER}{VER}}}} & 
+%		\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{DATE}{FECHA}}}}     &  % mmartini: se saca fecha
+		\parbox[c]{8.0cm}{\centering{\color{headerText}\textbf{\lang{TITLE}{T\'ITULO}}}} \\ % mmartini: 6.0 a 8.0 cm
+		\hline	
+		\endhead
+
+		%This is the footer for all pages except the last page of the table...
+		\multicolumn{5}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+		\endfoot
+
+		%This is the footer for the last page of the table...
+		\endlastfoot
+	}{
+		\begin{longtable}{|m{2.0cm}|m{5.0cm}|m{8.0cm}|}
+		\hline
+		\rowcolor{gris}
+		
+		\parbox[c]{2.0cm}{\textbf{ID}}                     &
+		\parbox[c]{5.0cm}{\textbf{\lang{Code}{C\'odigo}}}  &
+		\parbox[c]{8.0cm}{\textbf{\lang{Title}{T\'itulo}}} \\
+		\hline
+	
+		\endfirsthead
+
+		%This is the header for the remaining page(s) of the table...
+		\multicolumn{3}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+		\hline 	
+		\rowcolor{gris}
+		
+		\parbox[c]{2.0cm}{\textbf{ID}}                     &
+		\parbox[c]{5.0cm}{\textbf{\lang{Code}{C\'odigo}}}  &
+		\parbox[c]{8.0cm}{\textbf{\lang{Title}{T\'itulo}}} \\
+		\hline	
+		\endhead
+
+		%This is the footer for all pages except the last page of the table...
+		\multicolumn{3}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+		\endfoot
+
+		%This is the footer for the last page of the table...
+		\endlastfoot
+	}
+}{
+	\caption{\lang{Reference documents}{Documentos de Referencia}}
+    \end{longtable}
+
+%    \normalsize
+    \vspace{0.1cm}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Agrega una entrada en la tabla de agenda                                            %%
+%% uso: \addEvento{horario}{Actividad}{Exponen}                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addEvento}[3]{
+	\hline
+    {#1} & {#2} & {#3}\\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ambiente para las tablas de los eventos ..                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{schedule}{
+	\vspace{0.3cm}
+		
+	\begin{longtable}{|c|p{8.0cm}|p{5.0cm}|}
+	\hline
+	\rowcolor{gris} 
+
+	\formatD{
+		\parbox[c]{2.2cm}{\centering{\color{headerText}\textbf{\lang{SCHEDULE}{HORARIO}}}}   &
+		\parbox[c]{8.0cm}{\centering{\color{headerText}\textbf{\lang{ACTIVITY}{ACTIVIDAD}}}} &
+		\parbox[c]{5.0cm}{\centering{\color{headerText}\textbf{\lang{EXPOSE}{EXPONEN}}}}     \\
+	}{
+		\parbox[c]{2.2cm}{\centering{\textbf{\lang{Schedule}{Horario}}}}   &
+		\parbox[c]{8.0cm}{\centering{\textbf{\lang{Activity}{Actividad}}}} &
+		\parbox[c]{5.0cm}{\centering{\textbf{\lang{Expose}{Exponen}}}}     \\
+	}
+    \hline
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{3}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	\rowcolor{gris}
+	\formatD{
+		\parbox[c]{2.2cm}{\centering{\color{headerText}\textbf{\lang{SCHEDULE}{HORARIO}}}}   &
+		\parbox[c]{8.0cm}{\centering{\color{headerText}\textbf{\lang{ACTIVITY}{ACTIVIDAD}}}} &
+		\parbox[c]{6.5cm}{\centering{\color{headerText}\textbf{\lang{EXPOSE}{EXPONEN}}}}     \\
+	}{
+		\parbox[c]{2.2cm}{\centering{\textbf{\lang{Schedule}{Horario}}}}   &
+		\parbox[c]{8.0cm}{\centering{\textbf{\lang{Activity}{Actividad}}}} &
+		\parbox[c]{6.5cm}{\centering{\textbf{\lang{Expose}{Exponen}}}}     \\
+	}
+    \hline	
+	\endhead
+
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{3}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+}{
+
+	\caption{\lang{Events Schedule}{Cronograma de Eventos}}
+	
+    \end{longtable}	
+  %  \normalsize
+  %  \vspace{0.3cm}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Agrega un participante a la reunion                                                 %%
+%% uso: \addParticipante{Organizacion}{Nombre}{e-mail}                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addParticipante}[3]{
+	\hline
+    {#1} & {#2} & {#3} & {} \\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ambiente para la lista de participantes ..                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{participantes}{
+	\vspace{0.3cm}
+	\begin{longtable}{|m{4.0cm}|m{4.0cm}|m{5.0cm}|c|}
+	\hline
+	\rowcolor{gris}
+	
+	\formatD{
+		\parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{\lang{ORGANIZATION}{ORGANIZACI\'ON}}}} &
+		\parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{\lang{NAME}{NOMBRE}}}}                 &
+		\parbox[c]{5.0cm}{\centering{\color{headerText}\textbf{\lang{E-MAIL}{E-MAIL}}}}               &
+		\parbox[c]{2.5cm}{\centering{\color{headerText}\textbf{\lang{SIGNATURE}{FIRMA}}}}             \\
+	}{
+		\parbox[c]{4.0cm}{\centering{\textbf{\lang{Organization}{Organizaci\'on}}}} &
+		\parbox[c]{4.0cm}{\centering{\textbf{\lang{Name}{Nombre}}}}                 &
+		\parbox[c]{5.0cm}{\centering{\textbf{\lang{E-mail}{E-mail}}}}               &
+		\parbox[c]{2.5cm}{\centering{\textbf{\lang{Signature}{Firma}}}}             \\
+	}
+    \hline	
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{4}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	\rowcolor{gris}
+	\formatD{
+		\parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{\lang{ORGANIZATION}{ORGANIZACI\'ON}}}} &
+		\parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{\lang{NAME}{NOMBRE}}}}                 &
+		\parbox[c]{5.0cm}{\centering{\color{headerText}\textbf{\lang{E-MAIL}{E-MAIL}}}}               &
+		\parbox[c]{2.5cm}{\centering{\color{headerText}\textbf{\lang{SIGNATURE}{FIRMA}}}}             \\
+	}{
+		\parbox[c]{4.0cm}{\centering{\textbf{\lang{Organization}{Organizaci\'on}}}} &
+		\parbox[c]{4.0cm}{\centering{\textbf{\lang{Name}{Nombre}}}}                 &
+		\parbox[c]{5.0cm}{\centering{\textbf{\lang{E-mail}{E-mail}}}}               &
+		\parbox[c]{2.5cm}{\centering{\textbf{\lang{Signature}{Firma}}}}             \\
+	}
+    \hline	
+	\endhead
+
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{4}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+}{
+	\caption{\lang{Participants List}{Lista de Participantes}}
+
+    \end{longtable}	
+    \normalsize
+    \vspace{0.3cm}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Agrega una fila a la tabla de ItemAction                                            %%
+%% uso: \addIARowRelay{}{}{}{}{}{}{}{}{}                                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\addIARow#1{%
+  \def\ArgI{{#1}}%
+  \addIARowRelay
+}
+\def\addIARowRelay#1#2#3#4#5#6#7#8#9{%
+  % arguments 1 are now in
+  %   \ArgI
+  % arguments 2-10 are in
+  %   #1-#3
+
+	\parbox[][][]{1.50cm}{{\ArgI}} & 
+	\parbox{2.0cm}{{#1}}           &	
+	\parbox{1.0cm}{{#2}}           &
+	\parbox{0.25cm}{{#3}}          & 
+	\parbox{2.0cm}{{#4}}           &	
+	\parbox{5.50cm}{{#5}}          &
+	\parbox{2.0cm}{{#6}}           & 	
+	\parbox{2.0cm}{{#7}}           &	
+	\parbox{1.25cm}{{#8}}          &
+	\parbox{1.75cm}{{#9}} 	
+	
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Tabla de Items Actions                                                              %%
+%% \begin{itemActions}                                                                 %%
+%%  ...                                                                                %%
+%% \end{itemActions}                                                                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{itemActions}{
+
+\begin{landscape}
+
+\subsection{\'Items de Acci\'on}
+
+%\begin{sidewaystable}
+	\vspace{0.3cm}
+	                
+	\begin{longtable}{|m{1.5cm}|m{2.0cm}|m{1.0cm}|m{0.25cm}|m{2.0cm}|m{5.5cm}|m{2.0cm}|m{2.0cm}|m{1.25cm}|m{1.99cm}|} 
+	\hline 
+	\rowcolor{gris}
+	
+	\formatD{
+	  \parbox[c][][c]{1.50cm}{\centering{\color{headerText}\textbf{\lang{AMBIT}{AMBIT}}}}              &
+	  \parbox[c][][c]{2.00cm}{\centering{\color{headerText}\textbf{\lang{ORIGINATED}{ORIGINATED}} }}   &
+	  \parbox[c][][c]{1.00cm}{\centering{\color{headerText}\textbf{\lang{TYPE}{TYPE}}}}                &
+	  \parbox[c][][c]{0.25cm}{\centering{\color{headerText}\textbf{\lang{ID}{ID}}}}                    &
+	  \parbox[c][][c]{2.00cm}{\centering{\color{headerText}\textbf{\lang{NAME}{NAME}}}}                &
+	  \parbox[c][][c]{5.50cm}{\centering{\color{headerText}\textbf{\lang{DESCRIPTION}{DESCRIPTION}}}}  &
+	  \parbox[c][][c]{2.00cm}{\centering{\color{headerText}\textbf{\lang{REQUESTED}{REQUESTED}}}}      &
+	  \parbox[c][][c]{2.00cm}{\centering{\color{headerText}\textbf{\lang{ASSIGNED}{ASSIGNED}}}}        &
+	  \parbox[c][][c]{1.25cm}{\centering{\color{headerText}\textbf{\lang{DEAD LINE}{DEAD LINE}}}}      &
+	  \parbox[c][5\baselineskip]{1.99cm}{\strut{\centering{\color{headerText}\textbf{\lang{PRIORITY}{PRIORITY}}}}}
+	  \\ [5ex]
+	}{
+	  \parbox[c]{1.50cm}{\centering{\textbf{\lang{Ambit}{Ambit}}}}             &
+	  \parbox[c]{2.30cm}{\centering{\textbf{\lang{Originated}{Originated}} }}  &  %%(InternalReview, ExternalReview)
+	  \parbox[c]{1.00cm}{\centering{\textbf{\lang{Type}{Type}}}}               &  %% ItemType
+	  \parbox[c]{0.25cm}{\centering{\textbf{\lang{Id}{Id}}}}                   &  %% Item Id
+	  \parbox[c]{2.00cm}{\centering{\textbf{\lang{Name}{Name}}}}               &  %% ItemName
+	  \parbox[c]{5.50cm}{\centering{\textbf{\lang{Description}{Description}}}} &  %% ItemDescription
+	  \parbox[c]{2.00cm}{\centering{\textbf{\lang{Requested}{Requested}}}}     &
+	  \parbox[c]{2.00cm}{\centering{\textbf{\lang{Assigned}{Assigned}}}}       &    
+	  \parbox[c]{1.25cm}{\centering{\textbf{\lang{Dead Line}{Dead Line}}}}     &
+	  \parbox[c][5\baselineskip]{1.99cm}{\strut{\centering{\textbf{\lang{Priority}{Priority}}}}} 
+      \\ [5ex]
+	}
+	\hline 
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{10}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	\rowcolor{gris}
+	\formatD{
+	  \parbox[c][][c]{1.50cm}{\centering{\color{headerText}\textbf{\lang{AMBIT}{AMBIT}}}}              &
+	  \parbox[c][][c]{2.00cm}{\centering{\color{headerText}\textbf{\lang{ORIGINATED}{ORIGINATED}} }}   &
+	  \parbox[c][][c]{1.00cm}{\centering{\color{headerText}\textbf{\lang{TYPE}{TYPE}}}}                &
+	  \parbox[c][][c]{0.25cm}{\centering{\color{headerText}\textbf{\lang{ID}{ID}}}}                    &
+	  \parbox[c][][c]{2.00cm}{\centering{\color{headerText}\textbf{\lang{NAME}{NAME}}}}                &
+	  \parbox[c][][c]{5.50cm}{\centering{\color{headerText}\textbf{\lang{DESCRIPTION}{DESCRIPTION}}}}  &
+	  \parbox[c][][c]{2.00cm}{\centering{\color{headerText}\textbf{\lang{REQUESTED}{REQUESTED}}}}      &
+	  \parbox[c][][c]{2.00cm}{\centering{\color{headerText}\textbf{\lang{ASSIGNED}{ASSIGNED}}}}        &
+	  \parbox[c][][c]{1.25cm}{\centering{\color{headerText}\textbf{\lang{DEAD LINE}{DEAD LINE}}}}      &
+	  \parbox[c][5\baselineskip]{1.99cm}{\strut{\centering{\color{headerText}\textbf{\lang{PRIORITY}{PRIORITY}}}}}
+	  \\ [5ex]
+	}{
+	  \parbox[c]{1.50cm}{\centering{\textbf{\lang{Ambit}{Ambit}}}}             &
+	  \parbox[c]{2.30cm}{\centering{\textbf{\lang{Originated}{Originated}} }}  &  %%(InternalReview, ExternalReview)
+	  \parbox[c]{1.00cm}{\centering{\textbf{\lang{Type}{Type}}}}               &  %% ItemType
+	  \parbox[c]{0.25cm}{\centering{\textbf{\lang{Id}{Id}}}}                   &  %% Item Id
+	  \parbox[c]{2.00cm}{\centering{\textbf{\lang{Name}{Name}}}}               &  %% ItemName
+	  \parbox[c]{5.50cm}{\centering{\textbf{\lang{Description}{Description}}}} &  %% ItemDescription
+	  \parbox[c]{2.00cm}{\centering{\textbf{\lang{Requested}{Requested}}}}     &
+	  \parbox[c]{2.00cm}{\centering{\textbf{\lang{Assigned}{Assigned}}}}       &    
+	  \parbox[c]{1.25cm}{\centering{\textbf{\lang{Dead Line}{Dead Line}}}}     &
+	  \parbox[c][5\baselineskip]{1.99cm}{\strut{\centering{\textbf{\lang{Priority}{Priority}}}}} 
+      \\ [5ex]
+	}
+    \hline	
+	
+	\endhead
+
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{10}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+}{
+	\caption{\lang{Items Actions List}{Lista de Items de Acci\'on} }
+
+    \end{longtable}
+	
+    \normalsize
+    \vspace{0.3cm}
+
+%\end{sidewaystable}
+
+\end{landscape}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Tabla de Request Actions                                                            %%
+%% \begin{requestAction}                                                               %%
+%%  ...                                                                                %%
+%% \end{requestAction}                                                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{requestAction}{
+
+\begin{landscape}
+
+\subsection{Requests for Action}
+
+%\begin{sidewaystable}
+	\vspace{0.3cm}
+	                
+	\begin{longtable}{|m{1.5cm}|m{2.0cm}|m{1.0cm}|m{0.25cm}|m{2.0cm}|m{5.5cm}|m{2.0cm}|m{2.0cm}|m{1.25cm}|m{1.99cm}|} 
+	\hline 
+	\rowcolor{gris}
+	\formatD{
+	  \parbox[c][][c]{1.50cm}{\centering{\color{headerText}\textbf{\lang{AMBIT}{AMBIT}}}}              &
+	  \parbox[c][][c]{2.00cm}{\centering{\color{headerText}\textbf{\lang{ORIGINATED}{ORIGINATED}} }}   &
+	  \parbox[c][][c]{1.00cm}{\centering{\color{headerText}\textbf{\lang{TYPE}{TYPE}}}}                &
+	  \parbox[c][][c]{0.25cm}{\centering{\color{headerText}\textbf{\lang{ID}{ID}}}}                    &
+	  \parbox[c][][c]{2.00cm}{\centering{\color{headerText}\textbf{\lang{NAME}{NAME}}}}                &
+	  \parbox[c][][c]{5.50cm}{\centering{\color{headerText}\textbf{\lang{DESCRIPTION}{DESCRIPTION}}}}  &
+	  \parbox[c][][c]{2.00cm}{\centering{\color{headerText}\textbf{\lang{REQUESTED}{REQUESTED}}}}      &
+	  \parbox[c][][c]{2.00cm}{\centering{\color{headerText}\textbf{\lang{ASSIGNED}{ASSIGNED}}}}        &
+	  \parbox[c][][c]{1.25cm}{\centering{\color{headerText}\textbf{\lang{DEAD LINE}{DEAD LINE}}}}      &
+	  \parbox[c][5\baselineskip]{1.99cm}{\strut{\centering{\color{headerText}\textbf{\lang{PRIORITY}{PRIORITY}}}}}
+	  \\ [5ex]
+	}{
+	  \parbox[c]{1.50cm}{\centering{\textbf{\lang{Ambit}{Ambit}}}}             &
+	  \parbox[c]{2.30cm}{\centering{\textbf{\lang{Originated}{Originated}} }}  &  %%(InternalReview, ExternalReview)
+	  \parbox[c]{1.00cm}{\centering{\textbf{\lang{Type}{Type}}}}               &  %% ItemType
+	  \parbox[c]{0.25cm}{\centering{\textbf{\lang{Id}{Id}}}}                   &  %% Item Id
+	  \parbox[c]{2.00cm}{\centering{\textbf{\lang{Name}{Name}}}}               &  %% ItemName
+	  \parbox[c]{5.50cm}{\centering{\textbf{\lang{Description}{Description}}}} &  %% ItemDescription
+	  \parbox[c]{2.00cm}{\centering{\textbf{\lang{Requested}{Requested}}}}     &
+	  \parbox[c]{2.00cm}{\centering{\textbf{\lang{Assigned}{Assigned}}}}       &    
+	  \parbox[c]{1.25cm}{\centering{\textbf{\lang{Dead Line}{Dead Line}}}}     &
+	  \parbox[c][5\baselineskip]{1.99cm}{\strut{\centering{\textbf{\lang{Priority}{Priority}}}}} 
+      \\ [5ex]
+	}
+    \hline	
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{10}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	\formatD{
+	  \parbox[c][][c]{1.50cm}{\centering{\color{headerText}\textbf{\lang{AMBIT}{AMBIT}}}}              &
+	  \parbox[c][][c]{2.00cm}{\centering{\color{headerText}\textbf{\lang{ORIGINATED}{ORIGINATED}} }}   &
+	  \parbox[c][][c]{1.00cm}{\centering{\color{headerText}\textbf{\lang{TYPE}{TYPE}}}}                &
+	  \parbox[c][][c]{0.25cm}{\centering{\color{headerText}\textbf{\lang{ID}{ID}}}}                    &
+	  \parbox[c][][c]{2.00cm}{\centering{\color{headerText}\textbf{\lang{NAME}{NAME}}}}                &
+	  \parbox[c][][c]{5.50cm}{\centering{\color{headerText}\textbf{\lang{DESCRIPTION}{DESCRIPTION}}}}  &
+	  \parbox[c][][c]{2.00cm}{\centering{\color{headerText}\textbf{\lang{REQUESTED}{REQUESTED}}}}      &
+	  \parbox[c][][c]{2.00cm}{\centering{\color{headerText}\textbf{\lang{ASSIGNED}{ASSIGNED}}}}        &
+	  \parbox[c][][c]{1.25cm}{\centering{\color{headerText}\textbf{\lang{DEAD LINE}{DEAD LINE}}}}      &
+	  \parbox[c][5\baselineskip]{1.99cm}{\strut{\centering{\color{headerText}\textbf{\lang{PRIORITY}{PRIORITY}}}}}
+	  \\ [5ex]
+	}{
+	  \parbox[c]{1.50cm}{\centering{\textbf{\lang{Ambit}{Ambit}}}}             &
+	  \parbox[c]{2.30cm}{\centering{\textbf{\lang{Originated}{Originated}} }}  &  %%(InternalReview, ExternalReview)
+	  \parbox[c]{1.00cm}{\centering{\textbf{\lang{Type}{Type}}}}               &  %% ItemType
+	  \parbox[c]{0.25cm}{\centering{\textbf{\lang{Id}{Id}}}}                   &  %% Item Id
+	  \parbox[c]{2.00cm}{\centering{\textbf{\lang{Name}{Name}}}}               &  %% ItemName
+	  \parbox[c]{5.50cm}{\centering{\textbf{\lang{Description}{Description}}}} &  %% ItemDescription
+	  \parbox[c]{2.00cm}{\centering{\textbf{\lang{Requested}{Requested}}}}     &
+	  \parbox[c]{2.00cm}{\centering{\textbf{\lang{Assigned}{Assigned}}}}       &    
+	  \parbox[c]{1.25cm}{\centering{\textbf{\lang{Dead Line}{Dead Line}}}}     &
+	  \parbox[c][5\baselineskip]{1.99cm}{\strut{\centering{\textbf{\lang{Priority}{Priority}}}}} 
+      \\ [5ex]
+	}
+    \hline	
+	\endhead
+
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{10}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+}{
+	\caption{\lang{Request Action List}{Lista de Acciones Requeridas}}
+
+    \end{longtable}
+	
+    \normalsize
+    \vspace{0.3cm}
+
+%\end{sidewaystable}
+
+\end{landscape}
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Agrega un item a tabla itemList                                                     %%
+%% uso: \addItem{ID}{NAME}{DESCRIPTION}                                                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addItem}[3]{
+	%%\hline
+    {#1} & {#2} & {#3} \\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ItemList DDD                                                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{listaItems}{
+
+	\vspace{0.3cm}
+	\begin{longtable}{|p{4.0cm}|p{4.0cm}|p{7.0cm}|}
+	\hline
+	\rowcolor{gris}
+	\formatD{
+		\parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{\lang{ID}{ID}}}}                     &
+		\parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{\lang{NAME}{NOMBRE}}}}               &
+		\parbox[c]{7.0cm}{\centering{\color{headerText}\textbf{\lang{DESCRIPTION}{DESCRIPCI\'ON}}}} \\
+	}{
+		\parbox[c]{4.0cm}{\centering{\textbf{\lang{Id}{Id}}}}                     &
+		\parbox[c]{4.0cm}{\centering{\textbf{\lang{Name}{Nombre}}}}               &
+		\parbox[c]{7.0cm}{\centering{\textbf{\lang{Description}{Descripci\'on}}}} \\
+	}
+    \hline	
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{3}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	\rowcolor{gris}
+	\formatD{
+		\parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{\lang{ID}{ID}}}}                     &
+		\parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{\lang{NAME}{NOMBRE}}}}               &
+		\parbox[c]{7.0cm}{\centering{\color{headerText}\textbf{\lang{DESCRIPTION}{DESCRIPCI\'ON}}}} \\
+	}{
+		\parbox[c]{4.0cm}{\centering{\textbf{\lang{Id}{ID}}}}                     &
+		\parbox[c]{4.0cm}{\centering{\textbf{\lang{Name}{Nombre}}}}               &
+		\parbox[c]{7.0cm}{\centering{\textbf{\lang{Description}{Descripci\'on}}}} \\
+	}
+    \hline	
+	\endhead
+
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{3}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+}{
+	\caption{\lang{Items List}{Lista de Items}}
+
+    \end{longtable}	
+    \normalsize
+    \vspace{0.3cm}
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Agrega un item a tabla requerimiento                                                %%
+%% uso: \addRequerimiento{SRD Id}{DDD Id}{DESCRIPTION}{Date}                           %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addRequerimiento}[4]{
+	%%\hline
+    {#1} & {#2} & {#3} & {#4} \\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Lista requerimiento DDD                                                             %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{requerimiento}{
+
+	\vspace{0.3cm}
+	\begin{longtable}{|p{4.0cm}|p{4.0cm}|p{6.0cm}|c|}
+	\hline
+	\rowcolor{gris}
+	
+	\formatD{
+		\parbox[c]{3.50cm}{\centering{\color{headerText}\textbf{SRD ID}}}                            &
+		\parbox[c]{3.50cm}{\centering{\color{headerText}\textbf{DDD ID}}}                            &
+		\parbox[c]{6.00cm}{\centering{\color{headerText}\textbf{\lang{DESCRIPTION}{DESCRIPCI\'ON}}}} &
+		\parbox[c]{1.25cm}{\centering{\color{headerText}\textbf{\lang{DATE}{FECHA}}}}                \\
+	}{
+		\parbox[c]{3.50cm}{\centering{\textbf{SRD Id}}}                            &
+		\parbox[c]{3.50cm}{\centering{\textbf{DDD Id}}}                            &
+		\parbox[c]{6.00cm}{\centering{\textbf{\lang{Description}{Descripci\'on}}}} &
+		\parbox[c]{1.25cm}{\centering{\textbf{\lang{Date}{Fecha}}}}                \\
+	}
+    \hline	
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{4}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	\rowcolor{gris}
+	\formatD{
+		\parbox[c]{3.50cm}{\centering{\color{headerText}\textbf{SRD ID}}}                            &
+		\parbox[c]{3.50cm}{\centering{\color{headerText}\textbf{DDD ID}}}                            &
+		\parbox[c]{6.00cm}{\centering{\color{headerText}\textbf{\lang{DESCRIPTION}{DESCRIPCI\'ON}}}} &
+		\parbox[c]{1.25cm}{\centering{\color{headerText}\textbf{\lang{DATE}{FECHA}}}}                \\
+	}{
+		\parbox[c]{3.50cm}{\centering{\textbf{SRD Id}}}                            &
+		\parbox[c]{3.50cm}{\centering{\textbf{DDD Id}}}                            &
+		\parbox[c]{6.00cm}{\centering{\textbf{\lang{Description}{Descripci\'on}}}} &
+		\parbox[c]{1.25cm}{\centering{\textbf{\lang{Date}{Fecha}}}}                \\
+	}
+    \hline	
+	\endhead
+
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{4}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+}{
+	\caption{Software Requirements vs DDD Identifier}
+
+    \end{longtable}	
+    \normalsize
+    \vspace{0.3cm}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                                                     %%
+%% \addItemTrazabilidad{version}{fecha}{descripcion}                                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addItemTrazabilidad}[3]{
+	%%\hline
+    {#1} & {#2} & {#3} \\
+    \hline
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Tabla de Trazabilidad                                                               %%
+%% \begin{trazabilidad}                                                                %%
+%%  ...                                                                                %%
+%% \end{trazabilidad}                                                                  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{trazabilidad}{
+
+%%\begin{landscape}
+
+\subsection{\lang{Traceability Matrix}{Matriz de Trazabilidad}}
+
+	%This table represents the software's traceability\\
+
+	\vspace{0.3cm}
+	                
+	\begin{longtable}{|c|c|c|} 
+	\hline
+	\rowcolor{gris}
+	\formatD{
+		\parbox[c]{2.50cm}{\centering{\color{headerText}\textbf{\lang{VERSION}{VERSI\'ON}}}}         &
+		\parbox[c]{2.50cm}{\centering{\color{headerText}\textbf{\lang{DATE}{FECHA}} }}               &
+		\parbox[c]{9.50cm}{\centering{\color{headerText}\textbf{\lang{DESCRIPTION}{DESCRIPCI\'ON}}}} \\         
+	}{
+		\parbox[c]{2.50cm}{\centering{\textbf{\lang{Version}{Versi\'on}}}}         &
+		\parbox[c]{2.50cm}{\centering{\textbf{\lang{Date}{Fecha}} }}               &
+		\parbox[c]{9.50cm}{\centering{\textbf{\lang{Description}{Descripci\'on}}}} \\         
+	}
+    \hline	
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{3}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	\rowcolor{gris}
+	\formatD{
+		\parbox[c]{2.50cm}{\centering{\color{headerText}\textbf{\lang{VERSION}{VERSI\'ON}}}}         &
+		\parbox[c]{2.50cm}{\centering{\color{headerText}\textbf{\lang{DATE}{FECHA}} }}               &
+		\parbox[c]{9.50cm}{\centering{\color{headerText}\textbf{\lang{DESCRIPTION}{DESCRIPCI\'ON}}}} \\         
+	}{
+		\parbox[c]{2.50cm}{\centering{\textbf{\lang{Version}{Versi\'on}}}}         &
+		\parbox[c]{2.50cm}{\centering{\textbf{\lang{Date}{Fecha}} }}               &
+		\parbox[c]{9.50cm}{\centering{\textbf{\lang{Description}{Descripci\'on}}}} \\         
+	}
+    \hline	
+	\endhead
+
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{3}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+}{
+	\caption{\lang{Traceability Matrix}{Matriz de Trazabilidad}}
+
+    \end{longtable}
+	
+    \normalsize
+    \vspace{0.3cm}
+
+%%\end{landscape}
+
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%%  SUM 
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Agrega una entrada en la tabla de configuracion                                     %%
+%% uso: \addConfigTag{ConfigTag}{tipo}{Posibles Valores}{Descripciones}                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\addConfigTag}[4]{
+	\hline
+	\multicolumn{3}{|>{\columncolor{gris}}c|}{ \textcolor{red}{ \textit{\textbf{{#1}}}} } \\
+	\hline
+    {#2} & \small{#3} & {#4} \\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Crea la tabla que explica los tag del archivo de configuracion                      %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{ConfigTable}{
+	\vspace{0.3cm}
+	\begin{longtable}{|l|p{5.0cm}|p{9.5cm}|}
+	\hline
+	\rowcolor{gris}
+    \parbox[c]{2.0cm}{\centering{\textbf{\lang{Type}{Tipo}}}} &
+    \parbox[c]{5.0cm}{\centering{\textbf{\lang{Possible Values}{Posibles Valores}}}} &
+    \parbox[c]{9.5cm}{\centering{\textbf{\lang{Description}{Descripci\'on}}}} \\
+    \hline	
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{3}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	\rowcolor{gris}
+    \parbox[c]{2.0cm}{\centering{\textbf{\lang{Type}{Tipo}}}} &
+    \parbox[c]{5.0cm}{\centering{\textbf{\lang{Possible Values}{Posibles Valores}}}} &
+    \parbox[c]{9.5cm}{\centering{\textbf{\lang{Description}{Descripci\'on}}}} \\
+    \hline	
+	\endhead
+
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{3}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+}{
+	%\hline
+	\caption{\lang{Description of Setup Parameters}{Descripci\'on de los par\'ametros de configuraci\'on}}
+	\label{tab:ConfigTable}
+    \end{longtable}	
+    \normalsize
+    \vspace{0.3cm}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Crea la tabla que explica los mensajes log                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  environment usage:
+% \begin{logmessages}
+% ...
+% \end{logmessages}
+
+\newenvironment{logmessages}{
+\begin{longtable}{|m{10cm}|m{6cm}|}
+	\hline
+	\rowcolor[rgb]{0.65,0.65,0.65}
+	\parbox[c][1cm]{10cm}{\centering \textbf{Mensaje}} &
+	\parbox[c][1cm]{6cm}{\centering \textbf{Descripci\'on}} \\
+	\hline
+	    \endfirsthead
+
+	    %This is the header for the remaining page(s) of the table...
+	    \multicolumn{2}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline
+	\rowcolor[rgb]{0.65,0.65,0.65}
+	\parbox[c][1cm]{10cm}{\centering \textbf{Mensaje}} &
+	\parbox[c][1cm]{6cm}{\centering \textbf{Descripci\'on}} \\
+	\hline
+	    \endhead
+	    %This is the footer for all pages except the last page of the table...
+	    \multicolumn{2}{l}{ \lang{Continued on Next Page}{Continua en la p\'agina siguiente}~\ldots  } \\
+	    \endfoot
+
+	    %This is the footer for the last page of the table...
+	    %%\hline \hline
+	    \endlastfoot
+	}{
+	\caption{Descripci\'on de los eventos notificados por la unidad.}
+	\label{tab:logmessages}
+\end{longtable}
+}
+
+
+% command usage:
+% \addlogmessage{Message}{Descripcion}
+
+\newcommand{\addlogmessage}[2]{
+    {#1} & {#2} \\
+    \hline
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Tabla de procedimientos
+%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Add column reportProcTable
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+% Agrega entrada a la tabla de steps in Procedimientos .
+% uso:
+% \stepTable{Step}{Description}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addSHead}[2]{
+	\rowcolor{gris}       %%
+	{#1} & \multicolumn{4}{|>{\columncolor{gris}}l|}{ {#2} } \\
+	\hline
+
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+% Agrega entrada a la tabla de steps in Procedimientos .
+% uso:
+% \subStepItem{step}{Description}{expected}{actual}{remark}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addSItem}[5]{   
+	{#1} & {#2} & {#3} & {#4} & {#5} \\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{reportProcTable}{
+	\vspace{0.3cm}
+	\begin{longtable}{|p{1cm}|p{3cm}|p{3cm}|p{3.0cm}|p{3.0cm}|} 
+	\hline
+    \multicolumn{2}{|l|}{PROCEDURE:} &
+    \multicolumn{3}{|l|}{Procedure Name:} \\
+    \multicolumn{2}{|l|}{ID:} &
+    \multicolumn{3}{|l|}{SUB-case:} \\
+    \hline 
+    \rowcolor{gris}
+    \parbox[c]{1.0cm}{\centering{\textbf{Step}}} &
+    \parbox[c]{3.0cm}{\centering{\textbf{Action Description}}} 	&
+    \parbox[c]{3.0cm}{\centering{\textbf{Exprected Outcome}}} 	&
+    \parbox[c]{3.0cm}{\centering{\textbf{Actual Outcome}}} 		&
+    \parbox[c]{3.0cm}{\centering{\textbf{Remark}}} \\
+    \hline
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{5}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+    \hline     
+    \multicolumn{2}{|l|}{PROCEDURE:} &
+    \multicolumn{3}{|l|}{Procedure Name:} \\
+    \multicolumn{2}{|l|}{ID:} &
+    \multicolumn{3}{|l|}{SUB-case:} \\
+    \hline 
+    \rowcolor{gris}
+    \parbox[c]{1.0cm}{\centering{\textbf{Step}}} &
+    \parbox[c]{3.0cm}{\centering{\textbf{Action Description}}} &
+    \parbox[c]{3.0cm}{\centering{\textbf{Exprected Outcome}}} &
+    \parbox[c]{3.0cm}{\centering{\textbf{Actual Outcome}}} &
+    \parbox[c]{3.0cm}{\centering{\textbf{Remark}}}  \\
+    \hline 
+	\endhead
+
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{5}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+   	\endfoot 
+	\hline
+	\multicolumn{2}{|l|}{ {\bf Date:}  } &
+	\multicolumn{3}{|l|}{ {\bf Execution Responsible Signature:} } \\
+    \hline
+	\endlastfoot
+}{
+	%\hline
+    %%\label{tab:steps}
+    \end{longtable}
+    \normalsize
+    \vspace{0.3cm}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Tabla de procedimientos
+%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Add column Intro procedimiento reporte
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+% Agrega entrada a la tabla 
+% uso:
+% \addIntroR{}{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addIntroR}[2]{
+	{#1} & {#2}  \\
+    \hline
+}
+
+\newenvironment{introProcTable}{
+\begin{center} 
+    \begin{longtable}{|m{5.0cm}|m{9.5cm}|} 
+    \hline 
+    \rowcolor{gris}
+    \multicolumn{2}{|>{\columncolor{gris}}c|}{\centering{\textcolor{headerText}{\textbf{\lang{Introduction}{Introducc\'ion}}}}} \\ 
+    \hline 
+    \rowcolor{gris} 
+    \parbox[l]{5.0cm}{\centering{\textcolor{headerText}{\textbf{\lang{Item}{Item}}}}} & 
+    \parbox[c]{9.5cm}{\centering{\textcolor{headerText}{\textbf{\lang{Description}{Description}}}}}  \\ 
+    \hline 
+ \endfirsthead 
+  
+ %This is the header for the remaining page(s) of the table... 
+ \multicolumn{2}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex] 
+ \hline   
+    \rowcolor{gris} 
+    \parbox[l]{5.0cm}{\centering{\textcolor{headerText}{\textbf{\lang{ORGANIZATION}{ORGANIZACI\'ON}}}}} & 
+    \parbox[c]{9.5cm}{\centering{\textcolor{headerText}{\textbf{\lang{NAME}{NOMBRE}}}}}  \\ 
+    \hline  
+ \endhead 
+  
+ %This is the footer for all pages except the last page of the table... 
+ \multicolumn{2}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\ 
+ \endfoot 
+ 
+ %This is the footer for the last page of the table... 
+ \endlastfoot 
+
+}{
+    \end{longtable} 
+    \end{center}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% miselaneas                                                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{lined}[1]{
+	\begin{center}
+		\begin{minipage}{#1}
+			\hrule\medskip
+}
+{
+			\vspace{-1ex}\hrule 
+		\end{minipage}
+	\end{center}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% entorno para procedimientos: tabla de pasos
+% uso:
+% \begin{stepstable}
+% ...
+% \end{stepstable}
+\newenvironment{stepstable}[1]{
+\tablefirsthead{\multicolumn{7}{|c|}{ \cellcolor[rgb]{0,0,.6} \textcolor{white}{\bf {#1}} }\\\hline}
+\tabletail{\hline}
+\tablelasttail{\hline}
+\begin{center}
+    \begin{supertabular}{|
+	>{\scriptsize\centering}m{0.7cm}|
+    >{\scriptsize\centering}m{0.7cm}|
+    >{\scriptsize\centering}m{0.7cm}|
+    >{\scriptsize}m{5.4cm}|
+    >{\scriptsize}m{2.9cm}|
+    >{\scriptsize}m{2.9cm}|
+    >{\scriptsize}m{0.9cm}|}\hline
+}{
+    \end{supertabular}
+\end{center}
+}
+
+\newcommand{\sectionheader}[2]{
+    
+    \cellcolor[rgb]{0,0,0} \textcolor{white}{\bf {#1}} & \multicolumn{6}{|l|}{ \cellcolor[rgb]{0,0,0} \textcolor{white}{\bf {#2}} } \\ \hline
+
+
+    \cellcolor[rgb]{.85,.85,.85} Sect. 			&
+    \cellcolor[rgb]{.85,.85,.85} Nbr. 			& 
+	\cellcolor[rgb]{.85,.85,.85} Type 			& 
+	\cellcolor[rgb]{.85,.85,.85} Activity 		& 
+	\cellcolor[rgb]{.85,.85,.85} Expected result&
+	\cellcolor[rgb]{.85,.85,.85} Result 		&
+	\cellcolor[rgb]{.85,.85,.85} Status 		\\\hline
+}
+
+\newcommand{\procedurestep}[7]{ 
+	{#1} 	& 
+	{#2} 	& 
+	{#3} 	& 
+	\begin{flushleft}#4\end{flushleft} & 
+	\begin{flushleft}#5\end{flushleft} &
+	\parbox{2.9cm}{\begin{flushleft}#6\end{flushleft}} & 
+	{#7} 	\\\hline
+}
+
+\newcommand{\stepdetail}[3]{
+    \multicolumn{2}{|p{1.4cm}|}{} &
+    \parbox{0.7cm}{DET} &
+    \multicolumn{4}{p{12.1cm}|}{\parbox{12.1cm}{\scriptsize{\begin{flushleft}#3\end{flushleft}}} } \\\hline
+}
+
+\newcommand{\sectionseparatortext}[1]{
+    \multicolumn{7}{|c|}{ \cellcolor[rgb]{0,0,.6} \textcolor{white}{\bf {#1}} }\\\hline
+}
+
+\newcommand{\singleheader}[2]{
+\begin{center}
+    \begin{supertabular}{|>{\scriptsize\centering}m{0.5cm}|
+    >{\scriptsize\centering}m{0.5cm}|
+    >{\scriptsize\centering}m{0.5cm}|
+    >{\scriptsize}m{7.5cm}|
+    >{\scriptsize}l|}\hline % se cambio m{2.25cm} por l xq no se compilaba igual en CONAE y Ascentio 
+
+        \cellcolor[rgb]{0,0,0} \textcolor{white}{\bf {#1}} & \multicolumn{4}{|m{12cm}|}{ \cellcolor[rgb]{0,0,0} \textcolor{white}{\bf {#2}} } \\ \hline
+        \cellcolor[rgb]{.85,.85,.85} Sect. 			&
+        \cellcolor[rgb]{.85,.85,.85} Nbr. 			& 
+        \cellcolor[rgb]{.85,.85,.85} Type 			& 
+        \cellcolor[rgb]{.85,.85,.85} Activity 		& 
+        \cellcolor[rgb]{.85,.85,.85} Expected result \\\hline
+    \end{supertabular}
+\end{center}
+}
+
+\newcommand{\singlestep}[5]{
+\begin{center} % tama�o general scriptsize
+    \begin{supertabular}{|>{\scriptsize}c|
+    >{\scriptsize}c|
+    >{\scriptsize}c|
+    >{\scriptsize}l|
+    >{\scriptsize}l|}\hline
+	\parbox[c]{0.5cm}{#1} & 
+	\parbox[c]{0.5cm}{#2} & 
+	\parbox[c]{0.5cm}{#3} & 
+	\parbox[c]{7.5cm}{\begin{flushleft}#4\end{flushleft}} & 
+	\parbox[c]{2.25cm}{\begin{flushleft}#5\end{flushleft}}\\ \hline
+    \end{supertabular}
+\end{center}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Tabla de Requerimientos                                                            %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Agrega un requerimiento a la tabla.                                                 %%
+%% uso: \addRequire{codigo}{Descripcion}                                               %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addRequire}[2]{
+    {#1} & {#2} \\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Entorno para los requerimientos                                                     %%
+%% uso:                                                                                %%
+%% \begin{Require}                                                                     %%
+%% ...                                                                                 %%
+%% \end{Require}                                                                       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{Require}{
+    \vspace{0.3cm}
+    \begin{longtable}{|m{4.0cm}|m{12.0cm}|}
+    \hline
+    \rowcolor{gris}
+    \parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{\lang{Spec ID}{ID}}}} &
+    \parbox[c]{11.5cm}{\centering{\color{headerText}\textbf{\lang{Description}{Descripci\'on}}}} \\
+    \hline
+	
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{2}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	\rowcolor{gris}
+    \parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{\lang{Spec ID}{ID}}}} &
+    \parbox[c]{11.5cm}{\centering{\color{headerText}\textbf{\lang{Description}{Descripci\'on}}}} \\
+    \hline	
+	\endhead
+
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{2}{l}{ \lang{Continued on Next Page}{Continua en la pagina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+	
+}{
+    \caption{Requirements}
+    \label{tab:requerimientos}
+    \end{longtable}
+    \normalsize
+    \vspace{0.3cm}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Tabla de Especificaciones                                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Agrega un especificacion a la tabla.                                                %%
+%% uso: \addEspecificacion{ID}{Descripcion}{Espec ID}                                  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addEspecificacion}[3]{
+    {#1} & {#2} & {#3} \\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Entorno para las especificacion (DDD)                                               %%
+%% uso:                                                                                %%
+%% \begin{Especificacion}                                                              %%
+%% ...                                                                                 %%
+%% \end{Especificacion}                                                                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{Especificacion}{
+    \vspace{0.3cm}
+    \begin{longtable}{|m{3.5cm}|m{9.0cm}|m{3.5cm}|}
+    \hline
+    \rowcolor{gris}
+    \parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{{ID}}}} &
+    \parbox[c]{9.5cm}{\centering{\color{headerText}\textbf{\lang{Description}{Descripci\'on}}}} &
+    \parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{\lang{Spec ID}{Espec ID}}}} \\
+    \hline
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{3}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	\rowcolor{gris}
+    \parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{{ID}}}} &
+    \parbox[c]{9.5cm}{\centering{\color{headerText}\textbf{\lang{Description}{Descripci\'on}}}} &
+    \parbox[c]{4.0cm}{\centering{\color{headerText}\textbf{\lang{Spec ID}{Espec ID}}}} \\
+    \hline	
+	\endhead
+
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{3}{l}{ \lang{Continued on Next Page}{Continua en la pagina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+	
+}{
+    \caption{Specification}
+    \label{tab:especificacion}
+    \end{longtable}
+    \normalsize
+    \vspace{0.3cm}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Tabla de Trasabilidad                                         %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+% Agrega entrada a la tabla de trasabilidad.
+% uso:
+% \addEspecificacion{Version}{Fecha}{Descripcion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addTrace}[3]{
+    {#1} & {#2} & {#3} \\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% entorno para las especificacion
+% uso:
+% \begin{Especificacion}
+% ...
+% \end{Especificacion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{Trace}{
+    \vspace{0.3cm}
+    
+    \begin{longtable}[c]{|p{3.5cm}|p{3.5cm}|p{9.0cm}|}
+    \hline 
+    \rowcolor{gris}
+    \parbox[c]{3.5cm}{\color{headerText}\centering{\textbf{\lang{Version}{Versi\'on}}}} &
+    \parbox[c]{3.5cm}{\color{headerText}\centering{\textbf{\lang{Date}{Fecha}}}} &
+    \parbox[c]{9.0cm}{\color{headerText}\centering{\textbf{\lang{Description}{Descripci\'on}}}} \\
+    \hline 
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{3}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	\rowcolor{gris}
+    \parbox[c]{3.5cm}{\color{headerText}\centering{\textbf{\lang{Version}{Versi\'on}}}} &
+    \parbox[c]{3.5cm}{\color{headerText}\centering{\textbf{\lang{Date}{Fecha}}}} &
+    \parbox[c]{9.0cm}{\color{headerText}\centering{\textbf{\lang{Description}{Descripci\'on}}}} \\
+    \hline	
+	\endhead
+
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{3}{l}{ \lang{Continued on Next Page}{Continua en la pagina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+	
+}{
+    \caption{Traceability Matrix}
+    \label{tab:trace}
+    \end{longtable}
+    \normalsize
+    \vspace{0.3cm}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Genera component description                                                        %%
+%% uso:  \cmpDesc{nombre}{identificador}{tipo}{proposito}{funcion}                     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\cmpDesc}[5]{
+	\subsubsection{{#1}}
+	\begin{description}
+		\item[Id:] {#2}
+		\item[Type:] {#3}
+		\item[Purpose:] {#4}
+		\item[Function:] {#5}
+	\end{description}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Comandos para formatear texto                                                       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Comillas
+\newcommand{\comillas}[1]{
+	{``}{#1}{"}
+}
+%%  Comillas, texto en negrita
+\newcommand{\bcomillas}[1]{
+	\textbf{\comillas{{#1}}}
+}
+%%  Comillas, texto en italica
+\newcommand{\itcomillas}[1]{
+	\textit{\comillas{{#1}}}
+}
+
+%% Texto en negrita, centrado.
+\newcommand{\bfcenter}[1]{
+	{\bf{ \begin{center}{#1}\end{center} }}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Agrega un Archivo a la tabla de archivos a utilizar en el procedimiento                                              %%
+%% uso: \addFile{procedure Name}{Test case ID}{File used}{MD5 value}{Comments if they are applicable}                   %%                                                                                                   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addFile}[5]{
+	\formatD{
+		{#1} & {#2} & {#3} & {#4} & {#5} \\
+	}{
+		{#1} & {#2} & {#5} \\
+	}    
+    \hline
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% entorno Files used (QA Report)                                                                                       %%
+%% uso:                                                                                                                 %%
+%% \begin{FilesUsed}                                                                                                    %%
+%% ...                                                                                                                  %%
+%% \end{FilesUsed}                                                                                                      %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{FilesUsed}{		
+	\formatD{
+	    \vspace{0.1cm}
+		\begin{longtable}{|c|c|c|c|m{3.0cm}|}
+		\hline
+		\rowcolor{gris}
+		
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{PROCEDURE NAME}}}                     	   &
+		\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{TEST CASE ID}{ID DE CASO DE TEST}}}}  &
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{FILES}{ARCHIVOS}}}}        	   &
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{MD5}{MD5}}}}     			   &
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{COMMENTS}{COMENTARIOS}}}} \\
+		\hline
+	
+		\endfirsthead
+
+		%This is the header for the remaining page(s) of the table...
+		\multicolumn{5}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+		\hline 	
+		\rowcolor{gris}
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{PROCEDURE NAME}}} 			  &
+		\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{TEST CASE ID}{ID DE CASO DE TEST}}}} &
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{FILES}{ARCHIVOS}}}} 		  &
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{MD5}{MD5}}}}  			  &
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{COMMENTS}{COMENTARIOS}}}} \\
+		\hline	
+		\endhead
+
+		%This is the footer for all pages except the last page of the table...
+		\multicolumn{5}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+		\endfoot
+
+		%This is the footer for the last page of the table...
+		%%\hline \hline
+		\endlastfoot
+	}{
+		\begin{longtable}{|m{2.0cm}|m{5.0cm}|m{8.0cm}|}
+		\hline
+		\rowcolor{gris}
+		
+		\parbox[c]{2.0cm}{\textbf{ID}}                     &
+		\parbox[c]{5.0cm}{\textbf{\lang{Code}{C\'odigo}}}  &
+		\parbox[c]{8.0cm}{\textbf{\lang{Title}{T\'itulo}}} \\
+		\hline
+	
+		\endfirsthead
+
+		%This is the header for the remaining page(s) of the table...
+		\multicolumn{3}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+		\hline 	
+		\rowcolor{gris}
+		
+		\parbox[c]{2.0cm}{\textbf{ID}}                     &
+		\parbox[c]{5.0cm}{\textbf{\lang{Code}{C\'odigo}}}  &
+		\parbox[c]{8.0cm}{\textbf{\lang{Title}{T\'itulo}}} \\
+		\hline	
+		\endhead
+
+		%This is the footer for all pages except the last page of the table...
+		\multicolumn{3}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+		\endfoot
+
+		%This is the footer for the last page of the table...
+		\endlastfoot
+	}
+}{
+	\caption{\lang{Files Used}{Archivos Utilizados}}
+    \end{longtable}
+
+    \normalsize
+    \vspace{0.1cm}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Agrega un Hallazgo a la tabla de hallazgos detectados durante la ejecución del procedimiento                         %%
+%% uso: \addFinding{procedure Name}{Test case ID}{Step ID}{Step Result}{Comments if they are applicable}                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addFinding}[5]{
+	\formatD{
+		{#1} & {#2} & {#3} & {#4} & {#5} \\
+	}{
+		{#1} & {#2} & {#5} \\
+	}    
+    \hline
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% entorno Findings (QA Report)                                             				                %%
+%% uso:                                                                                			                %%
+%% \begin{Findings}                                                              			                %%
+%% ...                                                                                 			                %%
+%% \end{Findings}                                                                			                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{Findings}{		
+	\formatD{
+	    \vspace{0.1cm}
+		\begin{longtable}{|m{3.0cm}|m{4.0cm}|m{1.0cm}|m{2.0cm}|m{6.0cm}|}
+		\hline
+		\rowcolor{gris}
+		
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{PROCEDURE NAME}}}                     	  &
+		\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{TEST CASE ID}{ID DE CASO DE TEST}}}} &
+		\parbox[c]{1.0cm}{\centering{\color{headerText}\textbf{\lang{STEP ID}{ID DEL PASO}}}}             &
+		\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{STEP RESULT}{RESULTADO DEL PASO}}}}  &
+		\parbox[c]{6.0cm}{\centering{\color{headerText}\textbf{\lang{COMMENTS}{COMENTARIOS}}}} \\
+		\hline
+	
+		\endfirsthead
+
+		%This is the header for the remaining page(s) of the table...
+		\multicolumn{5}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+		\hline 	
+		\rowcolor{gris}
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{PROCEDURE NAME}}} 			  &
+		\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{TEST CASE ID}{ID DE CASO DE TEST}}}} &
+		\parbox[c]{1.0cm}{\centering{\color{headerText}\textbf{\lang{STEP ID}{ID DEL PASO}}}} 		  &
+		\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{STEP RESULT}{RESULTADO DEL PASO}}}}  &
+		\parbox[c]{6.0cm}{\centering{\color{headerText}\textbf{\lang{COMMENTS}{COMENTARIOS}}}} \\
+		\hline	
+		\endhead
+
+		%This is the footer for all pages except the last page of the table...
+		\multicolumn{5}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+		\endfoot
+
+		%This is the footer for the last page of the table...
+		%%\hline \hline
+		\endlastfoot
+	}{
+		\begin{longtable}{|m{2.0cm}|m{5.0cm}|m{8.0cm}|}
+		\hline
+		\rowcolor{gris}
+		
+		\parbox[c]{2.0cm}{\textbf{ID}}                     &
+		\parbox[c]{5.0cm}{\textbf{\lang{Code}{C\'odigo}}}  &
+		\parbox[c]{8.0cm}{\textbf{\lang{Title}{T\'itulo}}} \\
+		\hline
+	
+		\endfirsthead
+
+		%This is the header for the remaining page(s) of the table...
+		\multicolumn{3}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+		\hline 	
+		\rowcolor{gris}
+		
+		\parbox[c]{2.0cm}{\textbf{ID}}                     &
+		\parbox[c]{5.0cm}{\textbf{\lang{Code}{C\'odigo}}}  &
+		\parbox[c]{8.0cm}{\textbf{\lang{Title}{T\'itulo}}} \\
+		\hline	
+		\endhead
+
+		%This is the footer for all pages except the last page of the table...
+		\multicolumn{3}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+		\endfoot
+
+		%This is the footer for the last page of the table...
+		\endlastfoot
+	}
+}{
+	\caption{\lang{Findings}{Hallazgos}}
+    \end{longtable}
+
+    \normalsize
+    \vspace{0.1cm}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Agrega una evidencia a la tabla de evidencias generadas durante la ejecución del procedimiento                       %%
+%% uso: \addEvidence{procedure Name}{Test case ID}{Evidence Name}{MD5}{Comments if they are applicable}                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addEvidence}[5]{
+	\formatD{
+		{#1} & {#2} & {#3} & {#4} & {#5} \\
+	}{
+		{#1} & {#2} & {#5} \\
+	}    
+    \hline
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% entorno Evidence (QA Report)                                                                                         %%
+%% uso:                                                                                                                 %%
+%% \begin{Evidence}                                                                                                     %%
+%%                                                                                                                      %%
+%% \end{Evidence}                                                                                                       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%                                     
+\newenvironment{Evidence}{		
+	\formatD{
+	    \vspace{0.1cm}
+		\begin{longtable}{|c|c|c|c|m{3.0cm}|}
+		\hline
+		\rowcolor{gris}
+		
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{PROCEDURE NAME}}}                     		&
+		\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{TEST CASE ID}{ID DE CASO DE TEST}}}}  	&
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{EVIDENCE NAME}{NOMBRE DE LA EVIDENCIA}}}}  &
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{MD5}{MD5}}}}     				&
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{COMMENTS}{COMENTARIOS}}}} \\
+		\hline
+	
+		\endfirsthead
+
+		%This is the header for the remaining page(s) of the table...
+		\multicolumn{5}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+		\hline 	
+		\rowcolor{gris}
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{PROCEDURE NAME}}} 				&
+		\parbox[c]{2.0cm}{\centering{\color{headerText}\textbf{\lang{TEST CASE ID}{ID DE CASO DE TEST}}}}	&
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{EVIDENCE NAME}{NOMBRE DE LA EVIDENCIA}}}} 	&
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{MD5}{MD5}}}} 				&
+		\parbox[c]{3.0cm}{\centering{\color{headerText}\textbf{\lang{COMMENTS}{COMENTARIOS}}}} \\
+		\hline	
+		\endhead
+
+		%This is the footer for all pages except the last page of the table...
+		\multicolumn{5}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+		\endfoot
+
+		%This is the footer for the last page of the table...
+		%%\hline \hline
+		\endlastfoot
+	}{
+		\begin{longtable}{|m{2.0cm}|m{5.0cm}|m{8.0cm}|}
+		\hline
+		\rowcolor{gris}
+		
+		\parbox[c]{2.0cm}{\textbf{ID}}                     &
+		\parbox[c]{5.0cm}{\textbf{\lang{Code}{C\'odigo}}}  &
+		\parbox[c]{8.0cm}{\textbf{\lang{Title}{T\'itulo}}} \\
+		\hline
+	
+		\endfirsthead
+
+		%This is the header for the remaining page(s) of the table...
+		\multicolumn{3}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+		\hline 	
+		\rowcolor{gris}
+		
+		\parbox[c]{2.0cm}{\textbf{ID}}                     &
+		\parbox[c]{5.0cm}{\textbf{\lang{Code}{C\'odigo}}}  &
+		\parbox[c]{8.0cm}{\textbf{\lang{Title}{T\'itulo}}} \\
+		\hline	
+		\endhead
+
+		%This is the footer for all pages except the last page of the table...
+		\multicolumn{3}{l}{ \lang{Continued on Next Page}{Contin\'ua en la p\'agina siguiente}~\ldots  } \\
+		\endfoot
+
+		%This is the footer for the last page of the table...
+		\endlastfoot
+	}
+}{
+	\caption{\lang{Findings}{Hallazgos}}
+    \end{longtable}
+
+    \normalsize
+    \vspace{0.1cm}
+}
+
+
+%%% INICIO.SCF1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Subsection Binary and Source files, section Software configuration                                                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% agrega una abreviatura en el entorno asociado                                                                        %%
+%% uso:                                                                                                                 %%
+%% \addScf{Type}{Name}{Version}{Description}{Ckecksum}                                                                  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addScf}[5]{
+    {#1} & {#2} & {#3} & {#4} & {#5}\\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% entorno para las especificacion                                                                                       %%
+% uso:                                                                                                                  %%
+% \begin{scf}                                                                                                           %%
+% ...                                                                                                                   %%  
+% \end{scf}                                                                                                             %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{scf}{
+    \vspace{0.3cm}
+    
+    \begin{longtable}[c]{|p{2.0cm}|p{5.0cm}|p{1.5cm}|p{3.5cm}|p{2.0cm}|}
+    \hline 
+    \rowcolor{gris}
+    \parbox[c]{2.0cm}{\color{headerText}\centering{\textbf{\lang{Type}{Tipo}}}} 		&
+    \parbox[c]{5.0cm}{\color{headerText}\centering{\textbf{\lang{Name}{Nombre}}}} 		&
+    \parbox[c]{1.5cm}{\color{headerText}\centering{\textbf{\lang{Version}{Versi\'on}}}} 	&
+    \parbox[c]{3.5cm}{\color{headerText}\centering{\textbf{\lang{Description}{Descripci\'on}}}} &    
+    \parbox[c]{2.0cm}{\color{headerText}\centering{\textbf{\lang{Ckecksum}{Ckecksum}}}} \\
+    \hline 
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{5}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	\rowcolor{gris}
+    \parbox[c]{2.0cm}{\color{headerText}\centering{\textbf{\lang{Type}{Tipo}}}} 		&
+    \parbox[c]{5.0cm}{\color{headerText}\centering{\textbf{\lang{Name}{Nombre}}}} 		&
+    \parbox[c]{1.5cm}{\color{headerText}\centering{\textbf{\lang{Version}{Versi\'on}}}} 	&
+    \parbox[c]{3.5cm}{\color{headerText}\centering{\textbf{\lang{Description}{Descripci\'on}}}} &    
+    \parbox[c]{2.0cm}{\color{headerText}\centering{\textbf{\lang{Ckecksum}{Ckecksum}}}} \\
+    \hline	
+	\endhead
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{5}{l}{ \lang{Continued on Next Page}{Continua en la pagina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+	
+}{
+    \caption{\lang{Installer and Source Files}{Archivos Instalador y Fuente}}
+    \label{tab:trace}
+    \end{longtable}
+    \normalsize
+    \vspace{0.3cm}
+    \normalsize
+    \noindent
+}
+
+%%% FIN.SCF1
+
+
+
+%%% INICIO.SCF2
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Subsection Related Data, section Software configuration                                                              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% agrega una abreviatura en el entorno asociado                                                                        %%
+%% uso:                                                                                                                 %%
+%% \addRd {Type}{Name}{Version}{Description}{Ckecksum}                                                                  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addRd}[5]{
+    {#1} & {#2} & {#3} & {#4} & {#5}\\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% entorno para las especificaciones                                                                                     %%
+% uso:                                                                                                                  %%
+% \begin{rd}                                                                                                            %%
+% ...                                                                                                                   %%
+% \end{rd}                                                                                                              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{rd}{
+       \vspace{0.3cm}
+    
+    \begin{longtable}[c]{|p{2.0cm}|p{4.5cm}|p{1.5cm}|p{4.0cm}|p{2.0cm}|}
+    \hline 
+    \rowcolor{gris}
+    \parbox[c]{2.0cm}{\color{headerText}\centering{\textbf{\lang{Type}{Tipo}}}} 		&
+    \parbox[c]{4.5cm}{\color{headerText}\centering{\textbf{\lang{Name}{Nombre}}}} 		&
+    \parbox[c]{1.5cm}{\color{headerText}\centering{\textbf{\lang{Version}{Versi\'on}}}}	 	&
+    \parbox[c]{4.0cm}{\color{headerText}\centering{\textbf{\lang{Description}{Descripci\'on}}}} &    
+    \parbox[c]{2.0cm}{\color{headerText}\centering{\textbf{\lang{Ckecksum}{Ckecksum}}}} \\
+    \hline 
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{5}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	\rowcolor{gris}
+    \parbox[c]{2.0cm}{\color{headerText}\centering{\textbf{\lang{Type}{Tipo}}}} 		&
+    \parbox[c]{4.5cm}{\color{headerText}\centering{\textbf{\lang{Name}{Nombre}}}} 		&
+    \parbox[c]{1.5cm}{\color{headerText}\centering{\textbf{\lang{Version}{Versi\'on}}}} 	&
+    \parbox[c]{4.0cm}{\color{headerText}\centering{\textbf{\lang{Description}{Descripci\'on}}}} &    
+    \parbox[c]{2.0cm}{\color{headerText}\centering{\textbf{\lang{Ckecksum}{Ckecksum}}}} \\
+    \hline
+	\endhead
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{5}{l}{ \lang{Continued on Next Page}{Continua en la pagina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+	
+}{
+    \caption{\lang{Related data to software running}{Datos relacionados al software que se ejecuta}}
+    \label{tab:trace}
+    \end{longtable}
+    \normalsize
+    \vspace{0.3cm}
+    \normalsize
+    \noindent
+}
+
+%%% FIN.SCF2
+
+
+
+%%% INICIO.SCF3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section Software configuration item Status, subsection Difference with respect to reference version                  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% agrega una abreviatura en el entorno asociado                                                                        %%
+%% uso:                                                                                                                 %%
+%% \addDif {Reference Version}{Current Version}{Differences}                                                            %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addDif}[3]{
+    {#1} & {#2} & {#3}\\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% entorno para las especificacion                                                                                       %%
+% uso:                                                                                                                  %%
+% \begin{dif}                                                                                                           %%
+% ...                                                                                                                   %%
+% \end{dif}                                                                                                             %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{dif}{
+       \vspace{0.3cm}
+    
+    \begin{longtable}[c]{|p{3.5cm}|p{3.5cm}|p{7.0cm}|}
+    \hline 
+    \rowcolor{gris}
+    \parbox[c]{3.5cm}{\color{headerText}\centering{\textbf{\lang{Reference Version ID}{ID Vers. Anterior}}}} 	&
+    \parbox[c]{3.5cm}{\color{headerText}\centering{\textbf{\lang{Current Version ID}{ID Versi\'on Actual}}}}	&
+    \parbox[c]{7.0cm}{\color{headerText}\centering{\textbf{\lang{Differences}{Detalle de Diferencias}}}} \\
+    \hline 
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{3}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	\rowcolor{gris}
+    \parbox[c]{3.5cm}{\color{headerText}\centering{\textbf{\lang{Reference Version ID}{ID Vers. Anterior}}}} 	&
+    \parbox[c]{3.5cm}{\color{headerText}\centering{\textbf{\lang{Current Version ID}{ID Versi\'on Actual}}}} 	&
+    \parbox[c]{7.0cm}{\color{headerText}\centering{\textbf{\lang{Differences}{Detalle de Diferencias}}}} \\
+    \hline
+	\endhead
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{3}{l}{ \lang{Continued on Next Page}{Continua en la pagina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+	
+}{
+    \caption{\lang{Differences between versions}{Diferencias entre versiones}}
+    \label{tab:trace}
+    \end{longtable}
+    \normalsize
+    \vspace{0.3cm}
+    \normalsize
+    \noindent
+}
+
+%%% FIN.SCF3
+
+%%% INICIO.SCF4
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Section Software configuration item Status, subsection Known problems or limitations                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% agrega una abreviatura en el entorno asociado                                                                        %%
+%% uso:                                                                                                                 %%
+%% \addIssues{ID}{Description}                                                                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addIssue}[2]{
+    {#1} & {#2} \\
+    \hline
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% entorno para las especificacion                                                                                       %%
+% uso:                                                                                                                  %%
+% \begin{issue}                                                                                                         %%
+% ...                                                                                                                   %%
+% \end{issue}                                                                                                           %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{issue}{
+       \vspace{0.3cm}
+    
+    \begin{longtable}[c]{|p{4.5cm}|p{10.0cm}|}
+    \hline 
+    \rowcolor{gris}
+    \parbox[c]{4.5cm}{\color{headerText}\centering{\textbf{\lang{ID}{C\'odigo}}}} &
+    \parbox[c]{10.0cm}{\color{headerText}\centering{\textbf{\lang{Description}{Descripci\'on}}}} \\
+    \hline 
+	\endfirsthead
+
+	%This is the header for the remaining page(s) of the table...
+	\multicolumn{2}{c}{{\tablename} \thetable{} -- \lang{Continued}{Continuaci\'on} } \\[0.5ex]
+	\hline 	
+	\rowcolor{gris}
+     \parbox[c]{4.5cm}{\color{headerText}\centering{\textbf{\lang{ID}{C\'odigo}}}} &
+    \parbox[c]{10.0cm}{\color{headerText}\centering{\textbf{\lang{Description}{Descripcii\'on}}}} \\
+    \hline
+	\endhead
+	%This is the footer for all pages except the last page of the table...
+	\multicolumn{2}{l}{ \lang{Continued on Next Page}{Continua en la pagina siguiente}~\ldots  } \\
+	\endfoot
+
+	%This is the footer for the last page of the table...
+	%%\hline \hline
+	\endlastfoot
+	
+}{
+    \caption{\lang{Know issues, problems or limitations}{Limitaciones o problemas conocidos}}
+    \label{tab:trace}
+    \end{longtable}
+    \normalsize
+    \vspace{0.3cm}
+    \normalsize
+    \noindent
+}
+
+%%% FIN.SCF4

@@ -1,0 +1,221 @@
+%\documentclass[11pt,a4paper,english,draft]{article} 
+\documentclass[11pt,a4paper,spanish]{article} 
+\setlength\headheight{26pt} 
+
+\usepackage[en]{ascentiodoc-nodate}
+\usepackage[utf8]{inputenc}
+%\usepackage{newunicodechar}
+%\newunicodechar{ﬁ}{fi} 
+%\usepackage[usenames,dvipsnames]{pstricks}
+%\usepackage{graphicx}
+% cspell:disable-next-line
+\usepackage[space]{grffile} 		%Permite espacio en nombre de archivos de pdf. Incluir antes que pdfpages
+\usepackage{pdfpages}
+%\usepackage{todonotes}
+%\usepackage{subcaption}  
+%\usepackage{rotating}
+%\usepackage{seqsplit} 
+%\usepackage{gensymb}
+%\usepackage{tipa}
+%\usepackage{textcomp}
+\usepackage{listings}       
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage{lscape}
+\usepackage{subcaption}
+% cSpell:disable
+\usepackage[none]{hyphenat}			% Para no cortar palabras. 
+%\usepackage{parskip}				% Establece automaticamente el espacio entre parrafos
+%\setlength{\parindent}{0.5in}		% Define Sangria para todos los casos	
+%\setlength{\parskip}{8pt}			% Define espacio entre parrafos
+%\usepackage{pifont}
+\usepackage{multirow} 				% Tablas
+\usepackage{multicol}				% Tablas
+\usepackage{array}					% Tablas, para poder ajustar ancho y justificar
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\usepackage{footnote}
+\usepackage{fnpos}
+\usepackage{xspace}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}
+\usepackage{textcomp}
+\usepackage{pbox}
+\usepackage{verbatim}
+\usepackage{tagging}
+\usepackage{changepage,threeparttable}
+ \usepackage{rotating}
+\sloppy
+
+
+% Definiciones propias
+\newcommand{\cmark}{\textcolor{green}{\large\ding{51}}}%
+\newcommand{\xmark}{\textcolor{red}{\large\ding{55}}}%
+\newcommand{\textred}[1]{\textcolor{red}{#1}}
+\newcommand{\tr}[1]{\textcolor{red}{#1}}
+\newcommand{\tb}[1]{\textcolor{blue}{#1}}
+\usepackage{array}
+\newsavebox\dummy
+\newcolumntype{H}{>{\begin{lrbox}{\dummy}}c<{\end{lrbox}}@{}}
+
+% Definiciones Doc ASC
+\newcommand{\fechaLarga}{September 29, 2023}
+\newcommand{\fechaCorta}{29/09/2023}
+%SB1-B-PRO-T-D01-001
+\newcommand{\DocCode}    {SB1-B-PRO-T-D01-011}
+%SABIA-Mar Communications SS EM Functional Test Procedure
+\newcommand{\DocName}    {\DocCode\string_v1.0\string_X-BandTransmitterFMTestProcedure}
+\newcommand{\datasetName}{\DocName\string_dataset}
+\newcommand{\datasetNameone}{\DocCode\string_v1.0\string_X-BandTransmitterFM}
+\newcommand{\datasetNametwo}{TestProcedure\string_dataset}
+
+
+
+\newcommand{\mision}{SABIA-Mar\xspace{}}
+\newcommand{\gselong}{Ground Segment Ground Support Equipment\xspace}
+\newcommand{\gse}{GS-GSE}
+
+\newcommand{\NuevoHarnessUno}{H-EGSE-DUT-J11\_001}
+\newcommand{\NuevoHarnessDos}{H-EGSE-DUT-J12\_001}
+\newcommand{\NuevoHarnessTres}{H-EGSE-DUT-J13\_001}
+\newcommand{\NuevoHarnessCuatro}{H-EGSE-DUT-J14\_001}
+
+\newcommand{\preReqPro}{Execution of procedure \textbf{SB1FS-COM-P-013-01 Setup and Configuration} or \textbf{SB1FS-COM-F-012-01 Setup and Configuration}.}
+
+\newcommand{\pasarSiDespues}{\textbf{Note: If the following test is executed skip this step.}\\ \vspace{3mm}}
+\newcommand{\pasarSiAntes}{\textbf{Note: If the previous test was executed skip this step.}\\ \vspace{3mm} }
+\newcommand{\guardarLogs}{\textbf{Note: In case the CEGSE SW has not been started in this test, the CEGSE logs must be 
+saved in the test folder in which the CEGSE SW was started.}\\ \vspace{3mm} }
+\newcommand{\ValueVRipple}{542\ mVpp}
+\newcommand{\ValueIRippleADHBoxToFilter}{750\ mApp}
+\newcommand{\ValueIRippleDUTToFilter}{750\ mApp}
+\newcommand{\noteDuracionTXDUT}[1]{\textbf{Note: The generated file is transmitted in approximately #1 minutes.}\\ \vspace{3mm}}
+\newcommand{\ValueCurrentDUTTX}{2.46\ }
+\newcommand{\notaCorrienteEstimada}{\textbf{Note:} The indicated current value corresponds to an estimate obtained 
+from the EWC30 FM1 and FM2 reports (\refRD{rptSyrlinkFMOne} and \refRD{rptSyrlinkFMTwo}).}
+
+%%%%% Definiciones Procedimiento %%%%%
+%\input{secciones/procedure_snippets.tex}
+\input{secciones/procedure_snippets.tex}
+
+% Contadores PROC
+\newcounter{Sec}
+\newcounter{Step}
+
+\titulo{X-Band Transmitter FM Test Procedure}
+\sumario{This document describes the  EWC30-FM's aliveness, functional and performace test procedures.}
+\codigoDoc{\DocCode}
+\estadoDoc{Edition}
+\versionDoc{1.0}
+\autorDoc{Juan Pablo Vargas}
+\fechaDoc{\fechaLarga}
+\tituloEn{Plan}
+ 
+\encabezado
+
+% cSpell:enable 
+
+\begin{document} 
+
+%\genCaratulaPlan
+\genCaratula{}	
+
+% cspell:disable-next-line
+%% Paginas de firmas.
+\input{secciones/signature}
+\vspace{-0,5cm}
+
+% cspell:disable-next-line
+% Registro de cambios de los documentos
+\input{secciones/cambiosDocumentos}
+\vspace{-0,5cm}
+% cspell:disable-next-line
+%% Lista de Distribucion.
+\input{secciones/listaDistribucion} 
+
+\newpage
+\tablaDeContedidos
+\listaDeTablas
+\listaDeFiguras
+
+\newpage
+\input{secciones/document-information}
+
+\newpage
+\input{secciones/introduccion}
+
+%% All
+
+% Dataset deployment
+\newwrite\myfile
+
+\newpage
+\input{secciones/SB1FS-COM-D-011}
+
+%\immediate\openout\myfile=CheckLists/TP011-01.csv
+\input{secciones/SB1FS-COM-D-011-01}
+%\immediate\closeout\myfile
+\newpage
+%\immediate\openout\myfile=CheckLists/TP011-02.csv
+\input{secciones/SB1FS-COM-D-011-02}
+%\immediate\closeout\myfile
+
+
+
+% X-Band functional
+\newpage
+\input{secciones/SB1FS-COM-F-012}
+\immediate\openout\myfile=CheckLists/SB1FS-COM-F-012-01.csv
+\input{secciones/SB1FS-COM-F-012-01}
+\immediate\closeout\myfile
+
+\immediate\openout\myfile=CheckLists/SB1FS-COM-F-012-02.csv 
+\input{secciones/SB1FS-COM-F-012-02}
+\immediate\closeout\myfile
+
+ \immediate\openout\myfile=CheckLists/SB1FS-COM-F-012-03.csv
+ \input{secciones/SB1FS-COM-F-012-03}
+ \immediate\closeout\myfile
+
+ \newpage
+
+ \immediate\openout\myfile=CheckLists/SB1FS-COM-P-013.csv
+ \input{secciones/SB1FS-COM-P-013}
+\newpage
+ \input{secciones/SB1FS-COM-P-013-01-EWC30SetupConfig}
+ \newpage
+\input{secciones/SB1FS-COM-P-013-02-EWC30TXRFPXA}
+\newpage
+\input{secciones/SB1FS-COM-P-013-03-EWC30TXCCDF}
+\newpage
+\input{secciones/SB1FS-COM-P-013-04-EWC30TXFreqStability}
+\newpage
+\input{secciones/SB1FS-COM-P-013-05-EWC30TXCarrierPhaseNoise}
+
+\newpage
+\input{secciones/SB1FS-COM-P-013-06-EWC30TXFilterTuning}
+
+\newpage
+\input{secciones/SB1FS-COM-P-013-07-EWC30TXOneChannel}
+
+\newpage
+\input{secciones/SB1FS-COM-P-013-08-EWC30TXDNSSpurious}
+\newpage
+\input{secciones/SB1FS-COM-P-013-09-EWC30Disconnection}
+\immediate\closeout\myfile
+ \appendix
+ \newpage
+ \input{secciones/rf-link-budget}
+
+ \newpage
+ \input{secciones/item-list}
+
+ \newpage
+ \input{secciones/item-characteristics}
+
+
+\end{document}
+

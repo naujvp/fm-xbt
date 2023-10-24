@@ -1,0 +1,20 @@
+0,0,ExecutorRecord
+1,0,
+1,0,//////////////CEGSEpower off (PXI and Ad-Hoc Box)/////////////////
+1,2,TurnOnOffPSU, ACTION=off
+1,3,DisablePowerSupplyOutput
+1,4,TurnOffMainSwitch
+1,5,PowerOffPxi
+2,0,
+2,0,//////////////Disconnection of BB interfaces/////////////////
+2,5,DisconnectDutPortToAdHocBoxPort
+2,6,DisconnectDutPortToAdHocBoxPort
+3,0,
+3,0,//////////////Disconnection of RF Interfaces/////////////////
+3,1,DisconnectWTenCableBetweenDsnFilterAndXBandDut, CABLE=W10
+3,2,DisconnectWTwoCableToDsnFilter,CABLE=W2
+3,3,DisconnectRfLoopCableBetweenXBandPortAndCouplerPort
+3,4,DisconnectRfCableFromInOutPortOfCegse
+3,5,DisconnectRfCableFromInterfaceXBand
+4,0,
+4,0,//////////////Final Steps/////////////////

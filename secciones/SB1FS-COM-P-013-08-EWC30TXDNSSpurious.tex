@@ -1,0 +1,140 @@
+\renewcommand{\procid}{SB1FS-COM-P-013}
+\renewcommand{\subprocid}{\procid-08}
+\renewcommand{\procname}{Spurious in DSN Band}
+
+\newpage
+\subsection{\subprocid{} \procname}\label{sec:dataSpuriousDNS}
+
+\begin{table}[H]
+	\centering
+	\footnotesize
+	\begin{tabular}{|L{3.0cm}|L{13.0cm}|}\hline
+	 \textbf{Task ID} & \subprocid{} \\\hline
+	 \textbf{Task name} & \procname \\\hline
+	 \textbf{Task description} & In this test the EWC30 TX is set to modulation mode. Spurious in DSN Band is measured with the PXA.\\ \hline
+	 \textbf{Task purpose} & Spurious in DSN Band over RF signal.\\\hline
+	 \textbf{Success criteria} & Spurious in DSN Band performed.\\\hline
+
+	 \textbf{Test Setup} & 
+	 \begin{minipage}[t]{\linewidth}
+		\begin{itemize}[nosep,after=\strut]
+			\item \comEgse{}{} to DUT base-band electrical connections according to figure \ref{fig:ewc30_bb}
+			\item General setup according to figure \ref{fig:data-setup2} and the following optional connections:
+			\begin{itemize} 
+				\item RF input of PXA connected to \textbf{RF IN/OUT} of \comEgse{}. 
+			\end{itemize}
+		\end{itemize}
+		\end{minipage}
+	 \\\hline
+	 \textbf{Duration} & 90 minutes.\\\hline
+	 \textbf{Data sets required} & 
+	 \begin{minipage}[t]{\linewidth}
+		\begin{itemize}[nosep,after=\strut]
+			\item \comEgse{}{} PXI configuration file for EWC30 (\texttt{INIT\_FILE\_EWC30.ini}).
+			\item Oscilloscope configuration files in \texttt{osc-config} folder
+			\item Data file for modulation Data-4429200\_600s\_VCh01\_wPN.bin.
+			\item PXA configuration files in \texttt{\pxaTestFolderName} folder:
+				  \begin{itemize}[nosep,after=\strut]
+					\item EWC30TX-FM1-Spurious-MOD-v1.0.state: Data Downlink spectrum.%dataset file
+			        \item EWC30TX-FM2-Spurious-MOD-v1.0.state: Data Downlink spectrum.%dataset file
+					\item EWC30TX-FM-Spurious-DSN-v1.0.state: Data DownlinK Spurious in DSN Band.%dataset file
+					 \item EWC30TX-FM-Spurious-DSN-10KHz-v1.0.state: Data DownlinK Spurious in DSN Band.%dataset file
+				  \end{itemize}
+		\end{itemize}
+	\end{minipage}\\\hline
+	\textbf{Prerequisites} & 
+	\begin{minipage}[t]{\linewidth}
+		\begin{itemize}[nosep,after=\strut]
+			\item \preReqPro
+			\item Hardware: The necessary items are shown in the table \ref{tab:req-items}.
+		\end{itemize} 
+	\end{minipage}\\\hline
+\end{tabular}
+	\caption{Procedure \subprocid{} \ description. } \label{tb:dataccdf}
+	\end{table}
+
+\newpage\setcounter{Sec}{0}\setcounter{Step}{0}
+\report{}{}{}
+\begin{stepstable}{\subprocid{} \procname{}}
+	\ExecutorRecord{}
+
+	\SectionHeaderWithReset{Environmental temperature and humidity}
+		\RegisterTemp
+		\RegisterHumidity
+
+	\SectionHeaderWithReset{PXA Connection and configuration}
+		\ConnectRfCableToInOutPortOfCegse{XRF4.02}
+		\ConnectCableToDcBlockOnPXA{XRF4.02}{}
+		\ConfigurePxaAsSpectrumAnalyzer
+		\LoadPxaConfigFile{EWC30TX-FM<X>-Spurious-MOD-v1.0.state}
+	\SectionHeaderWithReset{EGSE Settings}
+		%\SetCegseVariableAttenuatorTo{1 dB}{5 dB}
+		\SetCegseVariableAttenuatorTo{10 dB}{0 dB}
+	\SectionHeaderWithReset{CEGSE SW Initialization}
+		\StartCegseSW{EWC30}{Nominal}{INIT\string_FILE\string_EWC30.ini}{}
+
+	\SectionHeaderWithReset{DUT power on}
+		\VerifyDutAlarms{EWC30}{}
+		\TakeNoteDutTemperaturesXBand{}
+    	\TurnOnOffVbusXBand{on}{\pasarSiAntes}
+		\VerifyRxSecondaryVoltageRFXBand
+	    \VerifyRxSecondaryVoltageNUMXBand 
+		\VerifyTemperature{O\string_TX\string_TEMP1}{}
+		\LoadOscilloscopeConfigFile{EWC30-TX-RUN.set}{}
+		\TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28\ V}{< 282 mA}{}
+		\VerifyTxStatusXBand{Standby}
+
+	\SectionHeaderWithReset{Switch DUT to Modulation Mode}
+		\SendStoredFileWithDurationXBand{Data-4429200\_600s\_VCh01\_wPN.bin}{I\string_STBY\string_2\string_OPE\string_M}{10 minutes}
+
+		\VerifyTxStatusXBand{Modulation}
+		\VerifyClkLockedStatus{ON}
+	    \VerifyRfOutputPowerTmXBand{$\approx$ 3.2}
+		\TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28\ V}{$\approx$ \ValueCurrentDUTTX A}{\notaCorrienteEstimada}
+
+
+	%\end{stepstable}
+	%\begin{stepstable}{\subprocid{} \procname{}}
+		\VerifyDataModInPxa
+		\TakeScreenShotOnPxaWithSingle{DATA-MOD.png}
+		\SectionHeaderWithReset{Spurious in DSN Band}
+		\LoadPxaConfigFileSDSN{EWC30TX-FM-Spurious-DSN-v1.0.state}
+		\WaitUntilPxaSweepEnds
+		\TakeScreenShotOnPxa
+		\SaveTraceOnPxa
+	    \MeasurePackNDSN
+		\TakeScreenShotOnPxa
+		\LoadPxaConfigFileSDSN{EWC30TX-FM-Spurious-DSN-10KHz-v1.0.state}
+		%\WaitUntilPxaSweepEndsTen
+		\WaitUntilPxaSweepEnds
+
+		\TakeScreenShotOnPxa
+		\SaveTraceOnPxa
+		\MeasurePackNDSN
+		\TakeScreenShotOnPxa
+		\ChangeTxStatusToXBand{Standby}{M}{}
+	
+		\WaitUntilTxFinishedOnCegse
+	\SectionHeaderWithReset{DUT Turn off}
+		 \TurnOnOffVbusXBand{off}{}
+
+	\SectionHeaderWithReset{CEGSE SW shutdown}
+		\StopCegseSW{}
+
+	\SectionHeaderWithReset{Collect Evidences}
+		\CopyPxaScreenShotsToCegseForEvidences %{pxa-screenshot and pxa-trace}
+		\CopyCegseLogsForEvicences{ffff}{}
+
+	\SectionHeaderWithReset{Final Steps}
+		\RegisterTemp
+		\RegisterHumidity
+		\DisconnectRfCableFromInOutPortOfCegse{XRF4.02}{\notskip{}}
+		\DisconnectCableFromDcBlock{XRF4.02}{}
+
+
+    \end{stepstable}
+\begin{longtable}{|p{17.0cm}|}
+	\endfirsthead
+	\endfoot
+	\caption{\subprocid{} procedure.}
+\end{longtable}

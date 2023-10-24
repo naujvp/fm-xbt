@@ -1,0 +1,63 @@
+\subsection{\lang{Applicable Documents}{Documentos aplicables}}
+
+% cspell:disable-next-line 
+%Incluir los documentos aplicables (p.e., documentos que deberían leerse para entender éste, documentos que afectan al presente documento, etc.) indicando el siguiente texto como presentación de la tabla:
+
+\lang{The following items are considered as applicable for the present document; this relationship should imply certain precedence so the modification of one of them may affect this one.}{Los siguientes documentos son considerados como aplicables para el presente documento.}
+
+% cspell:disable-next-line 
+%En el caso de que no existan documentos aplicables, simplemente escribir el siguiente texto:
+
+%\lang{No applicable documents.}{No hay documentos aplicables.}
+
+
+\newcounter{cntrAD}
+\newcommand{\idAD}{\refstepcounter{cntrAD}AD.\ifnum\value{cntrAD}<10 0\fi\arabic{cntrAD}}
+\newcommand{\refAD}[1]{\def\a{\getrefnumber{ad:#1}}AD.\ifnum\a <10 0\fi\ref{ad:#1}}
+
+\begin{aplicablesDocs}
+    \addDocumento{\idAD\label{ad:xbandfilter}}{SB1-G-PRO-T-D01-002}{1.0}{}{X-Band DSN FM Filter TestProcedure}
+    %\addDocumento{\idAD\label{ad:ewc29}}{EWC29-100-013}{1.1}{}{EWC-29 User Manual}
+    \addDocumento{\idAD\label{ad:ewc30}}{EWC30-100-013}{2.6}{}{EWC-30 User Manual}
+    %\addDocumento{\idAD\label{ad:ewc30-icd}}{900574-100-004}{1.0}{}{EWC-30 Interface Control Document}  
+    \addDocumento{\idAD\label{ad:ewc30-icd}}{EWC30-100-004\_EICD}{1.5}{}{EWC-30 Interface Control Document} 
+         % \addDocumento{\idAD\label{ad:comssrptF}}{SB1-B-RPT-T-D01-001}{1.0}{}{SABIA-Mar COM-SS EM Functional Test Report}
+    %\addDocumento{\idAD\label{ad:comssrptP}}{SB1-B-RPT-T-D01-002}{1.0}{}{SABIA-Mar COM-SS EM Performance Test Report}
+    %\addDocumento{\idAD\label{ad:ewc29-eicd}}{EWC29-100-004\_EICD}{1.03}{}{EICD of the S Band transceiver}
+    %\addDocumento{\idAD\label{ad:ewc29-icd}}{RD2-EWC29\_ICD}{0.2}{}{EWC-29 Interface Control Document}
+    
+        % \addDocumento{\idAD\label{ad:test-spec}}{SB-060407-SP-00100}{A}{}{SABIA-Mar      Communication      Equipment’s
+   %       Incoming Functional Test Specifications}
+    \addDocumento{\idAD\label{ad:test-spec-XB}}{SB-06040705020000-TS-00001}{A}{}{X-BAND TRANSMITTER TEST SPECIFICATION}
+    
+	\addDocumento{\idAD\label{ad:rf-con}} {UAM-0400-PR-00100}{A}{}{LIMPIEZA Y CUIDADOS DE CONECTORES DE RF}
+    \addDocumento{\idAD\label{ad:cegse}}{SBM-GSE-HB-00004}{D}{}{COM EGSE User Manual}
+    
+    \addDocumento{\idAD\label{ad:fm-ver-rpt}} {SB1-D-RPT-T-D01-007}{2.0}{}{GS-GSE-FMv2.0 Verification Report}
+    \addDocumento{\idAD\label{ad:fm-ver-delta-rpt}} {SB1-D-RPT-T-D01-009}{1.0}{}{GS-GSE-FM v2.0 Delta FAT Report}
+    \addDocumento{\idAD\label{ad:fm-ver-delta-pro}} {SB1-D-PRO-T-D01-005}{1.0}{}{GS-GSE-FM v2.0 Delta FAT Procedure}
+
+    
+
+	%\addDocumento{\idAD\label{ad:gse-cfg-n}} {SB1-D-RPT-T-D01-006}{1.6}{}{Control de Configuración de GS-GSE-FM(N) v2.0}
+    \addDocumento{\idAD\label{ad:gse-cfg-r}} {SB1-D-RPT-T-D01-008}{1.5}{}{Control de Configuración de GS-GSE-FM(R) v2.0}
+	    
+    \addDocumento{\idAD\label{ad:reportFMRMod}}{SB1-D-RPT-O-D01-001}{1.0}{}{Reporte Modificaciones GS-GSE-FM(R) Para Ensayos COMM-SS-FM}
+
+    %\addDocumento{\idAD\label{ad:gse-fm-tp}} {SB1-D-RPT-T-D01-007}{2.0}{}{GS-GSE-FM v2.0 Verification Report}
+    %\addDocumento{\idAD\label{ad:cegseSad}}{SBM-GSE-DS-00002}{C}{}{COM EGSE Software Architecture Document}
+    %\addDocumento{\idAD\label{ad:cegseHddd}}{SBM-GSE-DS-00001}{C}{}{AD-HOC Hardware documento de diseño en detalle}
+
+    % \addDocumento{\idAD\label{ad:ewc29-icd}}{RD2-EWC29\_ICD}{0.2}{}{EWC-29 Interface Control Document}
+
+    % \addDocumento{\idAD\label{ad:ewc30-icd}}{900574-100-004}{1.0}{}{EWC-30 Interface Control Document}
+    %\addDocumento{\idAD\label{ad:ewc29-annex}}{900830-S-100-022}{1.0}{}{USER MANUAL Annex EWC29 - CARNELIAN- S -Band Transceiver}
+
+    %\addDocumento{\idAD\label{ad:ewc29-atr}}{900830-S-120-008}{1.0}{}{ATR Acceptance Test Report CARNELIAN-S EM}
+    %\addDocumento{\idAD\label{ad:ewc30-atr}}{900830-S-120-008}{1.1}{}{ATR Acceptance Test Report CARNELIAN-X EM}
+    
+
+
+
+\end{aplicablesDocs}
+

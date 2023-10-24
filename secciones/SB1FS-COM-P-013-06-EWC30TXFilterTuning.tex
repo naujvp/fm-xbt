@@ -1,0 +1,255 @@
+\renewcommand{\procid}		{SB1FS-COM-P-013}
+\renewcommand{\subprocid}	{SB1FS-COM-P-013-06}
+\renewcommand{\procname}	{\TestPerfFilterVector}
+
+\newpage
+\subsection{SB1FS-COM-P-013-06 \TestPerfFilterVector}
+\label{sec:data-filter}
+
+\renewcommand{\foldername}{cortex-screenshot-013-06}
+
+\begin{table}[H] 
+	\centering
+	\footnotesize
+	\begin{tabular}{|L{3.0cm}|L{13.0cm}|}\hline
+		\textbf{Task ID}            & \subprocid{}\\\hline
+		\textbf{Task name}          & \procname{}\\\hline
+	 	\textbf{Task description} & 
+In this test the EWC30 TX is set in Modulation mode. 
+The modulated signal is received through the N1 [X-Band] 
+interface of the \gse-FM (R) in the case of the \textbf{EWC30-FM1} 
+and through N2 in the case of the \textbf{EWC30-FM2}. Two filter configurations 
+in Data Demodulator (Cortex HDR) are evaluated 
+(see table \ref{tab:data-advanced}).
+A vector analysis of the received signals is carried 
+out using the VSA and the Vector Script.
+\\\hline
+		\textbf{Task purpose} & The purpose of this test is to evaluate the two filters 
+		configurations (see table \ref{tab:data-advanced}) in the
+		Cortex HDR.% configuration returns the most accurate values: the minimum EVM value, minimum
+		%Unbalanced ratio (or Amplitude Error) and minimum Phase error. 
+		 On the other 
+		hand, it is to perform a vector analysis of the modulated signals. \\
+		\hline
+		\textbf{Success criteria} & 
+		
+		\begin{itemize}[nosep,after=\strut]
+			\item The  \textbf{A10} and \textbf{B2} filter configurations are 
+		evaluated. %and one is identified 
+		%as the one with the best performance. 
+		\item Vector analysis is performed.
+		\item For \textbf{A10}  filter configuration
+		\begin{itemize}
+			\item EVM < 6\%
+			\item |Amplitude Error| < 0.5 dB rms  
+			\item |Phase Error| < 5° rms for \textbf{EWC30-FM1}. 
+			\item |Phase Error| $\leq$ 5.3° rms for \textbf{EWC30-FM2}. 
+		\end{itemize}
+
+		\end{itemize}
+		
+		\\\hline
+		\textbf{Test Setup} &
+		\begin{minipage}[t]{\linewidth}
+		\begin{itemize}[nosep,after=\strut]
+		\item \comEgse{}{} to DUT base-band electrical connections according to figure \ref{fig:ewc30_bb}
+		\item General setup according to figure \ref{fig:data-setup1} and the following optional connections:
+		\begin{itemize}
+			%\item Frequency reference of PXA connected to 10 MHz reference of \fmn{}.
+			\item RF input of PXA connected to \textbf{XB TP} of \fmr{}.
+		\end{itemize}
+	\end{itemize}
+	\end{minipage}
+	\\\hline
+	\textbf{Duration} & 90 minutes\\\hline
+	\textbf{Data sets required} &
+	\begin{minipage}[t]{\linewidth}
+			\begin{itemize}[nosep,after=\strut]
+				\item \comEgse{} PXI nominal configuration file for EWC30 (\texttt{INIT\_FILE\_EWC30.ini}).
+				\item Oscilloscope configuration files in \texttt{osc-config} folder
+				\item Data file for modulation:
+				\begin{itemize}[nosep,after=\strut]
+					%\item Data-885840\_120s\_VCh01\_wPN.bin
+					\item Data-4429200\_600s\_VCh01\_wPN.bin.
+				\end{itemize}
+				\item PXA configuration files in \texttt{\pxaTestFolderName} folder:
+					\begin{itemize}[nosep,after=\strut]
+						\item EWC30TX-FM1-VSA-v1.0.setx.
+						\item EWC30TX-FM2-VSA-v1.0.setx.
+						\item SB1FS-COM.csd.
+					\end{itemize}
+					\item Vector-0.9.4 script installed in \vmTesting.
+		
+				\end{itemize}
+			\end{minipage}\\\hline
+			\textbf{Prerequisites} & 
+			\begin{minipage}[t]{\linewidth}
+				\begin{itemize}[nosep,after=\strut]
+					\item \preReqPro
+					\item Hardware: The necessary items are shown in the table \ref{tab:req-items}.
+				\end{itemize} 
+			\end{minipage}\\\hline
+		\end{tabular}
+	\caption{Procedure \subprocid{} description. } \label{tb:ewctxfilter}
+\end{table}
+
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|}
+\hline
+ Configuration\# & Filter Type and Advanced Cfg \\\hline
+A10 (\refRD{comssrptP}) & SRRC filter, Roll-off = 0.5, Asym, Comp, LPF, HBF, LMS, DEAF \\\hline
+B2 (\refRD{comssrptP}) & SRRC filter, Roll-off = 0.5, Asym, Comp, LPF, HBF, CMA \\\hline
+
+\end{tabular}
+	\caption{Filter configurations for Data demodulation.}
+	\label{tab:data-advanced}
+\end{table}
+
+
+
+\newpage
+\setcounter{Sec}{0}\setcounter{Step}{0}
+\report{}{}{}
+\begin{stepstable}{\subprocid{} \procname{}}
+	\ExecutorRecord{}
+
+	\SectionHeaderWithReset{Environmental temperature and humidity}
+		\RegisterTemp
+		\RegisterHumidity
+
+	\SectionHeaderWithReset{PXA Connection and configuration}
+		\ConnectRfCableToDwlTpPortOfCegse{XRF3.60}{\pasarSiAntes}
+		\ConnectCableToDcBlockOnPXA{XRF3.60}{\pasarSiAntes}
+		\ConfigurePxaInVSAMode
+		%\ConnectPxaExternalFreqReferenceTo{the Power Splitter Data of \fmr{}}{REF1.01}{VSA}
+		\LoadVSAConfigFile{EWC30TX-FM<X>-VSA-v1.0.setx}
+		\LoadStateDefinition{SB1FS-COM.csd}
+
+	\SectionHeaderWithReset{GS-GSE Preparation}
+		\EnableControlInXbmaOf{\fmr{}}
+		\EnableNOneInterfaceXBand{Note: Skip this step if \textbf{EWC30-FM2} is under test.}
+	    \EnableNTwoInterfaceXBand{Note: Skip this step if \textbf{EWC30-FM1} is under test.}
+		\SetXbmaAttenuationTo{0}
+
+
+		\VerifyXBandDownConverterOne
+	    \VerifyXBandDownConverterTwo
+		\CreateScreenShotsFolderOnCortexHdrGse{\foldername{}}
+		\ConfigureCortexHdrGse %{SB1GS-GSE-FM-N\_RF\_v<x.y>.mcs}{\versionNote{}}{CFG}
+	 	\OpenMcsWindowsInCortexHdrGseForFilterTuninglTest
+	 	\VerifyMatchedFilterParametersInCortexHdrGse
+
+
+	 \SectionHeaderWithReset{EGSE Settings}
+	 	%\SetCegseVariableAttenuatorTo{1 dB}{0 dB}
+	 	\SetCegseVariableAttenuatorTo{10 dB}{0 dB}
+		 \SectionHeaderWithReset{CEGSE SW Initialization}
+		 \StartCegseSW{EWC30}{Nominal}{INIT\string_FILE\string_EWC30.ini}{\pasarSiAntes}
+		 \SectionHeaderWithReset{DUT power on}
+		 \VerifyDutAlarms{EWC30}{}
+		 \TakeNoteDutTemperaturesXBand{}
+		 \TurnOnOffVbusXBand{on}{\pasarSiAntes}
+		 \VerifyRxSecondaryVoltageRFXBand
+		 \VerifyRxSecondaryVoltageNUMXBand 
+		 \VerifyTemperature{O\string_TX\string_TEMP1}{}
+		 \LoadOscilloscopeConfigFile{EWC30-TX-RUN.set}{\pasarSiAntes}
+		 \TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28\ V}{< 282 mA}{}
+		 \VerifyTxStatusXBand{Standby}
+
+	 \SectionHeaderWithReset{Data transmission}
+	 	%\VerifyTemperature{O\string_TX\string_TEMP1}{}
+	 	\SendStoredFileWithDurationXBand{Data-4429200\_600s\_VCh01\_wPN.bin}{I\string_STBY\string_2\string_OPE\string_M}{10 minutes}
+
+		\VerifyTxStatusXBand{Modulation}
+		\VerifyClkLockedStatus{ON}
+	    \VerifyRfOutputPowerTmXBand{$\approx$ 3.2}
+		\TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28\ V}{$\approx$ \ValueCurrentDUTTX A}{\notaCorrienteEstimada}
+
+
+	 \SectionHeaderWithReset{VSA measurement}
+	 	\StartRecordingRawWithPXA
+	 	\SaveRecordedRawWithPXA{}
+	 	\PlayVsaRecordingOnPXA
+	 	\MeasureRfDataCharacteristicsOnVSA{-7.2 dBm $\pm1\ dB$ for \textbf{EWC30-FM1}\\ -7.3 dBm $\pm1\ dB$ for \textbf{EWC30-FM2} }
+	 	\TakeScreenshotOnVSA{pause}{play}{HW}{1.png}
+
+	\SectionHeaderWithReset{A10: SRRC roll-off=0.5, Asym, Comp, LPF, HBF, LMS, 
+	 DEAF  filter meassurement}
+	 	\RestartIFRInCortexHdr{1}
+	 	\VerifyLockedInCortexHdr{1}
+	 	\MeasureRfDataCharacteristicsOnCortex{}
+	 	\TakeScreenShotInCortexHdrGse{\foldername{}}{a10.png}
+      \VectorStar
+	  \VectorVerify
+	  \VectorStop
+
+
+	\SectionHeaderWithReset{B2: SRRC roll-off=0.5, Asym, Comp, LPF, HBF, CMA 
+	filter meassurement}
+     \configureAdvancedParametersOnCortexHdrGse{2}
+ 	\VerifyLockedInCortexHdr{1}
+	\MeasureRfDataCharacteristicsOnCortex
+	\TakeScreenShotInCortexHdrGse{\foldername{}}{b2.png}
+	\VectorStar
+	\VectorVerify
+	\VectorStop
+
+
+     	\ChangeTxStatusToXBand{Standby}{M}{}
+	 	\WaitUntilTxFinishedOnCegse		
+	\SectionHeaderWithReset{Filter settings comparison.}
+	\VectorGetEVM{option A10}
+	\VectorGetEVM{option B2}
+
+
+		\CompleteReportTable{Results for configurations filter of data demodulation}{}%{Results for configurations under test of Data demodulation}{}
+     \verfifyTestSpecification{ For \textbf{A10} filter configuration: \\
+		 - EVM < 6\% \\
+		 - |Amplitude Error| < 0.5 dB rms  \\
+		 - |Phase Error| < 5° rms for \textbf{EWC30-FM1}. \\
+		 - |Phase Error| $\leq$ 5.3° rms for \textbf{EWC30-FM2}. 
+	}
+	 \SectionHeaderWithReset{DUT Power off}
+	  	\TurnOnOffVbusXBand{off}{}
+
+	 \SectionHeaderWithReset{CEGSE SW shutdown}
+	 	\StopCegseSW{}
+
+	 \SectionHeaderWithReset{Collect Evidences}
+
+	\CopyPxaScreenShotsToCegseForEvidences%{pxa-screenshot and pxa-recording}
+ 	\CopyCegseLogsForEvicences{}{\guardarLogs}
+    \CopyCortexHdrScreenShotsToCegseForEvidences{\foldername{}}
+    \CopyFilesToCEGEFromMgmt{option A10}
+	 \SectionHeaderWithReset{Final Steps}
+
+	 	\CloseCortexConfigFileHdrGse	
+		\SetChannelToReduntanSideOnXbmaOf{\fmr{}}{1}
+		\SetChannelToReduntanSideOnXbmaOf{\fmr{}}{2}
+		\DisconnectRfCableFromDwlTpOfCegse{XRF3.60}{}
+		\DisconnectCableFromDcBlock{XRF3.60}{}	
+		\RegisterTemp
+		\RegisterHumidity
+
+
+\end{stepstable}
+\begin{longtable}{|p{17.0cm}|}
+	\endfirsthead
+	\endfoot
+	\caption{\subprocid{} procedure.}
+\end{longtable}
+
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+	\hline	
+	Option Cfg \# & IF level & Eb/N0 & EVM (Vector Script) & Unb. Ratio(max) & Phase Error (max) \\\hline
+	A10 &  & & & & \\\hline
+	B2 &  & & & & \\\hline
+	\end{tabular}
+	\caption{Results for configurations filter of data demodulation.}
+	\label{tab:tm-filter}
+\end{table}

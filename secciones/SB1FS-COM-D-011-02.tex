@@ -1,0 +1,112 @@
+%% **************************** Sub Test ****************************
+\setcounter{Sec}{0}
+\setcounter{Step}{0}
+\renewcommand{\procid}{SB1FS-COM-D-011}
+\renewcommand{\subprocid}{{\procid}-02}
+\renewcommand{\procname}	{Dataset Deployment Procedure}
+\newpage
+
+\subsection{\subprocid\  \procname}\label{sec:dataset}	
+
+\begin{table}[H]
+	\centering
+	\footnotesize
+	\begin{tabular}{|L{3.0cm}|L{13.0cm}|}\hline
+		\textbf{Task ID} & \subprocid{} \\\hline
+		\textbf{Task name} & \procname{} \\\hline
+		\textbf{Task description}   & This task includes:
+		\begin{minipage}[t]{\linewidth}
+			\begin{itemize}[nosep,after=\strut]
+				\item Copy dataset from pen-drive to \comEgse{} hard disk.
+				\item Unzip dataset on \comEgse{}.
+				\item Copy dataset files to the instruments and RF TestBed.
+				\item Copy dataset files to \fmr{}.
+			\end{itemize}
+		\end{minipage} \\
+		\hline
+		\textbf{Task purpose} & Deploy the necessary files for the execution of aliveness, functional and performance tests of the communication system. \\
+		\hline
+		\textbf{Success criteria} & Files from dataset deployed to its final locations.\\
+		\hline
+		\textbf{Test Setup} & -\\
+		\hline
+		\textbf{Duration} & 60 minutes.\\
+		\hline
+		\textbf{Data sets required} & Dataset associated to this document, \texttt{\datasetName.zip}, available in pen-drive (FAT-32).\\
+		\hline
+		\textbf{Prerequisites} &   Execution of procedure \textbf{\procnameOne} \\
+		\hline
+	\end{tabular}
+	\caption{Procedure \subprocid{} \ description. } \label{tb:dataset}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{stepstable}{\subprocid{} \procname{}}
+	\ExecutorRecord
+
+	%\SectionHeaderWithReset{Test Folders Creation}
+	
+
+	%El siguiente comando lo muevo a cada test y no en la parte general
+
+
+	\SectionHeaderWithReset{Unzip dataset on PXI}
+	\CheckHardDiskSpaceOnPxi
+	\ConnectPendriveTo{PXI of \comEgse}
+	%1 - Folder Creation: Create..On..
+	%\CreateTestSessionFolderOnMgmt
+	%\CreateTestSessionFolderOnCortex{\subprocid}
+	\CreateTestSessionFolderOnPXI
+
+	\CopyDataSetToTestSessionFolderOnPXI
+	\VerifyDataSetOnPxi
+	\UnzipDataSetOnPxi
+
+	%deploy data set on PXI
+	\SectionHeaderWithReset{Deploy dataset 1/2}
+	\DeployCegseConfigurationFiles
+	
+	%deploy osc-config
+	\CopyOscilloscopeFileToPendrive
+	\CheckHardDiskSpaceOnPxa
+	\CopyPxaConfigFolder{\pxaTestFolderName}
+
+
+
+	%\CopyFileToCortexCRT
+	% ! preguntar si hace falta copiar el archivo de config del cortex
+	%\CopyConfigFilesToCortex
+	\CopyConfigFileToCortexHDRTestBed{SB1GS-Testbed\_XB\_NoiseGenerator\_v1.0.mcs}
+
+   	%\CopyFilesToMgmtFromDatasetOnPxi
+   	
+	\SectionHeaderWithReset{Deploy dataset 2/2 (\fmr{})}
+	\CreateTestSessionFolderOnMgmt{}
+	\CopyFilesToMgmtFromDatasetOnPxi{}
+	\CopyFileToCortexHDR{\fmr{}}
+
+
+	\SectionHeaderWithReset{Final Steps}
+	\DisconnectPendriveFrom{PXI of \comEgse}
+	\ConnectPendriveTo{Oscilloscope}
+\end{stepstable}
+\begin{longtable}{|p{17.0cm}|}
+\endfirsthead
+\endfoot
+\caption{Procedure \subprocid \ table.}
+
+\end{longtable}

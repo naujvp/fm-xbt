@@ -1,0 +1,218 @@
+\renewcommand{\procid}{SB1FS-COM-P-013}
+\renewcommand{\subprocid}{\procid{}-04}
+\renewcommand{\procname}{\TestPerfFreqS}
+
+\newpage
+\subsection{\subprocid{} \procname{}}
+\label{sec:ewctxstability}
+
+\begin{table}[H]
+	\centering
+	\footnotesize
+	\begin{tabular}{|L{3.0cm}|L{13.0cm}|}\hline
+		\textbf{Task ID}            & \subprocid{}\\\hline
+		\textbf{Task name}          & \procname{}\\\hline
+		\textbf{Task description}   & 
+		In this test the EWC30 is put into operating mode and transmitting the LO leakage.
+		Frequency and power of the carrier are measured with 
+ the PXA while temperature stabilizes. Ten measurements 
+ every 60 seconds are taken with the temperature stabilized. 
+ Finally, the maximum errors are calculated.\\\hline
+		\textbf{Task purpose} &
+		The objective of the test is to verify the Frequency Stability of the EWC30 transmitter.
+		\\\hline
+		\textbf{Success criteria} &
+		Frequency stability according to test specification (\refAD{test-spec-XB}):
+		\begin{itemize}
+			\item $Frequency Stability\ <\ 10\ ppm$
+		\end{itemize} 
+		\\\hline
+		\textbf{Test Setup} & 
+		\begin{minipage}[t]{\linewidth}
+		   \begin{itemize}[nosep,after=\strut]
+			   \item \comEgse{}{} to DUT base-band electrical connections according to figure \ref{fig:ewc30_bb}
+			   \item General setup according to figure \ref{fig:data-setup1} and the following optional connection:
+			   \begin{itemize} 
+				   \item RF input of PXA connected to \textbf{DWL TP} of \comEgse{}. 
+			   \end{itemize}
+		   \end{itemize}
+		   \end{minipage}
+		\\\hline
+		\textbf{Duration} & 90 minutes.\\\hline
+		\textbf{Data sets required} & 
+		\begin{minipage}[t]{\linewidth}
+		   \begin{itemize}[nosep,after=\strut]
+			   \item \comEgse{}{} PXI configuration file for EWC30 (\texttt{INIT\_FILE\_EWC30.ini}).
+			   \item Oscilloscope configuration files in \texttt{osc-config} folder
+			   \item Data file for modulation Data-1\_VCh01\_payload.bin.
+			   \item PXA configuration files in \texttt{\pxaTestFolderName} folder:
+					 \begin{itemize}[nosep,after=\strut]
+						\item EWC30TX-FM1-Downlink-MOD-v1.0.state: Data Downlink spectrum.%dataset file
+						\item EWC30TX-FM1-Downlink-CW-v1.0.state: Data Downlink CW signal.%dataset file
+						\item EWC30TX-FM1-FreqStability-v1.0.state: Data Downlink Frequency Stability.%dataset file
+						\item EWC30TX-FM2-Downlink-MOD-v1.0.state: Data Downlink spectrum.%dataset file
+						\item EWC30TX-FM2-Downlink-CW-v1.0.state: Data Downlink CW signal.%dataset file
+						\item EWC30TX-FM2-FreqStability-v1.0.state: Data Downlink Frequency Stability.%dataset file
+					 \end{itemize}
+		   \end{itemize}
+	   \end{minipage}\\\hline
+	   \textbf{Prerequisites} & 
+	   \begin{minipage}[t]{\linewidth}
+		   \begin{itemize}[nosep,after=\strut]
+			\item \preReqPro
+			   \item Hardware: The necessary items are shown in the table \ref{tab:req-items}.
+		   \end{itemize} 
+	   \end{minipage}\\\hline
+   \end{tabular}
+	   \caption{Procedure \subprocid{} \ description. } \label{tb:datastability}
+	   \end{table}
+
+\newpage\setcounter{Sec}{0}\setcounter{Step}{0}
+\report{}{}{}
+\begin{stepstable}{\subprocid{} \procname{}}
+	\ExecutorRecord{}
+
+	\SectionHeaderWithReset{Environmental temperature and humidity}
+		\RegisterTemp
+		\RegisterHumidity
+
+	\SectionHeaderWithReset{PXA Connection and configuration}
+		\ConnectRfCableToDwlTpPortOfCegse{XRF3.60}{\pasarSiAntes}
+		\ConnectCableToDcBlockOnPXA{XRF3.60}{\pasarSiAntes}
+		\ConfigurePxaAsSpectrumAnalyzer
+		\LoadPxaConfigFile{EWC30TX-FM<X>-Downlink-MOD-v1.0.state}
+
+	% \SectionHeaderWithReset{GS-GSE Preparation}
+	% \EnableControlInXbmaOf{\fmr{}}
+	% 	\SetChannelToReduntanSideOnXbmaOf{\fmr{}}{1}
+	% 	\SetChannelToReduntanSideOnXbmaOf{\fmr{}}{2}
+	% 	\SetXbmaAttenuationTo{0}
+
+
+	\SectionHeaderWithReset{CEGSE SW Initialization}
+		\StartCegseSW{EWC30}{Nominal}{INIT\string_FILE\string_EWC30.ini}{\pasarSiAntes}
+		\SectionHeaderWithReset{DUT power on}
+		\VerifyDutAlarms{EWC30}{}
+		\TakeNoteDutTemperaturesXBand{}
+    	\TurnOnOffVbusXBand{on}{\pasarSiAntes}
+		\VerifyRxSecondaryVoltageRFXBand
+	    \VerifyRxSecondaryVoltageNUMXBand 
+		\VerifyTemperature{O\string_TX\string_TEMP1}{}
+		\LoadOscilloscopeConfigFile{EWC30-TX-RUN.set}{\pasarSiAntes}
+		\TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28\ V}{< 282 mA}{}
+		\VerifyTxStatusXBand{Standby}
+
+	\SectionHeaderWithReset{Switch DUT to Modulation Mode}
+		%\SendStoredFileXBand{Data-885840\_120s\_VCh01\_wPN.bin}{I\string_STBY\string_2\string_OPE\string_M}
+		\GenerateDownlinkFileXBand{110730 ($\approx$15 seconds)}{110730}{Data-1\_VCh01\_payload.bin}{}
+		\SendGeneratedFileXBand{I\_STBY\_2\_OPE\_M}{main}
+		
+		\VerifyTxStatusXBand{Modulation}
+		\VerifyClkLockedStatus{ON}
+	    \VerifyRfOutputPowerTmXBand{$\approx$ 3.2}
+		\TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28\ V}{$\approx$ \ValueCurrentDUTTX A}{\notaCorrienteEstimada}
+
+		\VerifyDataModInPxa
+		\WaitUntilTxFinishedOnCegse
+		\LoadPxaConfigFile{EWC30TX-FM<X>-Downlink-CW-v1.0.state}
+
+	\SectionHeaderWithReset{Verify frequency LO leakage }
+		\VerifyCarrierPowerAndFreqUsingPxa
+		\TakeScreenShotOnPxaWithSingle{CW.png}
+
+	\SectionHeaderWithReset{DUT TX Thermal stabilization}
+		\LoadPxaConfigFile{EWC30TX-FM<X>-FreqStability-v1.0.state}
+		\TakeInitialScreenShotOnPxa{CW-A}
+		\MeasureCarrierPowerAndFreqUsingPxaEveryMinute
+
+    \end{stepstable}
+    \begin{table}[H]
+		\centering
+		\scriptsize
+        \begin{tabular}{|L{0.3cm}|L{1.0cm}|L{1.0cm}|L{2.3cm}|L{1.5cm}|L{0.3cm}|L{1.0cm}|L{1.0cm}|L{2.3cm}|L{1.5cm}|}
+            \hline
+            \# & Temp. Tx$[^{\circ} C]$ & Screen shot \# & Frequency $[Hz]$ & Power $[dBm]$ & \# & Temp. Tx$[^{\circ} C]$ & Screen shot \# & Frequency $[Hz]$ & Power $[dBm]$ \\
+            \hline
+            1  &                        &                &                  &               & 11 &                        &                &                  &               \\\hline
+            2  &                        &                &                  &               & 12 &                        &                &                  &               \\\hline
+            3  &                        &                &                  &               & 13 &                        &                &                  &               \\\hline
+            4  &                        &                &                  &               & 14 &                        &                &                  &               \\\hline
+            5  &                        &                &                  &               & 15 &                        &                &                  &               \\\hline
+            6  &                        &                &                  &               & 16 &                        &                &                  &               \\\hline
+            7  &                        &                &                  &               & 17 &                        &                &                  &               \\\hline
+            8  &                        &                &                  &               & 18 &                        &                &                  &               \\\hline
+            9  &                        &                &                  &               & 19 &                        &                &                  &               \\\hline
+            10 &                        &                &                  &               & 20 &                        &                &                  &               \\\hline
+        \end{tabular}
+        \caption{Temperature stabilization}
+        \label{tb:freqstab}
+    \end{table}
+    \begin{stepstable}{\subprocid{} \procname{}}
+
+	\SectionHeaderWithReset{Frequency stability Measurement}
+	\TakeInitialScreenShotOnPxa{CW-B}
+	\MeasureCarrierPowerAndFreqUsingPxaEveryMinute
+    \end{stepstable}
+    \begin{table}[H]
+		\centering
+		\scriptsize
+        \begin{tabular}{|L{0.3cm}|L{1.0cm}|L{1.0cm}|L{2.3cm}|L{1.5cm}|L{0.3cm}|L{1.0cm}|L{1.0cm}|L{2.3cm}|L{1.5cm}|}
+            \hline
+            \# & Temp. Tx$[^{\circ} C]$ & Screen shot\# & Frequency $[Hz]$ & Power $[dBm]$ & \# & Temp. Tx$[^{\circ} C]$ & Screen shot\# & Frequency$[Hz]$ & Power $[dBm]$ \\
+            \hline
+            1  &                        &               &                  &               & 6  &                        &               &                 &               \\\hline
+            2  &                        &               &                  &               & 7  &                        &               &                 &               \\\hline
+            3  &                        &               &                  &               & 8  &                        &               &                 &               \\\hline
+            4  &                        &               &                  &               & 9  &                        &               &                 &               \\\hline
+            5  &                        &               &                  &               & 10 &                        &               &                 &               \\\hline
+        \end{tabular}
+        \caption{Frequency stability}
+        \label{tb:tempstab2}
+    \end{table}
+    \begin{stepstable}{\subprocid{} \procname{}}
+
+	\SectionHeaderWithReset{DUT Turn off}
+	\ChangeTxStatusToXBand{Standby}{M}{}
+
+	\TurnOnOffVbusXBand{off}{\pasarSiDespues}
+
+
+	\SectionHeaderWithReset{CEGSE SW shutdown}
+		\StopCegseSW{\pasarSiDespues}
+
+	\SectionHeaderWithReset{Collect Evidences}
+		\CopyPxaScreenShotsToCegseForEvidences%{pxa-screenshot}
+	\end{stepstable}
+	\begin{stepstable}{\subprocid{} \procname{}}
+		\CopyCegseLogsForEvicences{}{\pasarSiDespues \guardarLogs}
+
+	\SectionHeaderWithReset{Error Calculation}
+		\SimpleExeStep{Compute average and maximum error in Hz and ppm}
+		{%$f_{error\_Hz}<22,4 Hz$ \\
+		 %$f_{error\_ppm}<10 ppm$ \\
+		 %$f_{stability\_Hz}<560 Hz$\\
+		 $f_{stability\_ppm}<10 ppm $}{
+		 With the last 10 measurements calculate the frequency error and the frequency stability.\\
+		 %$f_{error\_Hz}= MAX( ABS(Fmeas_{i} - <X>[Hz]$ )) \\
+		 %$f_{error\_ppm}= \frac{f_{error\_Hz}}{<X>[MHz]}$ \\
+		 $f_{avg\_Hz} = \frac{\sum_{i=1}^{10} Fmeas_{i}}{10}$ \\ 
+		 $f_{stability\_Hz} = MAX(ABS(Fmeas_{i} - f_{avg\_Hz}))$\\ 
+		
+		 $f_{stability\_ppm} = \frac{f_{stability\_Hz}}{<X>[MHz]}$\\
+         \vspace{5mm}
+		 Where \textbf{<X>} is 8106 for \textbf{EWC30-FM1} and
+		 8269 for \textbf{EWC30-FM2}.
+		 }
+
+	\SectionHeaderWithReset{Final Steps}
+	\RegisterTemp
+	\RegisterHumidity
+	\DisconnectRfCableFromDwlTpOfCegse{XRF3.60}{\pasarSiDespues}
+	\DisconnectCableFromDcBlock{XRF3.60}{\pasarSiDespues}
+	
+\end{stepstable}
+\begin{longtable}{|p{17.0cm}|}
+	\endfirsthead
+	\endfoot
+	\caption{\subprocid{} procedure.}
+\end{longtable}

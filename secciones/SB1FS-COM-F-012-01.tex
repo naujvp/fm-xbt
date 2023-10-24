@@ -1,0 +1,170 @@
+\renewcommand{\procid}{SB1FS-COM-F-012}
+\renewcommand{\subprocid}{\procid-01}
+
+\renewcommand{\procname}{Setup and Configuration\xspace}
+
+\setcounter{Sec}{0}
+\setcounter{Step}{0}
+
+\newpage
+\renewcommand{\subprocid}{{\procid}-01}
+\newpage
+\subsection{\subprocid{} Setup and Configuration}
+
+\begin{stepstable}{\subprocid{} \procname{}}
+	\ExecutorRecord	
+	\DUTSNRecord
+	\SectionHeaderWithReset{Environmental temperature and humidity}
+	\RegisterTempAndHumidity
+	\ConfigDatalogger
+	
+	%\
+	\SectionHeaderWithReset{Verification of CEGSE setup.}
+		\VerifyBBConectionXB
+		\VerifyPowerSupplyConfiguration{3 A}
+		\MeasureVoltSource
+
+	\SectionHeaderWithReset{Connection of EMI/EMC filter to ad-hoc box}
+		\ConnectHarnessToAdboxPowerSupplyOutput{\NuevoHarnessUno}
+		\ConnectHarnessToEMIEMCFilterInput{\NuevoHarnessUno}
+
+		\ConnectHarnessToEMIEMCFilterOutput{\NuevoHarnessDos} 
+
+		\ConnectTestHarnessToDutHarness{\NuevoHarnessDos}{\NuevoHarnessTres}
+		\ConnectTestHarnessToBreakOutBox{\NuevoHarnessTres}
+
+	\SectionHeaderWithReset{CEGSE SW Initialization}
+		\StartCegseSW{EWC30}{"no alarm"}{"INIT\string_FILE\string_NO\string_ALARM\string_EWC30.ini"}
+
+	\SectionHeaderWithReset{EWC30 Vbus verification}
+		\TurnOnOffVbusXBand{on}{}
+		\MeasureVBusOnBreakOutBox
+		\TurnOnOffVbusXBand{off}{}
+		\DisconnectTestHarnessToBreakOutBox{\NuevoHarnessTres}
+		\DisconnectTestHarnessToDutHarness{\NuevoHarnessDos}{\NuevoHarnessTres}
+		\DisconnectHarnessFromEMIEMCFilterOutput{\NuevoHarnessDos}
+
+		\ConnectBOB{ DB-9}{J201B}
+		\ConnectBOB{DB-25}{J200 }
+		\ConnectBOB{DB-37}{J201A}
+
+	\SectionHeaderWithReset{TSM interfaces aliveness}
+	\TSMAlivenessXband{O\string_TX\string_TEMP1}{DB-37}{13}{31}
+
+	\SectionHeaderWithReset{CEGSE power off (PXI and Ad-Hoc Box)}
+		\TurnOnOffVbusXBand{off}{}
+		\StopCegseSW{}
+		\TurnOnOffPSU{off}
+		\DisablePowerSupplyOutput
+		\TurnOffMainSwitch
+		\PowerOffPxi	
+
+	\SectionHeaderWithReset{HV-HPC interfaces aliveness}
+		\HVHPCAliveness{1}{6}{DB-9}{I\string_STBY\string_2\string_OPE\string_M}
+		\HVHPCAliveness{2}{7}{DB-9}{I\string_OPE\string_2\string_STBY\string_R}
+		\HVHPCAliveness{3}{8}{DB-9}{I\string_STBY\string_2\string_OPE\string_R}
+		\HVHPCAliveness{4}{9}{DB-9}{I\string_OPE\string_2\string_STBY\string_M}
+
+	\SectionHeaderWithReset{ASM interfaces aliveness}
+		\AsmAliveness{ 3}{22}{DB-37}{SEC\string_V\string_RF}
+		\AsmAliveness{11}{29}{DB-37}{SEC\string_V\string_NUM}
+		\AsmAliveness{12}{30}{DB-37}{OUTPUT\string_PWR}
+
+	\SectionHeaderWithReset{BDM interfaces aliveness}
+		\BdmAliveness{1}{20}{DB-37}{O\string_CLK\string_LOCKED}
+		\BdmAliveness{2}{21}{DB-37}{O\string_MMU\string_CLK\string_STATUS}
+		\BdmAliveness{4}{23}{DB-37}{O\string_TX\string_STATUS}
+
+	\SectionHeaderWithReset{LVDS interfaces aliveness}
+		\LvdsAliveness{ 3}{15}{DB-25}{I\string_MMU\string_DATA\string_7}
+		\LvdsAliveness{ 4}{16}{DB-25}{I\string_MMU\string_DATA\string_6}
+		\LvdsAliveness{ 5}{17}{DB-25}{I\string_MMU\string_DATA\string_5}
+		\LvdsAliveness{ 6}{18}{DB-25}{I\string_MMU\string_DATA\string_4}
+		\LvdsAliveness{ 7}{19}{DB-25}{I\string_MMU\string_DATA\string_3}
+		\LvdsAliveness{ 8}{20}{DB-25}{I\string_MMU\string_DATA\string_2}
+		\LvdsAliveness{ 9}{21}{DB-25}{I\string_MMU\string_DATA\string_1}
+		\LvdsAliveness{10}{22}{DB-25}{I\string_MMU\string_DATA\string_0}
+		\LvdsAliveness{11}{23}{DB-25}{I\string_MMU\string_CLK}	
+
+		\DisconnectBOB{DB-9}
+		\DisconnectBOB{DB-25}
+		\DisconnectBOB{DB-37}
+
+	\SectionHeaderWithReset{\gse{} configuration and verification}
+		\EnableControlInXbmaOf{\gse-FM (R)}
+		\SetChannelToReduntanSideOnXbmaOf{\gse-FM (R)}{1}
+		\SetChannelToReduntanSideOnXbmaOf{\gse-FM (R)}{2}
+
+		\SetXbmaAttenuationTo{0}
+		\VerifyXBandDownConverterOne
+		\VerifyXBandDownConverterTwo
+		\ConfigureCortexHdrGse
+		\ClearStorageInCortexHdr
+
+	\SectionHeaderWithReset{Instruments setup}
+		\ConnectMeasurementProbesToOscilloscopeForXBand
+		\ConnectMeasurementProbesToAdHocBoxForXBand
+
+	\SectionHeaderWithReset{DUT Connection}
+	\VerifyGroundOfXBandDut{facilities}
+    \VerifyGroundOfilterXBand{facilities}
+		\ConnectRfInternalCablesToDutXBandDut
+       
+        
+
+   
+    \SectionHeaderWithReset{BB harness connection to DUT}
+		%\ConnectDutPortToAdHocBoxPort{EWC30}{H-EGSE-DUT-J1\_001}{J100}	{J100}
+		\ConnectHarnessToDut{EWC30}{\NuevoHarnessDos}{J100} % DUT,harness,DUT connector
+		%\ConnectDutPortToAdHocBoxPort{EWC30}{H-EGSE-DUT-J2\_001}{J200}	{J200}
+		\ConnectHarnessToDut{EWC30}{H-EGSE-DUT-J2\_001}{J200} % DUT,harness,DUT connector
+		%\ConnectDutPortToAdHocBoxPort{EWC30}{H-EGSE-DUT-J3\_001}{J201A and J201B}{J201}
+		\ConnectHarnessToDut{EWC30}{H-EGSE-DUT-J3\_001}{J201} % DUT,harness,DUT connector
+		
+	\SectionHeaderWithReset{Mount CEGSE mechanical support in CEGSE}
+	    \disconnectGroundOfXBandDut{facilities}
+		\disconnectGroundOfilterXBand{facilities}
+		\SimpleExeStep{Mount CEGSE mechanical support to the CEGSE rack.}
+		{CEGSE mechanical support mounted.}
+		{Mount CEGSE mechanical support to the CEGSE rack. 
+		Take all possible precautions since the DUT is mounted on this.}
+		
+		\connectGroundOfXBandDut{\comEgse{} rack} %Verify
+		\connectGroundOfilterXBand{\comEgse{} rack}  %Verify
+		\VerifyGroundOfCegsePowerSupply
+
+	\SectionHeaderWithReset{BB harness connection to \adbox}
+		\ConnectHarnessToDevice{\adbox}{\NuevoHarnessDos}{J100}{EMI/EMC filter}
+		%\ConnectHarnessToAdHocBox{EWC30}{H-EGSE-DUT-J1\_001}{J100} % DUT,harness,connector ad-hoc box
+		\ConnectHarnessToAdHocBox{EWC30}{H-EGSE-DUT-J2\_001}{J200} % DUT,harness,connector ad-hoc box
+		\ConnectHarnessToAdHocBox{EWC30}{H-EGSE-DUT-J3\_001}{J201A and J201B} % DUT,harness,connector ad-hoc box
+		% \ConnectDutPortToAdHocBoxPort{EWC30}{H-EGSE-DUT-J1\string_001}{J100}	{J100}
+		% \ConnectDutPortToAdHocBoxPort{EWC30}{H-EGSE-DUT-J2\string_001}{J200}	{J200}
+		% \ConnectDutPortToAdHocBoxPort{EWC30}{H-EGSE-DUT-J3\string_001}{J201A and J201B}{J201}
+		\TakePhotosOfDutConnections
+
+	\SectionHeaderWithReset{RF connection to CEGSE and GS-GSE} 
+		\ConnectRfLoopCableBetweenXBandPortAndCouplerPort{W3}
+		\ConnectRfCableToNOneInterfaceXBand{XRF4.02}
+		\ConnectRfCableToInOutPortOfCegse{XRF4.02}
+
+	\SectionHeaderWithReset{Power-on \comEgse{}}
+		\TurnOnMainSwitch
+		\VerifyPowerSupplyConfiguration{3 A}
+		\EnablePowerSupplyOutput
+		\TurnOnOffPSU{on}
+		\PowerOnPxi
+		\RDPToPXIFromThinClient{\thinDT A}
+
+	\SectionHeaderWithReset{Collect Evidences}
+		\CopyCegseLogsForEvicences{\subprocid}{}
+		\SaveEvidencePhotos
+		\SectionHeaderWithReset{Final Steps}
+		\RegisterTempAndHumidity
+
+	\end{stepstable}
+	\begin{longtable}{|p{17.0cm}|}
+		\endfirsthead
+		\endfoot
+		\caption{\subprocid{} procedure.}
+	\end{longtable}

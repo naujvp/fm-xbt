@@ -1,0 +1,202 @@
+\section{Introduction} \label{sec:int}
+% \newcommand{\ccdf}{CCDF measurement}	
+% \newcommand{\freqStability}{Frequency Stability}	
+% \newcommand{\cwNoise}{Carrier phase noise }	
+% \newcommand{\DNSSpurious}{Spurious in DSN Band}	
+% \newcommand{\FilterTuning}{Data Demodulation Filter Tuning and Vector Analysis}	
+% \newcommand{\degradedLink}{Degraded link test with one X-Band channel}	
+% \newcommand{\testSetupBreak}{Tests setup break}
+
+
+\newcommand{\TestPerfSetup}{Setup and configuration}
+\newcommand{\TestPerfRFPXA}{Spectrum, power and BW with PXA}
+\newcommand{\TestPerfCCDF}{CCDF measurement}
+\newcommand{\TestPerfFreqS}{Frequency Stability}
+\newcommand{\TestPerfCWPhaseN}{Carrier Phase Noise}
+\newcommand{\TestPerfSpuriousDSN}{Spurious in DSN Band}
+\newcommand{\TestPerfFilterVector}{Optimum filter confirmation And RF characterization with VSA and Cortex}
+\newcommand{\TestPerfBer}{BER measurement}
+\newcommand{\TestPerfSetupBreak}{Tests setup break}
+
+The SABIA-Mar Flight Segment telecommunication links are composed for two separated
+communications channels, one for S-band (uplink \& downlink), and another one for X-band
+(downlink).\newline
+Syrlinks EWC29 and EWC30 products have been chosen to implement these links.
+The EWC29 product is a S-band transceiver. The EWC30 product (\refAD{ewc30}) is a X-band transmitter. 
+In order to test these equipments, the \comEgse\xspace and GS-GSE-FM (R) are also used.
+
+\subsection{Test overview}
+
+This document details a subsets of procedures according to Test specification (\refAD{test-spec-XB}).
+Procedures description, setup and step-by-step tables are presented.\\
+
+The test setup used for the aliveness and functional tests are presented in figure \ref{fig:setup_xband_funcional} while
+ the setup used in the performance tests are shown in the figures \ref{fig:data-setup1} and \ref{fig:data-setup2}.
+
+\newpage
+\section{Procedures list} \label{an:proc-list}
+
+Table \ref{tb:test-list} shown all procedures in the order that are presented in this documents, 
+same as the baseline execution order.
+If the performance tests are conducted following the functional tests, procedures SB1FS-COM-F-012-03 and SB1FS-COM-P-013-01 can be skipped.
+
+{\tiny
+
+	\begin{longtable}{|c|c|c|c|C{5cm}|C{2cm}|} %|C{2.5cm}  
+		\hline \rowcolor{gris}
+		\textbf{Activity Type} &
+		\textbf{Verification Task ID} &
+		\textbf{Verification Task Name} &
+		\textbf{Sub Task} &
+		\textbf{Sub-Task Name} &
+		\textbf{Duration [minutes] TBC} \\
+		\endhead
+		\multirow{2}{*}{Deploy} &
+		 \multirow{2}{*}{SB1FS-COM-D-011} & 
+		 \multirow{2}{*}{\begin{tabular}{l}Initialization dataset and \end{tabular}}&
+		  01 & Electrical Verifications and Instruments Initializations &60\\ \cline{4-6} %5-7
+		&&deploy&02& Test Procedure dataset deploy&60\\ \cline{4-6}  \hline
+
+		\multirow{2}{*}{Test} & 
+		\multirow{2}{*}{SB1FS-COM-F-012} & 
+		\multirow{2}{*}{Aliveness and Functional }&
+		 01 & Setup and configuration &150\\ \cline{4-6}
+		&&Test& 02 & Aliveness and Functional Test  &180\\ \cline{4-6}		
+		&&& 03 & Tests setup break&45\\ \hline
+        \multirow{2}{*}{Test} & 
+		\multirow{2}{*}{SB1FS-COM-P-013} & 
+		\multirow{2}{*}{Performace Test}&	
+		01 & Setup and configuration &150\\ \cline{4-6}
+		&&    & 02 & \TestPerfRFPXA &60\\ \cline{4-6}
+		&&    & 03 & \TestPerfCCDF &60\\ \cline{4-6}
+		&&    & 04 & \TestPerfFreqS  &90\\ \cline{4-6}
+		&&    & 05 & \TestPerfCWPhaseN &90\\ \cline{4-6}
+		&&    & 06 &  \TestPerfFilterVector &90\\ \cline{4-6}
+		&&    & 07 & \TestPerfBer &280\\ \cline{4-6}
+		&&    & 08 & \TestPerfSpuriousDSN  &90\\ \cline{4-6}
+		&&    & 09 & \TestPerfSetupBreak &45\\ \hline
+		\caption{Procedures list.}
+		\label{tb:test-list}	
+	\end{longtable}
+	}
+
+
+Appendix \ref{an:items-list} shown the complete list of elements necessaries for procedures execution, and also, the elements required for each test are present in each section. By completeness a summary is presented bellow. 
+\begin{itemize}
+\item Extension harness for Breakout Board:
+	\begin{itemize}
+		\item DB9 to DB9 Harness for Breakout Board.
+		\item DB15 to DB15 Harness for Breakout Board.
+		\item DB25 to DB25 harness for Breakout Board.
+		\item DB37 to DB37 Harness for Breakout Board.
+	\end{itemize}
+	\item Breakout Board with bridges and auxiliary wires:
+	\begin{itemize}
+		\item DB9 Breakout Board.
+		\item DB15 Breakout Board.
+		\item DB25 Breakout Board.
+		\item DB37 Breakout Board.
+	\end{itemize}
+\item Digital Multimeter with probes.
+\item Oscilloscope with differential voltage probe and current probe.
+%\item Spectrum analyzer with Vector Signal Analyzer Software
+\item RF Coaxial cables of different lengths and connectors.
+\item RF accessories, loads, attenuators, power divider, DC-Block, etc.
+\item Torque wrench and fixed wrench for different RF connectors.
+\item Torque wrench with 5/64" or 2 mm Hex bit.
+\item Ground wires.
+\item Ethernet cables.
+\item ESD gloves and antistatic wrist strap.
+\item Pen-drive previously formatted in FAT-32 format.
+\item Dataset file, \texttt{\datasetNameone}
+\texttt{\datasetNametwo.zip}, available in pen-drive (with FAT32 format).
+
+\end{itemize}
+
+\subsection{Considerations}
+
+\begin{itemize}
+%\item This procedure is written with the idea of being executed using the \textbf{\gse-FM (N)}.
+%\item The \textbf{\gse-FM (N)} should be used in all steps of this procedure unless otherwise stated.
+%\item Electrical passive measurements (resistance) are carried out on the baseband interfaces of EWC29 and EWC30
+% in order to check their health status after their handling, shipping and storage. 
+% \item All tests with the DUT are carried out in a clean room. Therefore, the operators must have the
+% appropriate elements: ESD smock, hair cover, shoe cover and face mask.
+% \item All handling of the DUT must be carried out using gloves and a chinstrap.
+
+%\item All tests procedure should be exercised in cleanroom.
+%\item Operators should wear typical cleanroom garments, including ESD smock, shoe covers, haircover, and a face mask.
+%\item Operators handling electrical connections or instruments should do so using the antistatic wriststrap attached to the copper grounding bar.
+%\item DUT should be handled by operators wearing ESD gloves and face mask.
+%\item In the following, when referring to \textbf{facilities} it will refer to the laboratory in clear room.
+
+\item All tests with the DUT are carried out in a clean room. Therefore, the operators shall have the appropriate elements: ESD smock, hair cover ,shoe cover and face mask.
+\item In the following, when referring to \textbf{facilities} it will refer to the clean room.
+\item Operators handling electrical connections or instruments should do using the
+antistatic wrist strap attached to the facilities grounding system.
+\item All handling of the DUT must be carried out using ESD gloves.
+
+
+
+
+\item \gse-FM (R) is used in this procedure.
+% The results of such measurements are contrasted with reference values which were obtained after the good state
+ % of health of the EWC29 and EWC30 were verified by means of related tests (\refAD{comssrptF} and \refAD{comssrptP}).
+ 
+
+\item \gse-FM (R) and \comEgse\xspace Racks have their own UPS so they do not need to be connected to a safe power supply. %The instruments and the Aux Rack shall be connected to a safe power supply of facilities.
+
+\item GS-GSE requirement compliance (RF interfaces and other functionalities) was verified before this test (\refAD{fm-ver-rpt} and \refAD{fm-ver-delta-rpt}). 
+\item \gse-FM (R) was modified before this test for requirement compliance
+ (RF interfaces and other functionalities) (\refAD{gse-cfg-r} and \refAD{reportFMRMod}).
+\item GS-GSE and \comEgse\xspace are connected to facilities network to give access to support team through VPN. 
+
+
+%\item Operators handling electrical connections or instruments should do using the antistatic wrist strap attached to the GSE's copper grounding bar.
+
+\item All hardware components are connected to GND before any electrical connection.
+
+\item All unused RF output ports shall be loaded.
+
+\item All RF connections are exercised according \textbf{RF connector care and cleaning} document 
+(\refAD{rf-con}). Also manufacturer recommendations are taken in to account.
+
+\item Both GS-GSE and \comEgse\xspace are initialized according to their respective user manuals (\refRD{gs-gse-fm} and \refAD{cegse}).
+
+\item DUTs are mounted on \comEgse's metal tray.
+
+\item DUTs are connected to grounding bar.
+
+%\item Harness \comEgse-DUT connected to DUT side only \hl{Esto hay que clararlo un poco...}.
+
+\item Only EWC30 is connected to the ad-hoc box.
+
+%\item GS-GSE RF test, according to \refAD{gse-fm-tr}, was performed before using it for this tests. 
+%\item GS-GSE RF test are performed before using it for this tests.
+\item X-Band DSN filter was previously tested according to \refAD{xbandfilter}.
+
+%\item Spurious measurements in the frequency range 0-10Ghz is affected by Bi-Directional Coupler ZGBDC35-93HP+ 
+%that only covers the 900-9000 MHz frequency range.
+
+\item \comEgse{} Power Supply is set to 28 Volts (Vbus of DUT).
+
+%\item In S-BAND TT\&C TRANSCEIVER TRANSMITTER test specification asks to verify passing through the initialization 
+%state after reset but the \comEgse\xspace sampling rate of TM is not fast enough. 
+%The passage through the initialization state lasts 115 ms and the TM lines are read once per second.
+
+\item The design of the test setups guarantees that the RF inputs do not exceed the maximum value accepted under any equipment configuration even in conditions of minimal attenuation and maximum gain.
+See the annex \ref{an:rf-link-budget} for details.
+
+\item All SMA connections are performed using 5 lb-inch torque wrench.
+
+\item The adjustment torque for the harnesses that connect to 
+the savers must be less than 0.10 Nm.
+
+\item DUT’s connectors and savers connection/disconnection will be logged.
+
+\item The purpose of resistance measurements is to detect whether the interface is shorted or open.
+After functionally checking of \comEgse, the resistances of all the interfaces were measured and a wide range was defined to cover all cases. LVDS interfaces do not follow this criteria.
+
+\item Before performing the first DUT power on of the day, validate that DUT temperature is within a range of +/-5 degrees with respect to the ambient temperature. The goal is to validate that the internal sensor is in good health.
+\end{itemize}
+
