@@ -82,7 +82,7 @@ Record DUT's S/N
 16,5,disconnetGroundOfXBandDut
 16,6,VerifyGroundOfCegsePowerSupply
 17,0,
-17,0,//////////////BB harness connection to Ad-hoc box/////////////////
+17,0,//////////////BB harness connection to Ad-hoc box{} and EMI/EMC filter/////////////////
 17,4,TakePhotosOfDutConnections
 18,0,
 18,0,//////////////RF connection to CEGSE and GS-GSE/////////////////

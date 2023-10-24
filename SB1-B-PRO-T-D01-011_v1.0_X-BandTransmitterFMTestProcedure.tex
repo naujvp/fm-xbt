@@ -1,5 +1,5 @@
-%\documentclass[11pt,a4paper,english,draft]{article} 
-\documentclass[11pt,a4paper,spanish]{article} 
+\documentclass[11pt,a4paper,english,draft]{article} 
+%\documentclass[11pt,a4paper,spanish]{article} 
 \setlength\headheight{26pt} 
 
 \usepackage[en]{ascentiodoc-nodate}
@@ -178,6 +178,10 @@ from the EWC30 FM1 and FM2 reports (\refRD{rptSyrlinkFMOne} and \refRD{rptSyrlin
 
  \immediate\openout\myfile=CheckLists/SB1FS-COM-F-012-03.csv
  \input{secciones/SB1FS-COM-F-012-03}
+ \immediate\closeout\myfile
+
+ \immediate\openout\myfile=CheckLists/SB1FS-COM-F-012-04.csv
+ \input{secciones/SB1FS-COM-F-012-04}
  \immediate\closeout\myfile
 
  \newpage

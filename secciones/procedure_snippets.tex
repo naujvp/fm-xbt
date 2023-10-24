@@ -1825,11 +1825,11 @@ NI PXIe-4072.}
 	{Disconnect \textbf{#1} MDM15 female connector to \textbf{#2} MDM15 male connector.}    
 }
 
-\newcommand{\ConnectTestHarnessToBreakOutBox}[1]
+\newcommand{\ConnectTestHarnessToBreakOutBox}[3]
 {
-	\SimpleExeStep{Connect \textbf{#1} harness to DB-15 BOB.}
-	{Harness connected to DB-15 BOB}
-	{Connect \textbf{#1} DB15 female connector to DB-15 BOB.}    
+	\SimpleExeStep{Connect \textbf{#1} harness to #2.}
+	{Harness connected to #2}
+	{Connect \textbf{#1} DB15 #3 connector to #2.}    
 }
 
 \newcommand{\DisconnectTestHarnessToBreakOutBox}[1]
@@ -6054,7 +6054,7 @@ means of multimeter.}
 {
     \stepcounter{Step}
     \immediate\write\myfile{\theSec,\theStep,disconnetGroundOfXBandDut}
-    \procedurestep{\theSec}{\theStep}{EXE}{Ground X-Band Filter.}{Ground of X-Band Filter disconnected}{}{}
+    \procedurestep{\theSec}{\theStep}{EXE}{Disconnect ground of X-Band Filter.}{Ground of X-Band Filter disconnected}{}{}
     \stepdetail{1}{0}{
         
         \begin{itemize}[nosep,after=\strut]

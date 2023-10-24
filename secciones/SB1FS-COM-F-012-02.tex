@@ -5,29 +5,110 @@
 \renewcommand{\subprocid}{{\procid}-02}
 
 \newpage
-\subsection{\subprocid \ Aliveness and Functional Test}
+\subsection{\subprocid \ Inrush and ripple measurement }
 
 
 %% Test Setup
 \begin{figure}[H]
 	\centering
-	  \includegraphics[width=.9\linewidth]{figuras/EWC30PXISetupB.png}  
-	  \caption{Aliveness and functional test setup.}
-	\label{fig:setup_xband_funcional}
+	  \includegraphics[width=.9\linewidth]{figuras/EWC30PXISetupA.png}  
+	  \caption{Inrush and ripple measurement setup.}
+	\label{fig:setup_xband_funcional_ripple}
 	\end{figure}
 \newpage
-\begin{stepstable}{\subprocid{} Aliveness and Functional Test}
+\begin{stepstable}{\subprocid{} Inrush and ripple measurement.}
 	\ExecutorRecord
 
 	\SectionHeaderWithReset{Environmental temperature and humidity}
 		\RegisterTempAndHumidity
+
+	%%%%% Update %%%%%	
+	\SectionHeaderWithReset{CEGSE power off (PXI and Ad-Hoc Box)}
+		%\TurnOnOffVbusXBand{off}{}
+		%\StopCegseSW{}
+		\TurnOnOffPSU{off}
+		\DisablePowerSupplyOutput
+		\TurnOffMainSwitch
+		\PowerOffPxi	
+		%\ConfigDatalogger
+	
+	\SectionHeaderWithReset{Connection of DB-15 BOB to EMI/EMC filter}
+		\DisconnectHarnessFromEMIEMCFilterOutput{\NuevoHarnessDos}
+		\ConnectHarnessToEMIEMCFilterOutput{\NuevoHarnessCuatro} % Dos
+
+		\ConnectTestHarnessToBreakOutBox{\NuevoHarnessCuatro}{DB-15 BOB}{female}
+        
+		% \ConnectHarnessToAdboxPowerSupplyOutput{\NuevoHarnessUno}
+		% \ConnectHarnessToEMIEMCFilterInput{\NuevoHarnessUno}
+
+		% \ConnectHarnessToEMIEMCFilterOutput{\NuevoHarnessDos} % Dos
+
+		% \ConnectTestHarnessToDutHarness{\NuevoHarnessDos}{\NuevoHarnessTres}
+		% \ConnectTestHarnessToBreakOutBox{\NuevoHarnessTres}{DB-15 BOB}{female}
+
+
+
+
+	% \SectionHeaderWithReset{Preparation of GS-GSE}
+	% 	\EnableNOneInterfaceXBand{Note: Skip this step if \textbf{EWC30-FM2} is under test.}
+	% 	\EnableNTwoInterfaceXBand{Note: Skip this step if \textbf{EWC30-FM1} is under test.}
+	% 	%\VerifyConfigurationInCortexHdr
+	% 	\OpenWinCortexHDR
+
+%%%%%%update %%
+	\SectionHeaderWithReset{Power-on \comEgse{}}
+		\TurnOnMainSwitch
+		\VerifyPowerSupplyConfiguration{3 A}
+		\EnablePowerSupplyOutput
+		\TurnOnOffPSU{on}
+		\PowerOnPxi
+		\RDPToPXIFromThinClient{\thinDT A}
+
+%%%%%%update %%
+	\SectionHeaderWithReset{CEGSE SW Initialization}
+		\StartCegseSW{EWC30}{"no alarm"}{"INIT\string_FILE\string_NO\string_ALARM\string_EWC30.ini"}
+    
+	\SectionHeaderWithReset{EWC30 Vbus verification}
+		\TurnOnOffVbusXBand{on}{}
+		\MeasureVBusOnBreakOutBox
+		%\TurnOnOffVbusXBand{off}{}
+		% \DisconnectTestHarnessToBreakOutBox{\NuevoHarnessTres}
+		% \DisconnectTestHarnessToDutHarness{\NuevoHarnessDos}{\NuevoHarnessTres}
+		% \DisconnectHarnessFromEMIEMCFilterOutput{\NuevoHarnessDos}
+
+		% \ConnectBOB{ DB-9}{J201B}
+		% \ConnectBOB{DB-25}{J200 }
+		% \ConnectBOB{DB-37}{J201A}
+		
+		%%%%%%update %%
+	\SectionHeaderWithReset{CEGSE power off (PXI and Ad-Hoc Box)}
+		\TurnOnOffVbusXBand{off}{}
+		\StopCegseSW{}
+		\TurnOnOffPSU{off}
+		\DisablePowerSupplyOutput
+		\TurnOffMainSwitch
+		\PowerOffPxi	
 		%\ConfigDatalogger
 
-	\SectionHeaderWithReset{Preparation of GS-GSE}
-		\EnableNOneInterfaceXBand{Note: Skip this step if \textbf{EWC30-FM2} is under test.}
-		\EnableNTwoInterfaceXBand{Note: Skip this step if \textbf{EWC30-FM1} is under test.}
-		%\VerifyConfigurationInCortexHdr
-		\OpenWinCortexHDR
+	\SectionHeaderWithReset{Connection of DB-15 BOB to EWC30}
+		
+        \ConnectTestHarnessToBreakOutBox{\NuevoHarnessDos}{DB-15 BOB}{male}
+
+		% \ConnectHarnessToAdboxPowerSupplyOutput{\NuevoHarnessUno}
+		% \ConnectHarnessToEMIEMCFilterInput{\NuevoHarnessUno}
+
+		% \ConnectHarnessToEMIEMCFilterOutput{\NuevoHarnessDos} % Dos
+
+		% \ConnectTestHarnessToDutHarness{\NuevoHarnessDos}{\NuevoHarnessTres}
+		% \ConnectTestHarnessToBreakOutBox{\NuevoHarnessTres}{DB-15 BOB}{female}
+	%%%%%%%% Update %
+	\SectionHeaderWithReset{Power-on \comEgse{}}
+		\TurnOnMainSwitch
+		\VerifyPowerSupplyConfiguration{3 A}
+		\EnablePowerSupplyOutput
+		\TurnOnOffPSU{on}
+		\PowerOnPxi
+		\RDPToPXIFromThinClient{\thinDT A}
 	
 	\SectionHeaderWithReset{PXI Spectrum Analyzer connection}
 		\ConnectRfCableToDwlTpPortOfCegse{W15}{}
@@ -80,7 +161,7 @@
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\SectionHeaderWithReset{File generation for data transmission}
 		\GenerateDownlinkFileXBand{1330000 ($\approx$180 seconds)}{1330000}{Data-885840\_120s\_VCh01\_payload.bin}{}
-	\SectionHeaderWithReset{Ripple voltage and current measurement}
+	\SectionHeaderWithReset{Ripple measurement between EMI/EMC filter and Ad-Hoc Box}
 	\VerifyTemperature{O\string_TX\string_TEMP1}{}
 		\SendGeneratedFileXBand{I\_STBY\_2\_OPE\_M}{main}
 		\VerifyTxStatusXBand{Modulation}
@@ -100,7 +181,43 @@
 		\SaveOscilloscopeRawValues
 		\TakeNoteOfCurrentAndVoltageRippleOf{TX}{CH1}{CH2}{\ValueVRipple}{\ValueIRippleADHBoxToFilter}
 
-		\SectionHeaderWithReset{Ripple  current measurement}
+  %%%%%%%%%%% Update %%%%%%
+    \SectionHeaderWithReset{DUT Turn Off}
+		\LoadOscilloscopeConfigFile{EWC30-TX-OFF.set}{}
+		\PressSingleOnOscilloscope
+		\TurnOnOffVbusXBand{off}{}
+		\TakeScreenShotOnOscilloscope
+		\MeasurePowerDownCurrentOn{CH1}
+		\SaveOscilloscopeRawValues
+%%%%%%%%%%%%%%%% update %%%%
+	\SectionHeaderWithReset{DUT Power On}
+		\VerifyDutAlarms{EWC-30}{}
+		\TakeNoteDutTemperaturesXBand{}
+		% \LoadOscilloscopeConfigFile{EWC30-TX-ON.set}{}
+		% \PressSingleOnOscilloscope
+		 \TurnOnOffVbusXBand{on}{}
+		% \TakeScreenShotOnOscilloscope
+		% \MeasureInrushCurrentOn{CH1}
+		% \SaveOscilloscopeRawValues
+		\LoadOscilloscopeConfigFile{EWC30-TX-RUN.set}{}{}
+		%\SimpleExeStep{\tr{validar cooriente y potencia}}{arg2}{arg3}
+		\TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28 V}{< 282 mA}{} 
+		\VerifyPowerConsumptionOf{TX}{CH1}{CH2}{P $\approx$\ 8 W@standby}
+		%\LoadOscilloscopeConfigFile{EWC30-TX-RIPPLE.set}{}
+	
+	\SectionHeaderWithReset{File generation for data transmission}
+		\GenerateDownlinkFileXBand{1330000 ($\approx$180 seconds)}{1330000}{Data-885840\_120s\_VCh01\_payload.bin}{}
+
+	\SectionHeaderWithReset{Ripple measurement between EMI/EMC filter and EWC30}
+		\VerifyTemperature{O\string_TX\string_TEMP1}{}
+		\SendGeneratedFileXBand{I\_STBY\_2\_OPE\_M}{main}
+		\VerifyTxStatusXBand{Modulation}
+		%\CheckLookCortexHDR
+    	%\StartIngestionInCortexHdr
+		\VerifyClkLockedStatus{ON}
+		\VerifyRfOutputPowerTmXBand{$\approx$ 3.2}
+  		\TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28\ V}{$\approx$ \ValueCurrentDUTTX A}{\notaCorrienteEstimada}
+
 		\ConnectMeasurementProbeBetweenFilterAndDUT
 
 		\LoadOscilloscopeConfigFile{EWC30-TX-RIPPLE.set}{}

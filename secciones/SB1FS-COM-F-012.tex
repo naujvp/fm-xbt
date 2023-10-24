@@ -45,16 +45,17 @@ DUT telemetry is between expected values.
 \begin{minipage}[t]{\linewidth}
 		\begin{itemize}[nosep,after=\strut]
 		\item \procid{-01}: Test setup and configuration
-		\item \procid{-02}: Aliveness and Functional Test
-		\item \procid{-03}: Tests setup break
+		\item \procid{-02}: Inrush and ripple measurement 
+		\item \procid{-03}: Aliveness and Functional Test
+		\item \procid{-04}: Tests setup break
 		\end{itemize}
 		\end{minipage}\\
 		\hline
 		\textbf{Test Setup} &
 \begin{minipage}[t]{\linewidth}
 	\begin{itemize}[nosep,after=\strut]
-		\item \comEgse\xspace to DUT base-band electrical connections according to figure \ref{fig:ewc30_bb} 
-		\item General setup according to figure \ref{fig:setup_xband_funcional} for Data Downlink test.
+		\item \comEgse\xspace to DUT base-band electrical connections according to figures \ref{fig:ewc30_bb_ripple} and \ref{fig:ewc30_bb} 
+		\item General setup according to figure \ref{fig:setup_xband_funcional_ripple} for inrush and ripple measurements. Figure \ref{fig:setup_xband_funcional} for Data Downlink test.
 		\end{itemize}
 	\end{minipage}	
 		\\ 
@@ -62,8 +63,10 @@ DUT telemetry is between expected values.
 		\textbf{Duration} & \begin{minipage}[t]{\linewidth}
 	\begin{itemize}[nosep,after=\strut]
 		\item \procid{-01}: 150 minutes
-		\item \procid{-02}: 180 minutes 		
-		\item \procid{-03}: 45 minutes 
+		\item \procid{-02}: 150 minutes \tr{actulizar}
+
+		\item \procid{-03}: 180 minutes \tr{actulizar}		
+		\item \procid{-04}: 45 minutes 
 		\end{itemize}
 	\end{minipage}
 	\\ \hline
@@ -129,8 +132,8 @@ DUT telemetry is between expected values.
 \begin{figure}[H]
 	\centering
 	  \includegraphics[width=.9\linewidth]{figuras/CEGSE_EWC30SetupA.png}  
-	  \caption{EWC-30 BB connections for ripple measurement.}
-	\label{fig:ewc30_bb}
+	  \caption{EWC-30 BB connections for inrush and ripple measurement.}
+	\label{fig:ewc30_bb_ripple}
 \end{figure}
 
 %% Test Setup

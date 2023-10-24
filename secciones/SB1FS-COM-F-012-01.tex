@@ -28,14 +28,14 @@
 		\ConnectHarnessToAdboxPowerSupplyOutput{\NuevoHarnessUno}
 		\ConnectHarnessToEMIEMCFilterInput{\NuevoHarnessUno}
 
-		\ConnectHarnessToEMIEMCFilterOutput{\NuevoHarnessDos} 
+		\ConnectHarnessToEMIEMCFilterOutput{\NuevoHarnessDos} % Dos
 
 		\ConnectTestHarnessToDutHarness{\NuevoHarnessDos}{\NuevoHarnessTres}
-		\ConnectTestHarnessToBreakOutBox{\NuevoHarnessTres}
+		\ConnectTestHarnessToBreakOutBox{\NuevoHarnessTres}{DB-15 BOB}{female}
 
 	\SectionHeaderWithReset{CEGSE SW Initialization}
 		\StartCegseSW{EWC30}{"no alarm"}{"INIT\string_FILE\string_NO\string_ALARM\string_EWC30.ini"}
-
+    
 	\SectionHeaderWithReset{EWC30 Vbus verification}
 		\TurnOnOffVbusXBand{on}{}
 		\MeasureVBusOnBreakOutBox
@@ -133,8 +133,10 @@
 		\connectGroundOfilterXBand{\comEgse{} rack}  %Verify
 		\VerifyGroundOfCegsePowerSupply
 
-	\SectionHeaderWithReset{BB harness connection to \adbox}
-		\ConnectHarnessToDevice{\adbox}{\NuevoHarnessDos}{J100}{EMI/EMC filter}
+	\SectionHeaderWithReset{BB harness connection to \adbox{} and EMI/EMC filter}
+		%\ConnectHarnessToDevice{\adbox}{\NuevoHarnessDos}{J100}{EMI/EMC filter} % estaba mal
+		\ConnectHarnessToDevice{EMI/EMC filter}{\NuevoHarnessDos}{output}{EWC30}
+
 		%\ConnectHarnessToAdHocBox{EWC30}{H-EGSE-DUT-J1\_001}{J100} % DUT,harness,connector ad-hoc box
 		\ConnectHarnessToAdHocBox{EWC30}{H-EGSE-DUT-J2\_001}{J200} % DUT,harness,connector ad-hoc box
 		\ConnectHarnessToAdHocBox{EWC30}{H-EGSE-DUT-J3\_001}{J201A and J201B} % DUT,harness,connector ad-hoc box
