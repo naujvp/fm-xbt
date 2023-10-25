@@ -1252,7 +1252,6 @@ NI PXIe-4072.}
 }
 % #endregion
 
-% #region       ConnectMeasurementProbesToAdHocBox
 \newcommand{\ConnectMeasurementProbeBetweenFilterAndDUT}
 {
     \stepcounter{Step}
@@ -1265,7 +1264,21 @@ NI PXIe-4072.}
         \textbf{Note:} When the current tip is placed in the cables of harness the arrow on the current tip should point from EMI/EMC filter to DUT.
     }
 }
-% #endregion
+
+\newcommand{\ConnectMeasurementVoltageProbeBetweenFilterAndDUT}
+{
+    \stepcounter{Step}
+    \immediate\write\myfile{\theSec,\theStep,ConnectMeasurementVoltageProbeBetweenFilterAndDUT}
+    \procedurestep{\theSec}{\theStep}{EXE}{Connect measurement probe to \textbf{DB-15 BOB} }{Probe connected according to detail.}{}{}
+    \stepdetail{1}{0}{
+        \begin{itemize}
+            \item Connect positive lead of CH2 voltage probe to the \textbf{P Tip = 5} pin DB-15 BOB.
+            \item Connect negative lead of CH2 voltage probe to the \textbf{N Tip = 10} pin DB-15 BOB.
+
+        \end{itemize}
+        %\textbf{Note:} When the current tip is placed in the cables of harness the arrow on the current tip should point from EMI/EMC filter to DUT.
+    }
+}
 
 % #region       ConnectMeasurementProbesToAdHocBoxForXBand
 \newcommand{\ConnectMeasurementProbesToAdHocBoxForXBand}
@@ -1832,11 +1845,11 @@ NI PXIe-4072.}
 	{Connect \textbf{#1} DB15 #3 connector to #2.}    
 }
 
-\newcommand{\DisconnectTestHarnessToBreakOutBox}[1]
+\newcommand{\DisconnectTestHarnessToBreakOutBox}[2]
 {
 	\SimpleExeStep{Disconnect \textbf{#1} harness to DB-15 BOB.}
 	{Harness disconnected from DB-15 BOB}
-	{Disconnect \textbf{#1} DB15 female connector from DB-15 BOB.}    
+	{Disconnect \textbf{#1} DB15 #2 connector from DB-15 BOB.}    
 }
 
 
@@ -2006,12 +2019,12 @@ NI PXIe-4072.}
 }
 % #endregion
 % #region       ConnectCableToDcBlock
-\newcommand{\ConnectCableToDcBlock}[1]
+\newcommand{\ConnectCableToDcBlock}[2]
 {
     \stepcounter{Step}
     \immediate\write\myfile{\theSec,\theStep,ConnectCableToDcBlock}
     \procedurestep{\theSec}{\theStep}{EXE}{Connect #1 cable to DC Block.}{Cable connected.}{}{}
-    \stepdetail{1}{0}{
+    \stepdetail{1}{0}{ #2
         \begin{minipage}[t]{\linewidth}
             \begin{itemize}[nosep,after=\strut]
                 \item Connect the end #1 cable to DC Block (this is connected to the RF IN of PXI).

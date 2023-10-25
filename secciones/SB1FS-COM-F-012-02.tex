@@ -32,7 +32,7 @@
 		\PowerOffPxi	
 		%\ConfigDatalogger
 	
-	\SectionHeaderWithReset{Connection of DB-15 BOB to EMI/EMC filter}
+	\SectionHeaderWithReset{DB-15 BOB connection to EMI/EMC filter}
 		\DisconnectHarnessFromEMIEMCFilterOutput{\NuevoHarnessDos}
 		\ConnectHarnessToEMIEMCFilterOutput{\NuevoHarnessCuatro} % Dos
 
@@ -72,7 +72,7 @@
 		\TurnOnOffVbusXBand{on}{}
 		\MeasureVBusOnBreakOutBox
 		%\TurnOnOffVbusXBand{off}{}
-		% \DisconnectTestHarnessToBreakOutBox{\NuevoHarnessTres}
+		% \DisconnectTestHarnessToBreakOutBox{\NuevoHarnessTres}{female}
 		% \DisconnectTestHarnessToDutHarness{\NuevoHarnessDos}{\NuevoHarnessTres}
 		% \DisconnectHarnessFromEMIEMCFilterOutput{\NuevoHarnessDos}
 
@@ -90,7 +90,7 @@
 		\PowerOffPxi	
 		%\ConfigDatalogger
 
-	\SectionHeaderWithReset{Connection of DB-15 BOB to EWC30}
+	\SectionHeaderWithReset{DB-15 BOB connection to DUT}
 		
         \ConnectTestHarnessToBreakOutBox{\NuevoHarnessDos}{DB-15 BOB}{male}
 
@@ -180,6 +180,14 @@
 		\TakeScreenShotOnOscilloscope
 		\SaveOscilloscopeRawValues
 		\TakeNoteOfCurrentAndVoltageRippleOf{TX}{CH1}{CH2}{\ValueVRipple}{\ValueIRippleADHBoxToFilter}
+ %%% update
+		\MeasureCarrierPowerModUsingPxi{40\ }{1} % de mezcla
+		\TakeScreenShotOnPxi  % de mezcla
+        %%%%%% Update %%%%%%%
+		\ChangeTxStatusTo{I\string_OPE\string_2\string_STBY\string_M }{standby}
+		\VerifyTxStatusXBand{Standby}
+		%\StopXB
+		\WaitUntilTxFinishedOnCegse
 
   %%%%%%%%%%% Update %%%%%%
     \SectionHeaderWithReset{DUT Turn Off}
@@ -189,10 +197,25 @@
 		\TakeScreenShotOnOscilloscope
 		\MeasurePowerDownCurrentOn{CH1}
 		\SaveOscilloscopeRawValues
-%%%%%%%%%%%%%%%% update %%%%
+		\StopCegseSW{}
+
+%%%%%%%%%%%% UPdate %%
+	\SectionHeaderWithReset{Connections of oscilloscope probe between EMI/EMC filter and DUT}
+		\ConnectMeasurementProbeBetweenFilterAndDUT
+		\ConnectMeasurementVoltageProbeBetweenFilterAndDUT		
+	%%%%% Update %%
+	\SectionHeaderWithReset{CEGSE SW Initialization}
+		\StartCegseSW{EWC30}{Nominal}{INIT\string_FILE\string_EWC30.ini}{}
+
+%%%%%%%%%%%%%%% update %%%%
 	\SectionHeaderWithReset{DUT Power On}
 		\VerifyDutAlarms{EWC-30}{}
-		\TakeNoteDutTemperaturesXBand{}
+
+
+
+		%\TakeNoteDutTemperaturesXBand{}
+		\VerifyTemperature{O\string_TX\string_TEMP1}{}
+
 		% \LoadOscilloscopeConfigFile{EWC30-TX-ON.set}{}
 		% \PressSingleOnOscilloscope
 		 \TurnOnOffVbusXBand{on}{}
@@ -205,10 +228,13 @@
 		\VerifyPowerConsumptionOf{TX}{CH1}{CH2}{P $\approx$\ 8 W@standby}
 		%\LoadOscilloscopeConfigFile{EWC30-TX-RIPPLE.set}{}
 	
+	%\SectionHeaderWithReset{File generation for data transmission}
+	%	\GenerateDownlinkFileXBand{1330000 ($\approx$180 seconds)}{1330000}{Data-885840\_120s\_VCh01\_payload.bin}{}
+
 	\SectionHeaderWithReset{File generation for data transmission}
 		\GenerateDownlinkFileXBand{1330000 ($\approx$180 seconds)}{1330000}{Data-885840\_120s\_VCh01\_payload.bin}{}
 
-	\SectionHeaderWithReset{Ripple measurement between EMI/EMC filter and EWC30}
+	\SectionHeaderWithReset{Ripple measurement between EMI/EMC filter and DUT}
 		\VerifyTemperature{O\string_TX\string_TEMP1}{}
 		\SendGeneratedFileXBand{I\_STBY\_2\_OPE\_M}{main}
 		\VerifyTxStatusXBand{Modulation}
@@ -218,7 +244,7 @@
 		\VerifyRfOutputPowerTmXBand{$\approx$ 3.2}
   		\TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28\ V}{$\approx$ \ValueCurrentDUTTX A}{\notaCorrienteEstimada}
 
-		\ConnectMeasurementProbeBetweenFilterAndDUT
+
 
 		\LoadOscilloscopeConfigFile{EWC30-TX-RIPPLE.set}{}
 		\adquicicionOSCStop
@@ -229,118 +255,165 @@
 		\adquicicionOSCStop
 		\TakeScreenShotOnOscilloscope
 		\SaveOscilloscopeRawValues
-		\TakeNoteOfCurrent{TX}{CH1}{\ValueIRippleDUTToFilter}
+		%\TakeNoteOfCurrent{TX}{CH1}{\ValueIRippleDUTToFilter}
+		\TakeNoteOfCurrentAndVoltageRippleOf{TX}{CH1}{CH2}{\ValueVRipple}{\ValueIRippleADHBoxToFilter}
+
+		\MeasureCarrierPowerModUsingPxi{40\ }{1} % de mezcla
+		\TakeScreenShotOnPxi  % de mezcla
+
 		%\adquicicionOSCStart
-		\ConnectMeasurementProbesToAdHocBoxForXBand
-		\LoadOscilloscopeConfigFile{EWC30-TX-RUN.set}{}{}
+		%\ConnectMeasurementProbesToAdHocBoxForXBand
+		%\LoadOscilloscopeConfigFile{EWC30-TX-RUN.set}{}{}
 		%\WaitUntilTxFinishedOnCegse
 		%\StopIngestonInCortexHdr
 		\ChangeTxStatusTo{I\string_OPE\string_2\string_STBY\string_M }{standby}
 		\VerifyTxStatusXBand{Standby}
-		\StopXB
+		%\StopXB
+		\WaitUntilTxFinishedOnCegse
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-   %\SectionHeaderWithReset{File generation for data transmission}
-   %   \GenerateDownlinkFileXBand{1000000 ($\approx$135 seconds)}{1000000}{Data-885840\_120s\_VCh01\_payload.bin}{}
+%    \SectionHeaderWithReset{File generation for data transmission}
+%      \GenerateDownlinkFileXBand{1000000 ($\approx$135 seconds)}{1000000}{Data-885840\_120s\_VCh01\_payload.bin}{}
 
-	\SectionHeaderWithReset{RF measurements with the PXI Spectrum Analyzer and Data Downlink test}
-   		\VerifyTemperature{O\string_TX\string_TEMP1}{}
-		\SendGeneratedFileXBand{I\_STBY\_2\_OPE\_R}{redundant}
-		\VerifyTxStatusXBand{Modulation}
-		\CheckLookCortexHDR
-    	\StartIngestionInCortexHdr
-		\VerifyRxSecondaryVoltageRFXBand % mezcla
-		\VerifyRxSecondaryVoltageNUMXBand % mezcla
-		\VerifyClkLockedStatus{ON}
-		\VerifyMmuClkStatus{ON} % de mezcla
-		%\VerifyRfOutputPowerTmXBand{$\approx$ 3.2} % estaba antes
-		%\LoadOscilloscopeConfigFile{EWC30-TX-RIPPLE.set}{}{}
-		%\adquicicionOSCStop
-		%\TakeScreenShotOnOscilloscope
-		%\SaveOscilloscopeRawValues
-		%\adquicicionOSCStart
-		%\ChangeTimeConf
-		%\adquicicionOSCStop
-		%\TakeScreenShotOnOscilloscope
-		%\SaveOscilloscopeRawValues
-		%\TakeNoteOfCurrentAndVoltageRippleOf{TX}{CH1}{CH2}{542\ mVpp}{750\ mApp}
-		%\adquicicionOSCStart
+% 	\SectionHeaderWithReset{RF measurements with the PXI Spectrum Analyzer and Data Downlink test}
+%    		\VerifyTemperature{O\string_TX\string_TEMP1}{}
+% 		\SendGeneratedFileXBand{I\_STBY\_2\_OPE\_R}{redundant}
+% 		\VerifyTxStatusXBand{Modulation}
+% 		\CheckLookCortexHDR
+%     	\StartIngestionInCortexHdr
+% 		\VerifyRxSecondaryVoltageRFXBand % mezcla
+% 		\VerifyRxSecondaryVoltageNUMXBand % mezcla
+% 		\VerifyClkLockedStatus{ON}
+% 		\VerifyMmuClkStatus{ON} % de mezcla
+% 		%\VerifyRfOutputPowerTmXBand{$\approx$ 3.2} % estaba antes
+% 		%\LoadOscilloscopeConfigFile{EWC30-TX-RIPPLE.set}{}{}
+% 		%\adquicicionOSCStop
+% 		%\TakeScreenShotOnOscilloscope
+% 		%\SaveOscilloscopeRawValues
+% 		%\adquicicionOSCStart
+% 		%\ChangeTimeConf
+% 		%\adquicicionOSCStop
+% 		%\TakeScreenShotOnOscilloscope
+% 		%\SaveOscilloscopeRawValues
+% 		%\TakeNoteOfCurrentAndVoltageRippleOf{TX}{CH1}{CH2}{542\ mVpp}{750\ mApp}
+% 		%\adquicicionOSCStart
         
-		\VerifyRfOutputPowerTmXBand{$\approx$ 3.2} % de mezcla
-		\TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28\ V}{$\approx$ \ValueCurrentDUTTX A}{\notaCorrienteEstimada}
-		\MeasureCarrierPowerModUsingPxi{40\ }{1} % de mezcla
-		\TakeScreenShotOnPxi  % de mezcla
-		\ConfigBandWidthPXI   % de mezcla
-		\MeasureOccupiedBandwidthUsingPxi{205} % de mezcla
-		\TakeScreenShotOnPxi  % de mezcla
+% 		\VerifyRfOutputPowerTmXBand{$\approx$ 3.2} % de mezcla
+% 		\TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28\ V}{$\approx$ \ValueCurrentDUTTX A}{\notaCorrienteEstimada}
+% 		\MeasureCarrierPowerModUsingPxi{40\ }{1} % de mezcla
+% 		\TakeScreenShotOnPxi  % de mezcla
+% 		\ConfigBandWidthPXI   % de mezcla
+% 		\MeasureOccupiedBandwidthUsingPxi{205} % de mezcla
+% 		\TakeScreenShotOnPxi  % de mezcla
 
 
 
-		\WaitUntilTxFinishedOnCegse
-		\StopIngestonInCortexHdr
-		\MeasureLOLeakageUsingPxi % de mezcla
-		\ChangeTxStatusTo{I\string_OPE\string_2\string_STBY\string_R }{standby} % de mezcla
-		%\ChangeTxStatusTo{I\string_OPE\string_2\string_STBY\string_M }{standby}
-		\VerifyTxStatusXBand{Standby} % de mezcla
-		%\VerifyTxStatusXBand{Standby}
+% 		\WaitUntilTxFinishedOnCegse
+% 		\StopIngestonInCortexHdr
+% 		\MeasureLOLeakageUsingPxi % de mezcla
+% 		\ChangeTxStatusTo{I\string_OPE\string_2\string_STBY\string_R }{standby} % de mezcla
+% 		%\ChangeTxStatusTo{I\string_OPE\string_2\string_STBY\string_M }{standby}
+% 		\VerifyTxStatusXBand{Standby} % de mezcla
+% 		%\VerifyTxStatusXBand{Standby}
 
-	\SectionHeaderWithReset{Verify received data}
-		\VerifyNumberOfIdlesFramesReceivedInCortexHdr
-		\VerifyNumberOfFramesReceivedVCOneInCortexHdr{1}{885840}
-		\StartDataRFFlow{1800}
-		\WaitForDataFlowExecution
-		\LoginToCCM
-		\GoToProductsOnCCM
-		\FindXBandProductOnCCM
-		\DownloadIdentifiedProductFromCCM{}
-		\RemoveTransportLayer{X Band}{885840}
-		\CompareDownlinkPayloadFiles{EWC30}{\fileXbCompare}
+% 	\SectionHeaderWithReset{Verify received data}
+% 		\VerifyNumberOfIdlesFramesReceivedInCortexHdr
+% 		\VerifyNumberOfFramesReceivedVCOneInCortexHdr{1}{885840}
+% 		\StartDataRFFlow{1800}
+% 		\WaitForDataFlowExecution
+% 		\LoginToCCM
+% 		\GoToProductsOnCCM
+% 		\FindXBandProductOnCCM
+% 		\DownloadIdentifiedProductFromCCM{}
+% 		\RemoveTransportLayer{X Band}{885840}
+% 		\CompareDownlinkPayloadFiles{EWC30}{\fileXbCompare}
 		
-    % \SectionHeaderWithReset{RF measurements with the PXI Spectrum Analyzer}
-	% 	\VerifyTemperature{O\string_TX\string_TEMP1}{}
-	% 	\SendGeneratedFileXBand{I\_STBY\_2\_OPE\_R}{redundant}
-	% 	\VerifyTxStatusXBand{Modulation}
-	% 	\CheckLookCortexHDR
-	% 	\VerifyRxSecondaryVoltageRFXBand
-	% 	\VerifyRxSecondaryVoltageNUMXBand
-	% 	\VerifyClkLockedStatus{ON}
-	% 	\VerifyMmuClkStatus{ON}
-	% 	\VerifyRfOutputPowerTmXBand{$\approx$ 3.2}
-	% 	\MeasureCarrierPowerModUsingPxi{40\ }{1}
-	% 	\TakeScreenShotOnPxi 
-	% 	\ConfigBandWidthPXI
-	% 	\MeasureOccupiedBandwidthUsingPxi{205}
-	% 	\TakeScreenShotOnPxi 
-	% 	\WaitUntilTxFinishedOnCegse
-	% 	\MeasureLOLeakageUsingPxi
-	% 	\ChangeTxStatusTo{I\string_OPE\string_2\string_STBY\string_R }{standby}
-	% 	\VerifyTxStatusXBand{Standby}
+%     \SectionHeaderWithReset{RF measurements with the PXI Spectrum Analyzer}
+% 		\VerifyTemperature{O\string_TX\string_TEMP1}{}
+% 		\SendGeneratedFileXBand{I\_STBY\_2\_OPE\_R}{redundant}
+% 		\VerifyTxStatusXBand{Modulation}
+% 		\CheckLookCortexHDR
+% 		\VerifyRxSecondaryVoltageRFXBand
+% 		\VerifyRxSecondaryVoltageNUMXBand
+% 		\VerifyClkLockedStatus{ON}
+% 		\VerifyMmuClkStatus{ON}
+% 		\VerifyRfOutputPowerTmXBand{$\approx$ 3.2}
+% 		\MeasureCarrierPowerModUsingPxi{40\ }{1}
+% 		\TakeScreenShotOnPxi 
+% 		\ConfigBandWidthPXI
+% 		\MeasureOccupiedBandwidthUsingPxi{205}
+% 		\TakeScreenShotOnPxi 
+% 		\WaitUntilTxFinishedOnCegse
+% 		\MeasureLOLeakageUsingPxi
+% 		\ChangeTxStatusTo{I\string_OPE\string_2\string_STBY\string_R }{standby}
+% 		\VerifyTxStatusXBand{Standby}
 
-	\SectionHeaderWithReset{DUT Turn Off}
-		\LoadOscilloscopeConfigFile{EWC30-TX-OFF.set}{}
-		\PressSingleOnOscilloscope
-		\TurnOnOffVbusXBand{off}{}
-		\TakeScreenShotOnOscilloscope
-		\MeasurePowerDownCurrentOn{CH1}
-		\SaveOscilloscopeRawValues
+	% \SectionHeaderWithReset{DUT Turn Off}
+	% 	%\LoadOscilloscopeConfigFile{EWC30-TX-OFF.set}{}
+	% 	%\PressSingleOnOscilloscope
+	% 	\TurnOnOffVbusXBand{off}{}
+	% 	%\TakeScreenShotOnOscilloscope
+	% 	%\MeasurePowerDownCurrentOn{CH1}
+	% 	%\SaveOscilloscopeRawValues
 	
-	\SectionHeaderWithReset{CEGSE SW Shutdown}
-		\StopCegseSW{}
+	% \SectionHeaderWithReset{CEGSE SW Shutdown}
+	% 	\StopCegseSW{}
+
+    
+    	%%%%%%update %%
+	\SectionHeaderWithReset{CEGSE power off (PXI and Ad-Hoc Box)}
+	\TurnOnOffVbusXBand{off}{}
+	\StopCegseSW{}
+	\TurnOnOffPSU{off}
+	\DisablePowerSupplyOutput
+	\TurnOffMainSwitch
+	\PowerOffPxi	
+	%\ConfigDatalogger
+	\SectionHeaderWithReset{DB-15 BOB disconnection and DUT connection}
+	 \DisconnectTestHarnessToBreakOutBox{\NuevoHarnessDos}{male}
+	 \DisconnectTestHarnessToBreakOutBox{\NuevoHarnessCuatro}{female}
+	 \DisconnectHarnessFromEMIEMCFilterOutput{\NuevoHarnessCuatro}
+	 \ConnectHarnessToEMIEMCFilterOutput{\NuevoHarnessDos} % Dos
+
+    
+		%\ConnectTestHarnessToBreakOutBox{\NuevoHarnessCuatro}{DB-15 BOB}{female}
+        
+		% \ConnectHarnessToAdboxPowerSupplyOutput{\NuevoHarnessUno}
+		% \ConnectHarnessToEMIEMCFilterInput{\NuevoHarnessUno}
+
+		% \ConnectHarnessToEMIEMCFilterOutput{\NuevoHarnessDos} % Dos
+
+		% \ConnectTestHarnessToDutHarness{\NuevoHarnessDos}{\NuevoHarnessTres}
+		% \ConnectTestHarnessToBreakOutBox{\NuevoHarnessTres}{DB-15 BOB}{female}
+
+	%%%%%%update %%
+	\SectionHeaderWithReset{Power-on \comEgse{}}
+		\TurnOnMainSwitch
+		\VerifyPowerSupplyConfiguration{3 A}
+		\EnablePowerSupplyOutput
+		\TurnOnOffPSU{on}
+		\PowerOnPxi
+		\RDPToPXIFromThinClient{\thinDT A}
+	
 
 	\SectionHeaderWithReset{Collect Evidences}
 		\CopyCegseLogsForEvicences{\subprocid}{}
 		\CopyOscilloscopeScreenShotsForEvidences
-		\GetTempAndHumidityFromDatalogger
+	%	\GetTempAndHumidityFromDatalogger
 		%\ConnectPendriveTo{oscilloscope}
 
 	\SectionHeaderWithReset{Final Steps}
-		\SetReduntanSideOnXbmaDisableMandC
+		%\SetReduntanSideOnXbmaDisableMandC
 		\RegisterTempAndHumidity
-		\DisconnectRfCableFromDwlTpOfCegse{W15}{}
-		\DisconnectCableFromDcBlock{W15}{} 
+		\DisconnectRfCableFromDwlTpOfCegse{W15}{\pasarSiDespues}
+		\DisconnectCableFromDcBlock{W15}{\pasarSiDespues} 
 		\ClosePXISA
+		\ConnectMeasurementProbesToAdHocBoxForXBand	
+		\ConnectPendriveTo{Oscilloscope}
+	
+
 		%\ClosePXIM 
 
 \end{stepstable}

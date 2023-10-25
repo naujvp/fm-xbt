@@ -17,38 +17,38 @@
 \contentsline {section}{\numberline {5}SB1FS-COM-F-012\ Aliveness and Functional Test\xspace }{28}{section.5}%
 \contentsline {subsection}{\numberline {5.1}{SB1FS-COM-F-012}-01{} Setup and Configuration}{30}{subsection.5.1}%
 \contentsline {subsection}{\numberline {5.2}{SB1FS-COM-F-012}-02\ Inrush and ripple measurement }{46}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}{SB1FS-COM-F-012}-02\ Aliveness and Functional Test}{74}{subsection.5.3}%
-\contentsline {subsection}{\numberline {5.4}{SB1FS-COM-F-012}-03\ Tests setup break}{95}{subsection.5.4}%
-\contentsline {section}{\numberline {6}SB1FS-COM-P-013\ Performance Test\xspace }{99}{section.6}%
-\contentsline {subsection}{\numberline {6.1}SB1FS-COM-P-013-01 Setup and configuration}{101}{subsection.6.1}%
-\contentsline {subsection}{\numberline {6.2}SB1FS-COM-P-013-02{} Spectrum, power and BW with PXA{}}{118}{subsection.6.2}%
-\contentsline {subsection}{\numberline {6.3}SB1FS-COM-P-013-03{} CCDF Measurement{}}{129}{subsection.6.3}%
-\contentsline {subsection}{\numberline {6.4}SB1FS-COM-P-013{}-04{} Frequency Stability{}}{139}{subsection.6.4}%
-\contentsline {subsection}{\numberline {6.5}SB1FS-COM-P-013{}-05{} Carrier Phase Noise}{152}{subsection.6.5}%
-\contentsline {subsection}{\numberline {6.6}SB1FS-COM-P-013-06 Optimum filter confirmation And RF characterization with VSA and Cortex}{166}{subsection.6.6}%
-\contentsline {subsection}{\numberline {6.7}SB1FS-COM-P-013-07 BER measurement}{183}{subsection.6.7}%
-\contentsline {subsection}{\numberline {6.8}SB1FS-COM-P-013-08{} Spurious in DSN Band}{227}{subsection.6.8}%
-\contentsline {subsection}{\numberline {6.9}SB1FS-COM-P-013-09{} Tests Setup break{}}{238}{subsection.6.9}%
-\contentsline {section}{\numberline {A}RF Link budget}{242}{appendix.Alph1}%
-\contentsline {section}{\numberline {B}Test elements list}{249}{appendix.Alph2}%
-\contentsline {section}{\numberline {C}Test items characteristics}{253}{appendix.Alph3}%
-\contentsline {subsection}{\numberline {C.1}XRF4.02 N m to N m 5m Harness}{253}{subsection.Alph3.1}%
-\contentsline {subsection}{\numberline {C.2}XRF3.60 N m to SMA m 10m Harness}{254}{subsection.Alph3.2}%
-\contentsline {subsection}{\numberline {C.3}SRF3.02 N m to SMA m 10m Harness}{254}{subsection.Alph3.3}%
-\contentsline {subsection}{\numberline {C.4}W2 SMA m to SMA m 55.1cm Harness}{255}{subsection.Alph3.4}%
-\contentsline {subsection}{\numberline {C.5}W3 SMA m to SMA m 20cm Harness}{255}{subsection.Alph3.5}%
-\contentsline {subsection}{\numberline {C.6}W4 SMA m to SMA m 37.6cm Harness}{256}{subsection.Alph3.6}%
-\contentsline {subsection}{\numberline {C.7}W5 SMA m to SMA m 50cm Harness}{256}{subsection.Alph3.7}%
-\contentsline {subsection}{\numberline {C.8}W6 N m to SMA m 80cm Harness}{257}{subsection.Alph3.8}%
-\contentsline {subsection}{\numberline {C.9}W7 SMA f to SMA m 34.8cm Harness}{257}{subsection.Alph3.9}%
-\contentsline {subsection}{\numberline {C.10}W8 SMA f to SMA m 34.8cm Harness}{258}{subsection.Alph3.10}%
-\contentsline {subsection}{\numberline {C.11}W10 SMA m to SMA m 50cm Harness}{259}{subsection.Alph3.11}%
-\contentsline {subsection}{\numberline {C.12}W15 SMA m to SMA m 240cm Harness}{260}{subsection.Alph3.12}%
-\contentsline {subsection}{\numberline {C.13}Fixed Attenuator BW-N20W20+}{261}{subsection.Alph3.13}%
-\contentsline {subsection}{\numberline {C.14}Coupler bi-directional ZGBDC35-93HP+}{262}{subsection.Alph3.14}%
-\contentsline {subsection}{\numberline {C.15}Variable Attenuator 8496B-001 (0 ATT)}{264}{subsection.Alph3.15}%
-\contentsline {subsection}{\numberline {C.16}DC-BLOCK PE8213}{265}{subsection.Alph3.16}%
-\contentsline {subsection}{\numberline {C.17}DC-BLOCK PE8210}{265}{subsection.Alph3.17}%
-\contentsline {subsection}{\numberline {C.18}Savers}{266}{subsection.Alph3.18}%
-\contentsline {subsection}{\numberline {C.19}Adapters N m to SMA f}{266}{subsection.Alph3.19}%
-\contentsline {subsection}{\numberline {C.20}Adapters SMA f to SMA f}{268}{subsection.Alph3.20}%
+\contentsline {subsection}{\numberline {5.3}{SB1FS-COM-F-012}-03\ Aliveness and Functional Test}{71}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}{SB1FS-COM-F-012}-03\ Tests setup break}{85}{subsection.5.4}%
+\contentsline {section}{\numberline {6}SB1FS-COM-P-013\ Performance Test\xspace }{89}{section.6}%
+\contentsline {subsection}{\numberline {6.1}SB1FS-COM-P-013-01 Setup and configuration}{91}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}SB1FS-COM-P-013-02{} Spectrum, power and BW with PXA{}}{108}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}SB1FS-COM-P-013-03{} CCDF Measurement{}}{119}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}SB1FS-COM-P-013{}-04{} Frequency Stability{}}{129}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}SB1FS-COM-P-013{}-05{} Carrier Phase Noise}{142}{subsection.6.5}%
+\contentsline {subsection}{\numberline {6.6}SB1FS-COM-P-013-06 Optimum filter confirmation And RF characterization with VSA and Cortex}{156}{subsection.6.6}%
+\contentsline {subsection}{\numberline {6.7}SB1FS-COM-P-013-07 BER measurement}{173}{subsection.6.7}%
+\contentsline {subsection}{\numberline {6.8}SB1FS-COM-P-013-08{} Spurious in DSN Band}{217}{subsection.6.8}%
+\contentsline {subsection}{\numberline {6.9}SB1FS-COM-P-013-09{} Tests Setup break{}}{228}{subsection.6.9}%
+\contentsline {section}{\numberline {A}RF Link budget}{232}{appendix.Alph1}%
+\contentsline {section}{\numberline {B}Test elements list}{239}{appendix.Alph2}%
+\contentsline {section}{\numberline {C}Test items characteristics}{243}{appendix.Alph3}%
+\contentsline {subsection}{\numberline {C.1}XRF4.02 N m to N m 5m Harness}{243}{subsection.Alph3.1}%
+\contentsline {subsection}{\numberline {C.2}XRF3.60 N m to SMA m 10m Harness}{244}{subsection.Alph3.2}%
+\contentsline {subsection}{\numberline {C.3}SRF3.02 N m to SMA m 10m Harness}{244}{subsection.Alph3.3}%
+\contentsline {subsection}{\numberline {C.4}W2 SMA m to SMA m 55.1cm Harness}{245}{subsection.Alph3.4}%
+\contentsline {subsection}{\numberline {C.5}W3 SMA m to SMA m 20cm Harness}{245}{subsection.Alph3.5}%
+\contentsline {subsection}{\numberline {C.6}W4 SMA m to SMA m 37.6cm Harness}{246}{subsection.Alph3.6}%
+\contentsline {subsection}{\numberline {C.7}W5 SMA m to SMA m 50cm Harness}{246}{subsection.Alph3.7}%
+\contentsline {subsection}{\numberline {C.8}W6 N m to SMA m 80cm Harness}{247}{subsection.Alph3.8}%
+\contentsline {subsection}{\numberline {C.9}W7 SMA f to SMA m 34.8cm Harness}{247}{subsection.Alph3.9}%
+\contentsline {subsection}{\numberline {C.10}W8 SMA f to SMA m 34.8cm Harness}{248}{subsection.Alph3.10}%
+\contentsline {subsection}{\numberline {C.11}W10 SMA m to SMA m 50cm Harness}{249}{subsection.Alph3.11}%
+\contentsline {subsection}{\numberline {C.12}W15 SMA m to SMA m 240cm Harness}{250}{subsection.Alph3.12}%
+\contentsline {subsection}{\numberline {C.13}Fixed Attenuator BW-N20W20+}{251}{subsection.Alph3.13}%
+\contentsline {subsection}{\numberline {C.14}Coupler bi-directional ZGBDC35-93HP+}{252}{subsection.Alph3.14}%
+\contentsline {subsection}{\numberline {C.15}Variable Attenuator 8496B-001 (0 ATT)}{254}{subsection.Alph3.15}%
+\contentsline {subsection}{\numberline {C.16}DC-BLOCK PE8213}{255}{subsection.Alph3.16}%
+\contentsline {subsection}{\numberline {C.17}DC-BLOCK PE8210}{255}{subsection.Alph3.17}%
+\contentsline {subsection}{\numberline {C.18}Savers}{256}{subsection.Alph3.18}%
+\contentsline {subsection}{\numberline {C.19}Adapters N m to SMA f}{256}{subsection.Alph3.19}%
+\contentsline {subsection}{\numberline {C.20}Adapters SMA f to SMA f}{258}{subsection.Alph3.20}%

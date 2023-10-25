@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.9.11)  24 OCT 2023 17:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.9.11)  25 OCT 2023 13:01
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -896,7 +896,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 30--32
  []
 
 [11]
-LaTeX Font Info:    Trying to load font information for TS1+phv on input line 88.
+LaTeX Font Info:    Trying to load font information for TS1+phv on input line 89.
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1phv.fd
 File: ts1phv.fd 2020/03/25 scalable font definitions for TS1/phv.
 ) [12] [13])
@@ -988,55 +988,35 @@ Overfull \hbox (4.24486pt too wide) in paragraph at lines 100--100
 
  (./secciones/SB1FS-COM-F-012-02.tex [45]
 <figuras/EWC30PXISetupA.png, id=162, 1495.989pt x 1660.5237pt>
- [46] [47] [48] [49] [50] [51] [52] [53] [54] [55] [56] [57] [58] [59] [60] [61] [62] [63] [64] [65] [66] [67] [68]
-Underfull \hbox (badness 10000) in paragraph at lines 297--297
-[]\T1/phv/m/n/8 Move down-loa-ded pro-ducts to C:\Users\EGSE COM\Documents\
- []
-
-[69]
-Overfull \hbox (8.80548pt too wide) in paragraph at lines 299--299
-\T1/phv/m/n/8 COMM-SS-FM\<session_ID>\SB1FS-COM-F-012\\T1/phv/b/n/8 Data-885840_-120s_-VCh01_-pay-load.bin  |
- []
-
-[70] [71]
-Underfull \hbox (badness 2035) in paragraph at lines 335--335
-[]\T1/phv/m/n/8 Save the fi-le down-loa-ded in the test evi-den-ce di-rec-tory of PXI: C:\Users\EGSE
- []
-
-
-Overfull \hbox (11.06944pt too wide) in paragraph at lines 335--335
-\T1/phv/m/n/8 COM\Documents\ COMM-SS-FM\<session_ID>\SB1FS-COM-F-012\SB1FS-COM-F-012-02.|
- []
-
-[72])
+ [46] [47] [48] [49] [50] [51] [52] [53] [54] [55] [56] [57] [58] [59] [60] [61] [62] [63] [64] [65] [66] [67] [68] [69])
 \openout6 = `CheckLists/SB1FS-COM-F-012-03.csv'.
 
- (./secciones/SB1FS-COM-F-012-03.tex [73]
-<figuras/EWC30PXISetupB.png, id=255, 1495.989pt x 1660.5237pt>
- [74] [75] [76] [77] [78] [79] [80] [81] [82] [83] [84] [85] [86] [87] [88] [89]
-Underfull \hbox (badness 10000) in paragraph at lines 180--180
+ (./secciones/SB1FS-COM-F-012-03.tex [70]
+<figuras/EWC30PXISetupB.png, id=245, 1495.989pt x 1660.5237pt>
+ [71] [72] [73] [74] [75] [76] [77] [78] [79] [80]
+Underfull \hbox (badness 10000) in paragraph at lines 182--182
 []\T1/phv/m/n/8 Move down-loa-ded pro-ducts to C:\Users\EGSE COM\Documents\
  []
 
-
-Overfull \hbox (8.80548pt too wide) in paragraph at lines 182--182
+[81]
+Overfull \hbox (8.80548pt too wide) in paragraph at lines 184--184
 \T1/phv/m/n/8 COMM-SS-FM\<session_ID>\SB1FS-COM-F-012\\T1/phv/b/n/8 Data-885840_-120s_-VCh01_-pay-load.bin  |
  []
 
-[90] [91]
-Underfull \hbox (badness 2035) in paragraph at lines 218--218
+[82]
+Underfull \hbox (badness 2035) in paragraph at lines 220--220
 []\T1/phv/m/n/8 Save the fi-le down-loa-ded in the test evi-den-ce di-rec-tory of PXI: C:\Users\EGSE
  []
 
 
-Overfull \hbox (11.06944pt too wide) in paragraph at lines 218--218
-\T1/phv/m/n/8 COM\Documents\ COMM-SS-FM\<session_ID>\SB1FS-COM-F-012\SB1FS-COM-F-012-02.|
+Overfull \hbox (11.06944pt too wide) in paragraph at lines 220--220
+\T1/phv/m/n/8 COM\Documents\ COMM-SS-FM\<session_ID>\SB1FS-COM-F-012\SB1FS-COM-F-012-03.|
  []
 
-[92] [93])
+[83])
 \openout6 = `CheckLists/SB1FS-COM-F-012-04.csv'.
 
- (./secciones/SB1FS-COM-F-012-04.tex [94] [95] [96] [97]
+ (./secciones/SB1FS-COM-F-012-04.tex [84] [85] [86] [87]
 Underfull \hbox (badness 2035) in paragraph at lines 49--49
 []\T1/phv/m/n/8 Save the fi-le down-loa-ded in the test evi-den-ce di-rec-tory of PXI: C:\Users\EGSE
  []
@@ -1046,23 +1026,23 @@ Overfull \hbox (11.06944pt too wide) in paragraph at lines 49--49
 \T1/phv/m/n/8 COM\Documents\ COMM-SS-FM\<session_ID>\SB1FS-COM-F-012\SB1FS-COM-F-012-03.|
  []
 
-) [98]
+) [88]
 \openout6 = `CheckLists/SB1FS-COM-P-013.csv'.
 
  (./secciones/SB1FS-COM-P-013.tex
-<figuras/EWC30-PXA-Setup1.png, id=335, 1758.57pt x 1660.5237pt>
-<figuras/EWC30-PXA-Setup2.png, id=336, 1381.0797pt x 1660.5237pt>
-) [99] [100] (./secciones/SB1FS-COM-P-013-01-EWC30SetupConfig.tex [101] [102] [103] [104] [105] [106] [107] [108] [109] [110] [111] [112] [113] [114] [115] [116]) [117] (./secciones/SB1FS-COM-P-013-02-EWC30TXRFPXA.tex
+<figuras/EWC30-PXA-Setup1.png, id=303, 1758.57pt x 1660.5237pt>
+<figuras/EWC30-PXA-Setup2.png, id=304, 1381.0797pt x 1660.5237pt>
+) [89] [90] (./secciones/SB1FS-COM-P-013-01-EWC30SetupConfig.tex [91] [92] [93] [94] [95] [96] [97] [98] [99] [100] [101] [102] [103] [104] [105] [106]) [107] (./secciones/SB1FS-COM-P-013-02-EWC30TXRFPXA.tex
 Underfull \hbox (badness 4316) in paragraph at lines 51--52
 []\T1/phv/m/n/9 Execution of pro-ce-du-re \T1/phv/b/n/9 SB1FS-COM-P-013-01 Se-tup and Con-fi-gu-ra-tion \T1/phv/m/n/9 or
  []
 
-[118] [119] [120] [121]
+[108] [109] [110] [111]
 Underfull \hbox (badness 10000) in paragraph at lines 95--95
 \T1/phv/m/n/8 in \T1/cmtt/m/n/8 C:\Users\EGSE COM\Documents\ COMM-SS-FM\<session_ID>\SB1FS-COM-P-013\
  []
 
-<figuras/data_mod.png, id=411, 776.9025pt x 584.1825pt>
+<figuras/data_mod.png, id=379, 776.9025pt x 584.1825pt>
 
 Underfull \hbox (badness 10000) in paragraph at lines 104--104
 []\T1/phv/m/n/8 In the dis-pla-yed win-dow, se-lect the \T1/phv/b/n/8 pxa-screenshot \T1/phv/m/n/8 fol-der in
@@ -1083,9 +1063,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 105--105
 \T1/phv/m/n/8 D:\Users\Instrument\DesktopCOMM-SS-FM-PXA-config\SB1FS-COM-P-013\
  []
 
-[122] [123]
-<figuras/CHPower.png, id=418, 1451.4225pt x 909.3975pt>
- [124]
+[112] [113]
+<figuras/CHPower.png, id=386, 1451.4225pt x 909.3975pt>
+ [114]
 Underfull \hbox (badness 10000) in paragraph at lines 110--110
 []\T1/phv/m/n/8 In the dis-pla-yed win-dow, se-lect the \T1/phv/b/n/8 pxa-screenshot \T1/phv/m/n/8 fol-der in
  []
@@ -1105,7 +1085,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 111--111
 \T1/phv/m/n/8 D:\Users\Instrument\DesktopCOMM-SS-FM-PXA-config\SB1FS-COM-P-013\
  []
 
-<figuras/OBW.png, id=422, 1451.4225pt x 909.3975pt>
+<figuras/OBW.png, id=390, 1451.4225pt x 909.3975pt>
 
 Underfull \hbox (badness 10000) in paragraph at lines 116--116
 []\T1/phv/m/n/8 In the dis-pla-yed win-dow, se-lect the \T1/phv/b/n/8 pxa-screenshot \T1/phv/m/n/8 fol-der in
@@ -1126,12 +1106,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 117--117
 \T1/phv/m/n/8 D:\Users\Instrument\DesktopCOMM-SS-FM-PXA-config\SB1FS-COM-P-013\
  []
 
-[125] [126] [127]) [128] (./secciones/SB1FS-COM-P-013-03-EWC30TXCCDF.tex
+[115] [116] [117]) [118] (./secciones/SB1FS-COM-P-013-03-EWC30TXCCDF.tex
 Underfull \hbox (badness 4316) in paragraph at lines 48--49
 []\T1/phv/m/n/9 Execution of pro-ce-du-re \T1/phv/b/n/9 SB1FS-COM-P-013-01 Se-tup and Con-fi-gu-ra-tion \T1/phv/m/n/9 or
  []
 
-[129] [130] [131] [132]
+[119] [120] [121] [122]
 Underfull \hbox (badness 10000) in paragraph at lines 92--92
 \T1/phv/m/n/8 in \T1/cmtt/m/n/8 C:\Users\EGSE COM\Documents\ COMM-SS-FM\<session_ID>\SB1FS-COM-P-013\
  []
@@ -1156,9 +1136,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 101--101
 \T1/phv/m/n/8 D:\Users\Instrument\DesktopCOMM-SS-FM-PXA-config\SB1FS-COM-P-013\
  []
 
-[133] [134]
-<figuras/DATA-CCDF.png, id=455, 1927.2pt x 1087.06125pt>
- [135]
+[123] [124]
+<figuras/DATA-CCDF.png, id=423, 1927.2pt x 1087.06125pt>
+ [125]
 Underfull \hbox (badness 10000) in paragraph at lines 106--106
 []\T1/phv/m/n/8 In the dis-pla-yed win-dow, se-lect the \T1/phv/b/n/8 pxa-screenshot \T1/phv/m/n/8 fol-der in
  []
@@ -1178,12 +1158,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 107--107
 \T1/phv/m/n/8 D:\Users\Instrument\DesktopCOMM-SS-FM-PXA-config\SB1FS-COM-P-013\
  []
 
-[136] [137]) [138] (./secciones/SB1FS-COM-P-013-04-EWC30TXFreqStability.tex
+[126] [127]) [128] (./secciones/SB1FS-COM-P-013-04-EWC30TXFreqStability.tex
 Underfull \hbox (badness 4316) in paragraph at lines 62--63
 []\T1/phv/m/n/9 Execution of pro-ce-du-re \T1/phv/b/n/9 SB1FS-COM-P-013-01 Se-tup and Con-fi-gu-ra-tion \T1/phv/m/n/9 or
  []
 
-[139] [140] [141] [142] [143] [144]
+[129] [130] [131] [132] [133] [134]
 Underfull \hbox (badness 10000) in paragraph at lines 121--121
 []\T1/phv/m/n/8 In the dis-pla-yed win-dow, se-lect the \T1/phv/b/n/8 pxa-screenshot \T1/phv/m/n/8 fol-der in
  []
@@ -1193,22 +1173,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 121--121
 \T1/phv/m/n/8 D:\Users\Instrument\DesktopCOMM-SS-FM-PXA-config\SB1FS-COM-P-013\
  []
 
-[145]
+[135]
 Overfull \hbox (28.90202pt too wide) in paragraph at lines 125--125
 []\T1/phv/m/n/8 In the dis-pla-yed win-dow, brow-se to the \T1/phv/b/n/8 D:\Users\Instrument\Desktop\COMM-SS-FM-PXA-config|
  []
 
-[146]
+[136]
 Overfull \hbox (28.90202pt too wide) in paragraph at lines 153--153
 []\T1/phv/m/n/8 In the dis-pla-yed win-dow, brow-se to the \T1/phv/b/n/8 D:\Users\Instrument\Desktop\COMM-SS-FM-PXA-config|
  []
 
-[147] [148] [149] [150]) [151] (./secciones/SB1FS-COM-P-013-05-EWC30TXCarrierPhaseNoise.tex
+[137] [138] [139] [140]) [141] (./secciones/SB1FS-COM-P-013-05-EWC30TXCarrierPhaseNoise.tex
 Underfull \hbox (badness 4316) in paragraph at lines 61--62
 []\T1/phv/m/n/9 Execution of pro-ce-du-re \T1/phv/b/n/9 SB1FS-COM-P-013-01 Se-tup and Con-fi-gu-ra-tion \T1/phv/m/n/9 or
  []
 
-[152] [153] [154] [155] [156] [157]
+[142] [143] [144] [145] [146] [147]
 Underfull \hbox (badness 10000) in paragraph at lines 120--120
 []\T1/phv/m/n/8 In the dis-pla-yed win-dow, se-lect the \T1/phv/b/n/8 pxa-screenshot \T1/phv/m/n/8 fol-der in
  []
@@ -1218,14 +1198,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 120--120
 \T1/phv/m/n/8 D:\Users\Instrument\DesktopCOMM-SS-FM-PXA-config\SB1FS-COM-P-013\
  []
 
-[158]
+[148]
 Overfull \hbox (28.90202pt too wide) in paragraph at lines 124--124
 []\T1/phv/m/n/8 In the dis-pla-yed win-dow, brow-se to the \T1/phv/b/n/8 D:\Users\Instrument\Desktop\COMM-SS-FM-PXA-config|
  []
 
-[159]
-<figuras/data-lol-phase-noise.png, id=536, 1451.4225pt x 909.3975pt>
- [160] [161]
+[149]
+<figuras/data-lol-phase-noise.png, id=503, 1451.4225pt x 909.3975pt>
+ [150] [151]
 Underfull \hbox (badness 10000) in paragraph at lines 160--160
 []\T1/phv/m/n/8 In the dis-pla-yed win-dow, se-lect the \T1/phv/b/n/8 pxa-screenshot \T1/phv/m/n/8 fol-der in
  []
@@ -1265,12 +1245,12 @@ Overfull \hbox (41.06079pt too wide) in paragraph at lines 164--164
 \T1/phv/m/n/8 D:\Users\Instrument\Desktop\COMM-SS-FM-PXA-config\SB1FS-COM-P-013\SB1FS-COM-P-013-05|
  []
 
-[162] [163] [164]) [165] (./secciones/SB1FS-COM-P-013-06-EWC30TXFilterTuning.tex
+[152] [153] [154]) [155] (./secciones/SB1FS-COM-P-013-06-EWC30TXFilterTuning.tex
 Underfull \hbox (badness 4316) in paragraph at lines 88--89
 []\T1/phv/m/n/9 Execution of pro-ce-du-re \T1/phv/b/n/9 SB1FS-COM-P-013-01 Se-tup and Con-fi-gu-ra-tion \T1/phv/m/n/9 or
  []
 
-[166]
+[156]
 Overfull \hbox (27.03795pt too wide) in paragraph at lines 115--115
 [] |
  []
@@ -1280,14 +1260,14 @@ Overfull \hbox (27.03795pt too wide) in paragraph at lines 115--125
  [] |
  []
 
-[167] [168] [169]
-<figuras/cortex-hdr-filter-tuning.png, id=569, 1445.4pt x 813.0375pt>
- [170] [171] [172]
+[157] [158] [159]
+<figuras/cortex-hdr-filter-tuning.png, id=537, 1445.4pt x 813.0375pt>
+ [160] [161] [162]
 Underfull \hbox (badness 10000) in paragraph at lines 163--163
 \T1/phv/m/n/8 in \T1/cmtt/m/n/8 C:\Users\EGSE COM\Documents\ COMM-SS-FM\<session_ID>\SB1FS-COM-P-013\
  []
 
-[173]
+[163]
 Underfull \hbox (badness 10000) in paragraph at lines 173--173
 []\T1/phv/m/n/8 In the dis-pla-yed win-dow, find and se-lect the \T1/phv/b/n/8 pxa-recording \T1/phv/m/n/8 fol-der in
  []
@@ -1297,8 +1277,8 @@ Overfull \hbox (41.06079pt too wide) in paragraph at lines 173--173
 \T1/phv/m/n/8 D:\Users\Instrument\Desktop\COMM-SS-FM-PXA-config\SB1FS-COM-P-013\SB1FS-COM-P-013-06|
  []
 
-<figuras/downlink_EWC30.png, id=582, 776.14969pt x 584.1825pt>
-[174]
+<figuras/downlink_EWC30.png, id=551, 776.14969pt x 584.1825pt>
+[164]
 Underfull \hbox (badness 10000) in paragraph at lines 176--176
 []\T1/phv/m/n/8 In the dis-pla-yed win-dow, find and se-lect the fol-der pxa-screenshot in
  []
@@ -1313,19 +1293,19 @@ Overfull \hbox (49.65056pt too wide) in paragraph at lines 176--177
  []\T1/phv/m/n/8 pauseplayHW1.png |
  []
 
-<figuras/restartIFR-HDR.png, id=586, 78.2925pt x 36.135pt>
-[175]
+<figuras/restartIFR-HDR.png, id=555, 78.2925pt x 36.135pt>
+[165]
 Overfull \hbox (1.4865pt too wide) in paragraph at lines 184--184
 []\T1/phv/m/n/8 YYYYMMDDHHMMSS:  |
  []
 
-<figuras/clientHDR.png, id=591, 58.2175pt x 82.3075pt>
-[176]
+<figuras/clientHDR.png, id=559, 58.2175pt x 82.3075pt>
+[166]
 Overfull \hbox (1.4865pt too wide) in paragraph at lines 195--195
 []\T1/phv/m/n/8 YYYYMMDDHHMMSS:  |
  []
 
-[177] [178] [179] [180]
+[167] [168] [169] [170]
 Overfull \hbox (10.26935pt too wide) in paragraph at lines 225--225
 \T1/phv/m/n/8 COM/Documents/COMM-SS-FM/<session_ID>/SB1FS-COM-P-013/SB1FS-COM-P-013-06/  |
  []
@@ -1335,13 +1315,13 @@ Overfull \hbox (10.26935pt too wide) in paragraph at lines 225--225
 \T1/phv/m/n/8 COM/Documents/COMM-SS-FM/<session_ID>/SB1FS-COM-P-013/SB1FS-COM-P-013-06/  |
  []
 
-[181]) [182] (./secciones/SB1FS-COM-P-013-07-EWC30TXOneChannel.tex
+[171]) [172] (./secciones/SB1FS-COM-P-013-07-EWC30TXOneChannel.tex
 Underfull \hbox (badness 4316) in paragraph at lines 65--66
 []\T1/phv/m/n/9 Execution of pro-ce-du-re \T1/phv/b/n/9 SB1FS-COM-P-013-01 Se-tup and Con-fi-gu-ra-tion \T1/phv/m/n/9 or
  []
 
-[183] [184] [185] [186]
-<figuras/cortex-hdr-one-channel.png, id=626, 1445.4pt x 813.0375pt>
+[173] [174] [175] [176]
+<figuras/cortex-hdr-one-channel.png, id=595, 1445.4pt x 813.0375pt>
 
 Underfull \hbox (badness 1194) in paragraph at lines 106--106
 []\T1/phv/m/n/8 RF = 8106.0 MHz
@@ -1352,19 +1332,19 @@ Underfull \hbox (badness 1194) in paragraph at lines 106--106
 []\T1/phv/m/n/8 RF = 8269.0 MHz
  []
 
-[187] [188] [189] [190] [191]
+[177] [178] [179] [180] [181]
 Underfull \hbox (badness 10000) in paragraph at lines 135--135
 \T1/phv/m/n/8 in \T1/cmtt/m/n/8 C:\Users\EGSE COM\Documents\ COMM-SS-FM\<session_ID>\SB1FS-COM-P-013\
  []
 
-[192]
-<figuras/SignalAnalysis.png, id=646, 607.26875pt x 465.74pt>
- [193] [194]
+[182]
+<figuras/SignalAnalysis.png, id=615, 607.26875pt x 465.74pt>
+ [183] [184]
 Overfull \hbox (1.4865pt too wide) in paragraph at lines 151--151
 []\T1/phv/m/n/8 YYYYMMDDHHMMSS:  |
  []
 
-[195] [196]
+[185] [186]
 Underfull \hbox (badness 10000) in paragraph at lines 160--160
 []\T1/phv/m/n/8 Move down-loa-ded pro-ducts to C:\Users\EGSE COM\Documents\
  []
@@ -1374,17 +1354,17 @@ Overfull \hbox (6.45358pt too wide) in paragraph at lines 161--161
 []\T1/phv/m/n/8 Ber.exe -m da-ta -i ebno6\SB1_-XBandN<X>VC01_-<pas-sID>_-<YYYYMMDDTHHMMSS>.bin|
  []
 
-[197]
+[187]
 Underfull \hbox (badness 10000) in paragraph at lines 170--170
 \T1/phv/m/n/8 in \T1/cmtt/m/n/8 C:\Users\EGSE COM\Documents\ COMM-SS-FM\<session_ID>\SB1FS-COM-P-013\
  []
 
-[198] [199] [200]
+[188] [189] [190]
 Overfull \hbox (1.4865pt too wide) in paragraph at lines 187--187
 []\T1/phv/m/n/8 YYYYMMDDHHMMSS:  |
  []
 
-[201] [202]
+[191] [192]
 Underfull \hbox (badness 10000) in paragraph at lines 196--196
 []\T1/phv/m/n/8 Move down-loa-ded pro-ducts to C:\Users\EGSE COM\Documents\
  []
@@ -1394,17 +1374,17 @@ Overfull \hbox (6.45358pt too wide) in paragraph at lines 197--197
 []\T1/phv/m/n/8 Ber.exe -m da-ta -i ebno5\SB1_-XBandN<X>VC01_-<pas-sID>_-<YYYYMMDDTHHMMSS>.bin|
  []
 
-[203]
+[193]
 Underfull \hbox (badness 10000) in paragraph at lines 207--207
 \T1/phv/m/n/8 in \T1/cmtt/m/n/8 C:\Users\EGSE COM\Documents\ COMM-SS-FM\<session_ID>\SB1FS-COM-P-013\
  []
 
-[204] [205] [206]
+[194] [195] [196]
 Overfull \hbox (1.4865pt too wide) in paragraph at lines 223--223
 []\T1/phv/m/n/8 YYYYMMDDHHMMSS:  |
  []
 
-[207] [208]
+[197] [198]
 Underfull \hbox (badness 10000) in paragraph at lines 235--235
 []\T1/phv/m/n/8 Move down-loa-ded pro-ducts to C:\Users\EGSE COM\Documents\
  []
@@ -1414,17 +1394,17 @@ Overfull \hbox (6.45358pt too wide) in paragraph at lines 236--236
 []\T1/phv/m/n/8 Ber.exe -m da-ta -i ebno4\SB1_-XBandN<X>VC01_-<pas-sID>_-<YYYYMMDDTHHMMSS>.bin|
  []
 
-[209]
+[199]
 Underfull \hbox (badness 10000) in paragraph at lines 247--247
 \T1/phv/m/n/8 in \T1/cmtt/m/n/8 C:\Users\EGSE COM\Documents\ COMM-SS-FM\<session_ID>\SB1FS-COM-P-013\
  []
 
-[210] [211] [212]
+[200] [201] [202]
 Overfull \hbox (1.4865pt too wide) in paragraph at lines 264--264
 []\T1/phv/m/n/8 YYYYMMDDHHMMSS:  |
  []
 
-[213] [214]
+[203] [204]
 Underfull \hbox (badness 10000) in paragraph at lines 276--276
 []\T1/phv/m/n/8 Move down-loa-ded pro-ducts to C:\Users\EGSE COM\Documents\
  []
@@ -1434,17 +1414,17 @@ Overfull \hbox (6.45358pt too wide) in paragraph at lines 277--277
 []\T1/phv/m/n/8 Ber.exe -m da-ta -i ebno3\SB1_-XBandN<X>VC01_-<pas-sID>_-<YYYYMMDDTHHMMSS>.bin|
  []
 
-[215]
+[205]
 Underfull \hbox (badness 10000) in paragraph at lines 286--286
 \T1/phv/m/n/8 in \T1/cmtt/m/n/8 C:\Users\EGSE COM\Documents\ COMM-SS-FM\<session_ID>\SB1FS-COM-P-013\
  []
 
-[216] [217] [218]
+[206] [207] [208]
 Overfull \hbox (1.4865pt too wide) in paragraph at lines 303--303
 []\T1/phv/m/n/8 YYYYMMDDHHMMSS:  |
  []
 
-[219] [220]
+[209] [210]
 Underfull \hbox (badness 10000) in paragraph at lines 315--315
 []\T1/phv/m/n/8 Move down-loa-ded pro-ducts to C:\Users\EGSE COM\Documents\
  []
@@ -1454,7 +1434,7 @@ Overfull \hbox (6.45358pt too wide) in paragraph at lines 316--316
 []\T1/phv/m/n/8 Ber.exe -m da-ta -i ebno2\SB1_-XBandN<X>VC01_-<pas-sID>_-<YYYYMMDDTHHMMSS>.bin|
  []
 
-[221] [222]
+[211] [212]
 Overfull \hbox (10.26935pt too wide) in paragraph at lines 338--338
 \T1/phv/m/n/8 COM/Documents/COMM-SS-FM/<session_ID>/SB1FS-COM-P-013/SB1FS-COM-P-013-07/  |
  []
@@ -1464,7 +1444,7 @@ Overfull \hbox (10.26935pt too wide) in paragraph at lines 338--338
 \T1/phv/m/n/8 COM/Documents/COMM-SS-FM/<session_ID>/SB1FS-COM-P-013/SB1FS-COM-P-013-07/  |
  []
 
-[223] [224] [225]) [226] (./secciones/SB1FS-COM-P-013-08-EWC30TXDNSSpurious.tex
+[213] [214] [215]) [216] (./secciones/SB1FS-COM-P-013-08-EWC30TXDNSSpurious.tex
 Underfull \hbox (badness 1642) in paragraph at lines 41--42
 []\T1/phv/m/n/9 EWC30TX-FM-Spurious-DSN-10KHz-v1.0.state: Da-ta Down-linK Spu-rious in
  []
@@ -1474,12 +1454,12 @@ Underfull \hbox (badness 4316) in paragraph at lines 48--49
 []\T1/phv/m/n/9 Execution of pro-ce-du-re \T1/phv/b/n/9 SB1FS-COM-P-013-01 Se-tup and Con-fi-gu-ra-tion \T1/phv/m/n/9 or
  []
 
-[227] [228] [229] [230]
+[217] [218] [219] [220]
 Underfull \hbox (badness 10000) in paragraph at lines 88--88
 \T1/phv/m/n/8 in \T1/cmtt/m/n/8 C:\Users\EGSE COM\Documents\ COMM-SS-FM\<session_ID>\SB1FS-COM-P-013\
  []
 
-[231]
+[221]
 Underfull \hbox (badness 10000) in paragraph at lines 99--99
 []\T1/phv/m/n/8 In the dis-pla-yed win-dow, se-lect the \T1/phv/b/n/8 pxa-screenshot \T1/phv/m/n/8 fol-der in
  []
@@ -1489,7 +1469,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 99--99
 \T1/phv/m/n/8 D:\Users\Instrument\DesktopCOMM-SS-FM-PXA-config\SB1FS-COM-P-013\
  []
 
-[232]
+[222]
 Underfull \hbox (badness 10000) in paragraph at lines 103--103
 []\T1/phv/m/n/8 In the dis-pla-yed win-dow, se-lect the \T1/phv/b/n/8 pxa-screenshot \T1/phv/m/n/8 fol-der in
  []
@@ -1509,7 +1489,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 104--104
 \T1/phv/m/n/8 D:\Users\Instrument\DesktopCOMM-SS-FM-PXA-config\SB1FS-COM-P-013\
  []
 
-[233]
+[223]
 Underfull \hbox (badness 10000) in paragraph at lines 106--106
 []\T1/phv/m/n/8 In the dis-pla-yed win-dow, se-lect the \T1/phv/b/n/8 pxa-screenshot \T1/phv/m/n/8 fol-der in
  []
@@ -1519,7 +1499,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 106--106
 \T1/phv/m/n/8 D:\Users\Instrument\Desktop\COMM-SS-FM-PXA-config\SB1FS-COM-P-013\
  []
 
-[234]
+[224]
 Underfull \hbox (badness 10000) in paragraph at lines 111--111
 []\T1/phv/m/n/8 In the dis-pla-yed win-dow, se-lect the \T1/phv/b/n/8 pxa-screenshot \T1/phv/m/n/8 fol-der in
  []
@@ -1549,12 +1529,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 114--114
 \T1/phv/m/n/8 D:\Users\Instrument\Desktop\COMM-SS-FM-PXA-config\SB1FS-COM-P-013\
  []
 
-[235] [236]) [237] (./secciones/SB1FS-COM-P-013-09-EWC30Disconnection.tex
+[225] [226]) [227] (./secciones/SB1FS-COM-P-013-09-EWC30Disconnection.tex
 Underfull \hbox (badness 4316) in paragraph at lines 46--47
 []\T1/phv/m/n/9 Execution of pro-ce-du-re \T1/phv/b/n/9 SB1FS-COM-P-013-01 Se-tup and Con-fi-gu-ra-tion \T1/phv/m/n/9 or
  []
 
-[238] [239] [240]
+[228] [229] [230]
 Underfull \hbox (badness 2035) in paragraph at lines 86--86
 []\T1/phv/m/n/8 Save the fi-le down-loa-ded in the test evi-den-ce di-rec-tory of PXI: C:\Users\EGSE
  []
@@ -1564,19 +1544,19 @@ Overfull \hbox (11.96535pt too wide) in paragraph at lines 86--86
 \T1/phv/m/n/8 COM\Documents\ COMM-SS-FM\<session_ID>\SB1FS-COM-P-013\SB1FS-COM-P-013-09.|
  []
 
-) [241] (./secciones/rf-link-budget.tex
-<tables/Ensayos COMM-SS Link Budget - X-Band Data N1 Downlink.pdf, id=804, page=1, 597.23125pt x 845.1575pt>
- [242]
-<tables/Ensayos COMM-SS Link Budget - X-Band Data N2 Downlink.pdf, id=808, page=1, 597.23125pt x 845.1575pt>
- [243]
-<tables/Ensayos COMM-SS Link Budget -EBN0 X-Band Data N1 Downlink.pdf, id=812, page=1, 597.23125pt x 845.1575pt>
- [244]
-<tables/Ensayos COMM-SS Link Budget -EBN0 X-Band Data N2 Downlink.pdf, id=816, page=1, 597.23125pt x 845.1575pt>
- [245]
-<tables/Ensayos COMM-SS Link Budget -DSN X-Band Data N1 Downlink.pdf, id=820, page=1, 597.23125pt x 845.1575pt>
- [246]
-<tables/Ensayos COMM-SS Link Budget -DSN X-Band Data N2 Downlink.pdf, id=824, page=1, 597.23125pt x 845.1575pt>
-) [247] [248] (./secciones/item-list.tex
+) [231] (./secciones/rf-link-budget.tex
+<tables/Ensayos COMM-SS Link Budget - X-Band Data N1 Downlink.pdf, id=772, page=1, 597.23125pt x 845.1575pt>
+ [232]
+<tables/Ensayos COMM-SS Link Budget - X-Band Data N2 Downlink.pdf, id=776, page=1, 597.23125pt x 845.1575pt>
+ [233]
+<tables/Ensayos COMM-SS Link Budget -EBN0 X-Band Data N1 Downlink.pdf, id=780, page=1, 597.23125pt x 845.1575pt>
+ [234]
+<tables/Ensayos COMM-SS Link Budget -EBN0 X-Band Data N2 Downlink.pdf, id=784, page=1, 597.23125pt x 845.1575pt>
+ [235]
+<tables/Ensayos COMM-SS Link Budget -DSN X-Band Data N1 Downlink.pdf, id=789, page=1, 597.23125pt x 845.1575pt>
+ [236]
+<tables/Ensayos COMM-SS Link Budget -DSN X-Band Data N2 Downlink.pdf, id=793, page=1, 597.23125pt x 845.1575pt>
+) [237] [238] (./secciones/item-list.tex
 Overfull \hbox (2.55325pt too wide) in paragraph at lines 94--94
  \T1/phv/m/n/6 UFB197C-0-1969-7GU7GU| |
  []
@@ -1616,72 +1596,72 @@ Overfull \hbox (0.89125pt too wide) in paragraph at lines 129--129
  \T1/phv/m/n/6 MCJ088D-0-0197-3Q03Q0| |
  []
 
-[249
+[239
 
-] [250] [251] [252]) (./secciones/item-characteristics.tex
+] [240] [241] [242]) (./secciones/item-characteristics.tex
 Underfull \hbox (badness 1910) in paragraph at lines 3--3
 []\T1/phv/m/n/10.95 In this ap-pen-dix spe-ci-fi-ca-tions of har-ness used for test are pre-sen-ted. Other com-po-nents
  []
 
-<figuras/measures/XRF4.02-XB.png, id=845, 1033.8625pt x 776.9025pt>
-<figuras/measures/XRF3.60_MFR 64639 873248-001.png, id=846, 1033.8625pt x 776.9025pt>
-[253
+<figuras/measures/XRF4.02-XB.png, id=813, 1033.8625pt x 776.9025pt>
+<figuras/measures/XRF3.60_MFR 64639 873248-001.png, id=814, 1033.8625pt x 776.9025pt>
+[243
 
 ]
-<figuras/measures/SRF3.02-XB.png, id=851, 1033.8625pt x 776.9025pt>
-<figuras/measures/W2_10M_10G.png, id=852, 1033.8625pt x 776.9025pt>
- [254]
-<figuras/measures/W3_10M_10G.png, id=856, 1033.8625pt x 776.9025pt>
-<figuras/measures/W4_10M_10G.png, id=857, 1033.8625pt x 776.9025pt>
- [255]
-<figuras/measures/W5_10M_10G.png, id=861, 1033.8625pt x 776.9025pt>
-<figuras/measures/W6_2G_9G.png, id=862, 1033.8625pt x 776.9025pt>
- [256]
-<figuras/measures/W7_10M_10G.png, id=866, 1033.8625pt x 776.9025pt>
-<figuras/measures/W8_10M_10G.png, id=867, 1033.8625pt x 776.9025pt>
- [257]
-<figuras/measures/W10_10M_10G.png, id=871, 1033.8625pt x 776.9025pt>
- [258]
-<figuras/measures/W15-MFR64639227197-004.png, id=875, 1033.8625pt x 776.9025pt>
- [259]
-<figuras/measures/ATT BW-N20W20+.png, id=880, 1033.8625pt x 776.9025pt>
- [260]
-<figuras/measures/Coupler ZGBDC35-93HP+ (IN-OUT).png, id=884, 1033.8625pt x 776.9025pt>
+<figuras/measures/SRF3.02-XB.png, id=818, 1033.8625pt x 776.9025pt>
+<figuras/measures/W2_10M_10G.png, id=819, 1033.8625pt x 776.9025pt>
+ [244]
+<figuras/measures/W3_10M_10G.png, id=823, 1033.8625pt x 776.9025pt>
+<figuras/measures/W4_10M_10G.png, id=824, 1033.8625pt x 776.9025pt>
+ [245]
+<figuras/measures/W5_10M_10G.png, id=828, 1033.8625pt x 776.9025pt>
+<figuras/measures/W6_2G_9G.png, id=829, 1033.8625pt x 776.9025pt>
+ [246]
+<figuras/measures/W7_10M_10G.png, id=833, 1033.8625pt x 776.9025pt>
+<figuras/measures/W8_10M_10G.png, id=834, 1033.8625pt x 776.9025pt>
+ [247]
+<figuras/measures/W10_10M_10G.png, id=839, 1033.8625pt x 776.9025pt>
+ [248]
+<figuras/measures/W15-MFR64639227197-004.png, id=843, 1033.8625pt x 776.9025pt>
+ [249]
+<figuras/measures/ATT BW-N20W20+.png, id=847, 1033.8625pt x 776.9025pt>
+ [250]
+<figuras/measures/Coupler ZGBDC35-93HP+ (IN-OUT).png, id=851, 1033.8625pt x 776.9025pt>
 
 Underfull \hbox (badness 10000) in paragraph at lines 177--177
 []\T1/phv/m/n/10.95 Table C.14.0-1: |S-Band and X-Band elec-tri-cal mea-su-re-ments of coupler bi-directional
  []
 
-[261]
-<figuras/measures/Coupler ZGBDC35-93HP+ (IN-CPL IN).png, id=888, 1033.8625pt x 776.9025pt>
+[251]
+<figuras/measures/Coupler ZGBDC35-93HP+ (IN-CPL IN).png, id=856, 1033.8625pt x 776.9025pt>
 
 Underfull \hbox (badness 10000) in paragraph at lines 184--184
 []\T1/phv/m/n/10.95 Table C.14.0-2: |S-Band and X-Band elec-tri-cal mea-su-re-ments of coupler bi-directional
  []
 
-[262]
-<figuras/measures/Coupler ZGBDC35-93HP+ (OUT-CPL OUT).png, id=892, 1033.8625pt x 776.9025pt>
+[252]
+<figuras/measures/Coupler ZGBDC35-93HP+ (OUT-CPL OUT).png, id=860, 1033.8625pt x 776.9025pt>
 
 Underfull \hbox (badness 10000) in paragraph at lines 191--191
 []\T1/phv/m/n/10.95 Table C.14.0-3: |S-Band and X-Band elec-tri-cal mea-su-re-ments of coupler bi-directional
  []
 
-<figuras/measures/ATT-V 8496B-001 (0 ATT).png, id=893, 1033.8625pt x 776.9025pt>
-[263]
-<figuras/measures/DC-BLOCK-N-XB.png, id=897, 1033.8625pt x 776.9025pt>
- [264]
-<figuras/measures/DCB1.01.png, id=901, 1033.8625pt x 776.9025pt>
- [265]
-<figuras/measures/AdapterNm-SMAf-1_10M_10G.png, id=906, 1033.8625pt x 776.9025pt>
-<figuras/measures/AdapterNm-SMAf-2_10M_10G.png, id=907, 1033.8625pt x 776.9025pt>
- [266]
-<figuras/measures/AdapterNm-SMAf-3_10M_10G.png, id=911, 1033.8625pt x 776.9025pt>
-<figuras/measures/Adapter1_10M_10G.png, id=912, 1033.8625pt x 776.9025pt>
- [267]
-<figuras/measures/Adapter3_10M_10G.png, id=916, 1033.8625pt x 776.9025pt>
- [268]) 
+<figuras/measures/ATT-V 8496B-001 (0 ATT).png, id=861, 1033.8625pt x 776.9025pt>
+[253]
+<figuras/measures/DC-BLOCK-N-XB.png, id=866, 1033.8625pt x 776.9025pt>
+ [254]
+<figuras/measures/DCB1.01.png, id=870, 1033.8625pt x 776.9025pt>
+ [255]
+<figuras/measures/AdapterNm-SMAf-1_10M_10G.png, id=874, 1033.8625pt x 776.9025pt>
+<figuras/measures/AdapterNm-SMAf-2_10M_10G.png, id=875, 1033.8625pt x 776.9025pt>
+ [256]
+<figuras/measures/AdapterNm-SMAf-3_10M_10G.png, id=879, 1033.8625pt x 776.9025pt>
+<figuras/measures/Adapter1_10M_10G.png, id=880, 1033.8625pt x 776.9025pt>
+ [257]
+<figuras/measures/Adapter3_10M_10G.png, id=884, 1033.8625pt x 776.9025pt>
+ [258]) 
 AED: lastpage setting LastPage
-[269] (./SB1-B-PRO-T-D01-011_v1.0_X-BandTransmitterFMTestProcedure.aux
+[259] (./SB1-B-PRO-T-D01-011_v1.0_X-BandTransmitterFMTestProcedure.aux
 LaTeX Info: Redefining \. on input line 35.
 LaTeX Info: Redefining \% on input line 35.
 )
@@ -1690,18 +1670,18 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 18328 strings out of 478287
- 312148 string characters out of 5849289
- 950138 words of memory out of 5000000
- 36027 multiletter control sequences out of 15000+600000
+ 18329 strings out of 478287
+ 312197 string characters out of 5849289
+ 953496 words of memory out of 5000000
+ 36028 multiletter control sequences out of 15000+600000
  546592 words of font info for 141 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,18n,77p,599b,771s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/mathpazo/fplmri.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt0900.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1095.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on SB1-B-PRO-T-D01-011_v1.0_X-BandTransmitterFMTestProcedure.pdf (269 pages, 864407 bytes).
+Output written on SB1-B-PRO-T-D01-011_v1.0_X-BandTransmitterFMTestProcedure.pdf (259 pages, 837889 bytes).
 PDF statistics:
- 995 PDF objects out of 1000 (max. 8388607)
- 639 compressed objects within 7 object streams
+ 964 PDF objects out of 1000 (max. 8388607)
+ 618 compressed objects within 7 object streams
  0 named destinations out of 1000 (max. 500000)
  246 words of extra memory for PDF output out of 10000 (max. 10000000)
 

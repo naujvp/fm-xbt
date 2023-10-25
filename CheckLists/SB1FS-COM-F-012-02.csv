@@ -9,7 +9,7 @@
 2,3,TurnOffMainSwitch
 2,4,PowerOffPxi
 3,0,
-3,0,//////////////Connection of DB-15 BOB to EMI/EMC filter/////////////////
+3,0,//////////////DB-15 BOB connection to EMI/EMC filter/////////////////
 4,0,
 4,0,//////////////Power-on CEGSE{}/////////////////
 4,1,TurnOnMainSwitch
@@ -31,7 +31,7 @@
 7,5,TurnOffMainSwitch
 7,6,PowerOffPxi
 8,0,
-8,0,//////////////Connection of DB-15 BOB to EWC30/////////////////
+8,0,//////////////DB-15 BOB connection to DUT/////////////////
 9,0,
 9,0,//////////////Power-on CEGSE{}/////////////////
 9,1,TurnOnMainSwitch
@@ -86,6 +86,8 @@
 17,14,TakeScreenShotOnOscilloscope
 17,15,SaveOscilloscopeRawValues, DEST=E:
 17,16,TakeNoteOfCurrentAndVoltageOf, PART=TX V-EXPECTED=542\ mVpp I-EXPECTED=750\ mApp 
+17,19,ChangeTxStatusTo,CMD=standby STATUS=I_OPE_2_STBY_M 
+17,21,WaitUntilTxFinishedOnCegse
 18,0,
 18,0,//////////////DUT Turn Off/////////////////
 18,1,LoadOscilloscopeConfigFile, FILE=osc-config/EWC30-TX-OFF.set
@@ -93,71 +95,62 @@
 18,4,TakeScreenShotOnOscilloscope
 18,5,MeasurePowerDownCurrentOn
 18,6,SaveOscilloscopeRawValues, DEST=E:
+18,7,StopCegseSW
 19,0,
-19,0,//////////////DUT Power On/////////////////
-19,1,VerifyDutAlarms
-19,2,TakeNoteDutTemperaturesXBand
-19,4,LoadOscilloscopeConfigFile, FILE=osc-config/EWC30-TX-RUN.set
-19,5,TakeNoteOfCurrentAndVoltageOf, PART=TX V-EXPECTED=28 V I-EXPECTED=< 282 mA 
-19,6,VerifyPowerConsumptionOf, DUT=TX POWER=P $\approx $\ 8 W@standby (CH1 x CH2)
+19,0,//////////////Connections of oscilloscope probe between EMI/EMC filter and DUT/////////////////
+19,1,ConnectMeasurementProbeBetweenFilterAndDUT
+19,2,ConnectMeasurementVoltageProbeBetweenFilterAndDUT
 20,0,
-20,0,//////////////File generation for data transmission/////////////////
-20,1,GenerateDownlinkFileXBand,IDLEs=1330000 ($\approx $180 seconds)/1330000 FILE=C:\Users\EGSE\ COM\Documents\ COMM-SS-FM\ SB1FS-COM-F-012\ Data-885840\protect \unhbox \voidb@x \protect \penalty \@M \hskip \z@skip \T1\textunderscore \discretionary {-}{}{}\protect \penalty \@M \hskip \z@skip 120s\protect \unhbox \voidb@x \protect \penalty \@M \hskip \z@skip \T1\textunderscore \discretionary {-}{}{}\protect \penalty \@M \hskip \z@skip VCh01\protect \unhbox \voidb@x \protect \penalty \@M \hskip \z@skip \T1\textunderscore \discretionary {-}{}{}\protect \penalty \@M \hskip \z@skip payload.bin
+20,0,//////////////CEGSE SW Initialization/////////////////
+20,1,StartCegseSW, CGF-FILE: EWC30 Nominal INIT_FILE_EWC30.ini
 21,0,
-21,0,//////////////Ripple measurement between EMI/EMC filter and EWC30/////////////////
-21,1,VerifyTemperature, 25 < O_TX_TEMP1 < 40
-21,4,VerifyClkLockedStatus
-21,5,VerifyRfOutputPowerTmXBand
-21,6,TakeNoteOfCurrentAndVoltageOf, PART=TX V-EXPECTED=28\ V I-EXPECTED=$\approx $ 2.46\ A 
-21,7,ConnectMeasurementProbeBetweenFilterAndDUT
-21,8,LoadOscilloscopeConfigFile, FILE=osc-config/EWC30-TX-RIPPLE.set
-21,10,TakeScreenShotOnOscilloscope
-21,11,SaveOscilloscopeRawValues, DEST=E:
-21,15,TakeScreenShotOnOscilloscope
-21,16,SaveOscilloscopeRawValues, DEST=E:
-21,17,TakeNoteOfCurrentAndVoltageOf, PART=TX I-EXPECTED=750\ mApp 
-21,18,ConnectMeasurementProbesToAdHocBoxForXBand
-21,19,LoadOscilloscopeConfigFile, FILE=osc-config/EWC30-TX-RUN.set
-21,20,ChangeTxStatusTo,CMD=standby STATUS=I_OPE_2_STBY_M 
+21,0,//////////////DUT Power On/////////////////
+21,1,VerifyDutAlarms
+21,2,VerifyTemperature, 25 < O_TX_TEMP1 < 40
+21,4,LoadOscilloscopeConfigFile, FILE=osc-config/EWC30-TX-RUN.set
+21,5,TakeNoteOfCurrentAndVoltageOf, PART=TX V-EXPECTED=28 V I-EXPECTED=< 282 mA 
+21,6,VerifyPowerConsumptionOf, DUT=TX POWER=P $\approx $\ 8 W@standby (CH1 x CH2)
 22,0,
-22,0,//////////////RF measurements with the PXI Spectrum Analyzer and Data Downlink test/////////////////
-22,1,VerifyTemperature, 25 < O_TX_TEMP1 < 40
-22,5,StartIngestionInCortexHdr
-22,6,VerifyRxSecondaryVoltageXBand,O_SEC_V_RF = 4.37V
-22,8,VerifyClkLockedStatus
-22,9,VerifyMmuClkStatus
-22,10,VerifyRfOutputPowerTmXBand
-22,11,TakeNoteOfCurrentAndVoltageOf, PART=TX V-EXPECTED=28\ V I-EXPECTED=$\approx $ 2.46\ A 
-22,17,WaitUntilTxFinishedOnCegse
-22,18,StopIngestonInCortexHdr
-22,20,ChangeTxStatusTo,CMD=standby STATUS=I_OPE_2_STBY_R 
+22,0,//////////////File generation for data transmission/////////////////
+22,1,GenerateDownlinkFileXBand,IDLEs=1330000 ($\approx $180 seconds)/1330000 FILE=C:\Users\EGSE\ COM\Documents\ COMM-SS-FM\ SB1FS-COM-F-012\ Data-885840\protect \unhbox \voidb@x \protect \penalty \@M \hskip \z@skip \T1\textunderscore \discretionary {-}{}{}\protect \penalty \@M \hskip \z@skip 120s\protect \unhbox \voidb@x \protect \penalty \@M \hskip \z@skip \T1\textunderscore \discretionary {-}{}{}\protect \penalty \@M \hskip \z@skip VCh01\protect \unhbox \voidb@x \protect \penalty \@M \hskip \z@skip \T1\textunderscore \discretionary {-}{}{}\protect \penalty \@M \hskip \z@skip payload.bin
 23,0,
-23,0,//////////////Verify received data/////////////////
-23,1,VerifyNumberOfIdlesFramesReceivedInCortexHdr
-|23|2|VerifyNumberOfFramesReceivedVCOneInCortexHdr|
-23,4,WaitForDataFlowExecution
-23,5,LoginToCCM
-23,6,GoToProductsOnCCM
-23,7,FindXBandProductOnCCM
-|23|8|DownloadIdentifiedProductFromCCM|
-23,9,RemoveTransportLayer
-23,10,CompareDownlinkPayloadFiles
+23,0,//////////////Ripple measurement between EMI/EMC filter and DUT/////////////////
+23,1,VerifyTemperature, 25 < O_TX_TEMP1 < 40
+23,4,VerifyClkLockedStatus
+23,5,VerifyRfOutputPowerTmXBand
+23,6,TakeNoteOfCurrentAndVoltageOf, PART=TX V-EXPECTED=28\ V I-EXPECTED=$\approx $ 2.46\ A 
+23,7,LoadOscilloscopeConfigFile, FILE=osc-config/EWC30-TX-RIPPLE.set
+23,9,TakeScreenShotOnOscilloscope
+23,10,SaveOscilloscopeRawValues, DEST=E:
+23,14,TakeScreenShotOnOscilloscope
+23,15,SaveOscilloscopeRawValues, DEST=E:
+23,16,TakeNoteOfCurrentAndVoltageOf, PART=TX V-EXPECTED=542\ mVpp I-EXPECTED=750\ mApp 
+23,19,ChangeTxStatusTo,CMD=standby STATUS=I_OPE_2_STBY_M 
+23,21,WaitUntilTxFinishedOnCegse
 24,0,
-24,0,//////////////DUT Turn Off/////////////////
-24,1,LoadOscilloscopeConfigFile, FILE=osc-config/EWC30-TX-OFF.set
-24,2,PressSingleOnOscilloscope
-24,4,TakeScreenShotOnOscilloscope
-24,5,MeasurePowerDownCurrentOn
-24,6,SaveOscilloscopeRawValues, DEST=E:
+24,0,//////////////CEGSE power off (PXI and Ad-Hoc Box)/////////////////
+24,2,StopCegseSW
+24,3,TurnOnOffPSU, ACTION=off
+24,4,DisablePowerSupplyOutput
+24,5,TurnOffMainSwitch
+24,6,PowerOffPxi
 25,0,
-25,0,//////////////CEGSE SW Shutdown/////////////////
-25,1,StopCegseSW
+25,0,//////////////DB-15 BOB disconnection and DUT connection/////////////////
 26,0,
-26,0,//////////////Collect Evidences/////////////////
-26,1,CopyCegseLogsForEvicences, FROM: C:/Users/EGSE COM/Desktop/LOGs/<session_ID>/{SB1FS-COM-F-012}-02 TO:C:/Users/EGSE COM/Documents/COMM-SS-FM/<session_ID>/
-26,2,CopyOscilloscopeScreenShotsForEvidences
+26,0,//////////////Power-on CEGSE{}/////////////////
+26,1,TurnOnMainSwitch
+26,2,VerifyPowerSupplyConfiguration
+26,3,EnablePowerSupplyOutput
+26,4,TurnOnOffPSU, ACTION=on
+26,5,PowerOnPxi
+26,6,RDPToPXIFromThinClient,IP=192.168.75.211. USR=EGSE COM PSW=Conae1234
 27,0,
-27,0,//////////////Final Steps/////////////////
-27,1,SetReduntanSideOnXbmaDisableMandC
-27,2,RegisterTempAndHumidity
-27,4,DisconnectRfCableFromDwlTpOfCegse
+27,0,//////////////Collect Evidences/////////////////
+27,1,CopyCegseLogsForEvicences, FROM: C:/Users/EGSE COM/Desktop/LOGs/<session_ID>/{SB1FS-COM-F-012}-02 TO:C:/Users/EGSE COM/Documents/COMM-SS-FM/<session_ID>/
+27,2,CopyOscilloscopeScreenShotsForEvidences
+28,0,
+28,0,//////////////Final Steps/////////////////
+28,1,RegisterTempAndHumidity
+28,3,DisconnectRfCableFromDwlTpOfCegse
+28,6,ConnectMeasurementProbesToAdHocBoxForXBand
+28,7,ConnectPendriveTo, DEVICE:Oscilloscope

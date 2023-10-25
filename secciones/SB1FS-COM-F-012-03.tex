@@ -2,7 +2,7 @@
 \setcounter{Sec}{0}\setcounter{Step}{0}
 
 \newpage
-\renewcommand{\subprocid}{{\procid}-02}
+\renewcommand{\subprocid}{{\procid}-03}
 
 \newpage
 \subsection{\subprocid \ Aliveness and Functional Test}
@@ -30,8 +30,8 @@
 		\OpenWinCortexHDR
 	
 	\SectionHeaderWithReset{PXI Spectrum Analyzer connection}
-		\ConnectRfCableToDwlTpPortOfCegse{W15}{}
-    	\ConnectCableToDcBlock{W15}
+		\ConnectRfCableToDwlTpPortOfCegse{W15}{\pasarSiAntes}
+    	\ConnectCableToDcBlock{W15}{\pasarSiAntes}
 
 	\SectionHeaderWithReset{Instrument configuration}
 		\StartPXISpectrumA
@@ -46,13 +46,15 @@
 	\SectionHeaderWithReset{DUT Power On}
 		\VerifyDutAlarms{EWC-30}{}
 		\TakeNoteDutTemperaturesXBand{}
-		\LoadOscilloscopeConfigFile{EWC30-TX-ON.set}{}
-		\PressSingleOnOscilloscope
-		\TurnOnOffVbusXBand{on}{}
-		\TakeScreenShotOnOscilloscope
-		\MeasureInrushCurrentOn{CH1}
-		\SaveOscilloscopeRawValues
+		%\LoadOscilloscopeConfigFile{EWC30-TX-ON.set}{}
 		\LoadOscilloscopeConfigFile{EWC30-TX-RUN.set}{}{}
+
+		%\PressSingleOnOscilloscope
+		\TurnOnOffVbusXBand{on}{}
+		%\TakeScreenShotOnOscilloscope
+		%\MeasureInrushCurrentOn{CH1}
+		%\SaveOscilloscopeRawValues
+		%%\LoadOscilloscopeConfigFile{EWC30-TX-RUN.set}{}{}
 		%\SimpleExeStep{\tr{validar cooriente y potencia}}{arg2}{arg3}
 		\TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28 V}{< 282 mA}{} 
 		\VerifyPowerConsumptionOf{TX}{CH1}{CH2}{P $\approx$\ 8 W@standby}
@@ -80,47 +82,47 @@
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\SectionHeaderWithReset{File generation for data transmission}
 		\GenerateDownlinkFileXBand{1330000 ($\approx$180 seconds)}{1330000}{Data-885840\_120s\_VCh01\_payload.bin}{}
-	\SectionHeaderWithReset{Ripple voltage and current measurement}
-	\VerifyTemperature{O\string_TX\string_TEMP1}{}
-		\SendGeneratedFileXBand{I\_STBY\_2\_OPE\_M}{main}
-		\VerifyTxStatusXBand{Modulation}
-		%\CheckLookCortexHDR
-    	%\StartIngestionInCortexHdr
-		\VerifyClkLockedStatus{ON}
-		\VerifyRfOutputPowerTmXBand{$\approx$ 3.2}
-  		\TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28\ V}{$\approx$ \ValueCurrentDUTTX A}{\notaCorrienteEstimada}
-		\LoadOscilloscopeConfigFile{EWC30-TX-RIPPLE.set}{}
-		\adquicicionOSCStop
-		\TakeScreenShotOnOscilloscope
-		\SaveOscilloscopeRawValues
-		\adquicicionOSCStart
-		\ChangeTimeConf
-		\adquicicionOSCStop
-		\TakeScreenShotOnOscilloscope
-		\SaveOscilloscopeRawValues
-		\TakeNoteOfCurrentAndVoltageRippleOf{TX}{CH1}{CH2}{\ValueVRipple}{\ValueIRippleADHBoxToFilter}
+	% \SectionHeaderWithReset{Ripple voltage and current measurement}
+	% \VerifyTemperature{O\string_TX\string_TEMP1}{}
+	% 	\SendGeneratedFileXBand{I\_STBY\_2\_OPE\_M}{main}
+	% 	\VerifyTxStatusXBand{Modulation}
+	% 	%\CheckLookCortexHDR
+    % 	%\StartIngestionInCortexHdr
+	% 	\VerifyClkLockedStatus{ON}
+	% 	\VerifyRfOutputPowerTmXBand{$\approx$ 3.2}
+  	% 	\TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28\ V}{$\approx$ \ValueCurrentDUTTX A}{\notaCorrienteEstimada}
+	% 	\LoadOscilloscopeConfigFile{EWC30-TX-RIPPLE.set}{}
+	% 	\adquicicionOSCStop
+	% 	\TakeScreenShotOnOscilloscope
+	% 	\SaveOscilloscopeRawValues
+	% 	\adquicicionOSCStart
+	% 	\ChangeTimeConf
+	% 	\adquicicionOSCStop
+	% 	\TakeScreenShotOnOscilloscope
+	% 	\SaveOscilloscopeRawValues
+	% 	\TakeNoteOfCurrentAndVoltageRippleOf{TX}{CH1}{CH2}{\ValueVRipple}{\ValueIRippleADHBoxToFilter}
 
-		\SectionHeaderWithReset{Ripple  current measurement}
-		\ConnectMeasurementProbeBetweenFilterAndDUT
+	% 	\SectionHeaderWithReset{Ripple  current measurement}
+	% 	\ConnectMeasurementProbeBetweenFilterAndDUT
 
-		\LoadOscilloscopeConfigFile{EWC30-TX-RIPPLE.set}{}
-		\adquicicionOSCStop
-		\TakeScreenShotOnOscilloscope
-		\SaveOscilloscopeRawValues
-		\adquicicionOSCStart
-		\ChangeTimeConf
-		\adquicicionOSCStop
-		\TakeScreenShotOnOscilloscope
-		\SaveOscilloscopeRawValues
-		\TakeNoteOfCurrent{TX}{CH1}{\ValueIRippleDUTToFilter}
-		%\adquicicionOSCStart
-		\ConnectMeasurementProbesToAdHocBoxForXBand
-		\LoadOscilloscopeConfigFile{EWC30-TX-RUN.set}{}{}
-		%\WaitUntilTxFinishedOnCegse
-		%\StopIngestonInCortexHdr
-		\ChangeTxStatusTo{I\string_OPE\string_2\string_STBY\string_M }{standby}
-		\VerifyTxStatusXBand{Standby}
-		\StopXB
+	% 	\LoadOscilloscopeConfigFile{EWC30-TX-RIPPLE.set}{}
+	% 	\adquicicionOSCStop
+	% 	\TakeScreenShotOnOscilloscope
+	% 	\SaveOscilloscopeRawValues
+	% 	\adquicicionOSCStart
+	% 	\ChangeTimeConf
+	% 	\adquicicionOSCStop
+	% 	\TakeScreenShotOnOscilloscope
+	% 	\SaveOscilloscopeRawValues
+	% 	\TakeNoteOfCurrent{TX}{CH1}{\ValueIRippleDUTToFilter}
+	% 	%\adquicicionOSCStart
+	% 	\ConnectMeasurementProbesToAdHocBoxForXBand
+	% 	\LoadOscilloscopeConfigFile{EWC30-TX-RUN.set}{}{}
+	% 	%\WaitUntilTxFinishedOnCegse
+	% 	%\StopIngestonInCortexHdr
+	% 	\ChangeTxStatusTo{I\string_OPE\string_2\string_STBY\string_M }{standby}
+	% 	\VerifyTxStatusXBand{Standby}
+	% 	\StopXB
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -202,12 +204,12 @@
 	% 	\VerifyTxStatusXBand{Standby}
 
 	\SectionHeaderWithReset{DUT Turn Off}
-		\LoadOscilloscopeConfigFile{EWC30-TX-OFF.set}{}
-		\PressSingleOnOscilloscope
+		%\LoadOscilloscopeConfigFile{EWC30-TX-OFF.set}{}
+		%\PressSingleOnOscilloscope
 		\TurnOnOffVbusXBand{off}{}
-		\TakeScreenShotOnOscilloscope
-		\MeasurePowerDownCurrentOn{CH1}
-		\SaveOscilloscopeRawValues
+		% \TakeScreenShotOnOscilloscope
+		% \MeasurePowerDownCurrentOn{CH1}
+		% \SaveOscilloscopeRawValues
 	
 	\SectionHeaderWithReset{CEGSE SW Shutdown}
 		\StopCegseSW{}
