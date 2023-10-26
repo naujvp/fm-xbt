@@ -23,8 +23,8 @@
    RF and base-band DUT interfaces are connected to EGSEs.
    DUT monitoring and control is performed from CEGSE{}.
   Oscilloscope and PXI spectrum analyzer are configured 
-  to measure power consumption and RF signals characteristics respectively.
-Data frames will be sent from CEGSE to  EWC30 in order to be modulated through X-Band interface. 
+  to measure inrush currents, ripple, power consumption and RF signals characteristics respectively.
+Data frames will be sent from CEGSE to EWC30 in order to be modulated through X-Band interface. 
  The data received in \fmr{} will be compared with 
  original data.\\
 		\hline
@@ -54,13 +54,20 @@ DUT telemetry is between expected values.
 		\textbf{Test Setup} &
 \begin{minipage}[t]{\linewidth}
 	\begin{itemize}[nosep,after=\strut]
-		\item \comEgse\xspace to DUT base-band electrical connections according to figures \ref{fig:ewc30_bb_ripple} and \ref{fig:ewc30_bb} 
-		\item General setup according to figure \ref{fig:setup_xband_funcional_ripple} for inrush and ripple measurements. Figure \ref{fig:setup_xband_funcional} for Data Downlink test.
+		\item \comEgse\xspace to DUT base-band electrical connections according to:
+			\begin{itemize}
+			\item Figure \ref{fig:ewc30_bb_ripple} for inrush and ripple measurements 
+			\item Figure \ref{fig:ewc30_bb} for aliveness and functional measurements
+			\end{itemize}
+		\item General setup according to:
+			\begin{itemize}
+			\item Figure \ref{fig:setup_xband_funcional_ripple} for inrush and ripple measurements 
+			\item Figure \ref{fig:setup_xband_funcional} for aliveness and functional measurements
+			\end{itemize}
 		\end{itemize}
-	\end{minipage}	
-		\\ 
-		\hline
-		\textbf{Duration} & \begin{minipage}[t]{\linewidth}
+	\end{minipage}	\\ \hline
+		\textbf{Duration} & 
+		\begin{minipage}[t]{\linewidth}
 	\begin{itemize}[nosep,after=\strut]
 		\item \procid{-01}: 150 minutes
 		\item \procid{-02}: 240 minutes
@@ -132,7 +139,7 @@ DUT telemetry is between expected values.
 \begin{figure}[H]
 	\centering
 	  \includegraphics[width=.9\linewidth]{figuras/CEGSE_EWC30SetupA.png}  
-	  \caption{EWC-30 BB connections for inrush and ripple measurement.}
+	  \caption{EWC30 BB connections for inrush and ripple measurement.}
 	\label{fig:ewc30_bb_ripple}
 \end{figure}
 
@@ -140,7 +147,7 @@ DUT telemetry is between expected values.
 \begin{figure}[H]
 	\centering
 	  \includegraphics[width=.7\linewidth]{figuras/CEGSE_EWC30SetupB.png}  
-	  \caption{EWC-30 BB general connections.}
+	  \caption{EWC30 BB connections for aliveness, functional and performace test.}
 	\label{fig:ewc30_bb}
 \end{figure}
 

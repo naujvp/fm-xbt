@@ -3344,8 +3344,9 @@ To do this, execute the following steps:
         \item Download the file .csv.
         %\item The folder SB1FS-COM-P-003-07 was 
         %created in the directory \comEgseTestFolderLocation{}\comEgseTestFolderName{}\bs20221017-\#1\bs\procid{}\bs
-        \item Save the file downloaded in the test evidence directory of 
-        PXI: \comEgseTestFolderLocation{}\comEgseTestFolderName{}\bs\sessionID\bs\procid{}\bs\subprocid{}.	 
+        \item Save the file downloaded in the test evidence directory of PXI:
+        \comEgseTestFolderLocation{}\comEgseTestFolderName{}\bs\sessionID\bs\procid{}
+        \bs\subprocid{}.	 
     \end{itemize}
 \end{minipage}
 
@@ -5657,7 +5658,7 @@ F/S is locked and stable.
     \procedurestep{\theSec}{\theStep}{EXE}
     {Verify #1 power consumption.}{#4}{}{}
     \stepdetail{1}{0}{
-        Verify that product between high measurements for \textbf{#2} and \textbf{#3} is approximately expected value.
+        Verify that product between measurements for \textbf{#2} and \textbf{#3} is approximately expected value.
     }
 }
 % #endregion
@@ -6161,7 +6162,7 @@ means of multimeter.}
     \procedurestep{\theSec}{\theStep}{EXE}
     {Check Locked status of the base band PLL}{0\_MMU\_CLK\_STATUS = #1}{}{}
     \stepdetail{1}{0}{
-        Go to SBDL\& BDM tab on \comEgse{} GUI and verify 0\_MMU\_CLK\_STATUS status.
+        Go to SBDL\& BDM tab on \comEgse{} GUI and verify \textbf{0\_MMU\_CLK\_STATUS} status.
     }
 }
 % #endregion

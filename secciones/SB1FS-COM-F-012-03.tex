@@ -12,7 +12,7 @@
 \begin{figure}[H]
 	\centering
 	  \includegraphics[width=.9\linewidth]{figuras/EWC30PXISetupB.png}  
-	  \caption{Aliveness and functional test setup.}
+	  \caption{EWC30 Aliveness and functional test setup.}
 	\label{fig:setup_xband_funcional}
 	\end{figure}
 \newpage
@@ -132,12 +132,14 @@
 
 	\SectionHeaderWithReset{RF measurements with the PXI Spectrum Analyzer and Data Downlink test}
    		\VerifyTemperature{O\string_TX\string_TEMP1}{}
-		\SendGeneratedFileXBand{I\_STBY\_2\_OPE\_R}{redundant}
+		\SendGeneratedFileXBand{I\_STBY\_2\_OPE\_M}{main}
 		\VerifyTxStatusXBand{Modulation}
 		\CheckLookCortexHDR
     	\StartIngestionInCortexHdr
 		\VerifyRxSecondaryVoltageRFXBand % mezcla
 		\VerifyRxSecondaryVoltageNUMXBand % mezcla
+		\VerifyRfOutputPowerTmXBand{$\approx$ 3.2} % de mezcla
+
 		\VerifyClkLockedStatus{ON}
 		\VerifyMmuClkStatus{ON} % de mezcla
 		%\VerifyRfOutputPowerTmXBand{$\approx$ 3.2} % estaba antes
@@ -153,7 +155,6 @@
 		%\TakeNoteOfCurrentAndVoltageRippleOf{TX}{CH1}{CH2}{542\ mVpp}{750\ mApp}
 		%\adquicicionOSCStart
         
-		\VerifyRfOutputPowerTmXBand{$\approx$ 3.2} % de mezcla
 		\TakeNoteOfCurrentAndVoltageOf{TX}{CH1}{CH2}{28\ V}{$\approx$ \ValueCurrentDUTTX A}{\notaCorrienteEstimada}
 		\MeasureCarrierPowerModUsingPxi{40\ }{1} % de mezcla
 		\TakeScreenShotOnPxi  % de mezcla
@@ -166,7 +167,7 @@
 		\WaitUntilTxFinishedOnCegse
 		\StopIngestonInCortexHdr
 		\MeasureLOLeakageUsingPxi % de mezcla
-		\ChangeTxStatusTo{I\string_OPE\string_2\string_STBY\string_R }{standby} % de mezcla
+		\ChangeTxStatusTo{I\string_OPE\string_2\string_STBY\string_M }{standby} % de mezcla
 		%\ChangeTxStatusTo{I\string_OPE\string_2\string_STBY\string_M }{standby}
 		\VerifyTxStatusXBand{Standby} % de mezcla
 		%\VerifyTxStatusXBand{Standby}
@@ -182,7 +183,40 @@
 		\DownloadIdentifiedProductFromCCM{}
 		\RemoveTransportLayer{X Band}{885840}
 		\CompareDownlinkPayloadFiles{EWC30}{\fileXbCompare}
-		
+
+
+    %%%%%%%%%%%%%%% Update 
+
+	\SectionHeaderWithReset{Verify redundant HV-HPC interface}
+		% %\VerifyTxStatus{standby}{O\string_TX\string_STATUS = 0}
+		% %\SendGeneratedFileXBand{I\string_STBY\string_2\string_OPE\string_M}
+		% \VerifyTemperature{O\string_TX\string_TEMP1}
+	
+		% %\SendStoredFileXBand{\fileXBSend}{I\string_STBY\string_2\string_OPE\string_M}
+		% \SendGeneratedFileXBand{I\_STBY\_2\_OPE\_M}{main}
+		% \VerifyTxStatusXBand{Modulation}
+		% \CheckLookCortexHDR
+		% %\VerifyTxStatus{Mode = Operational}{O\string_TX\string_STATUS = 1}
+		% \ChangeTxStatusTo{I\string_OPE\string_2\string_STBY\string_M }{standby}
+		% %\VerifyTxStatus{standby}{O\string_TX\string_STATUS = 0}
+		% \VerifyTxStatusXBand{Standby}
+		% \StopXB
+		% %\WaitUntilTxFinishedOnCegse
+		\VerifyTemperature{O\string_TX\string_TEMP1}
+	
+		%\SendStoredFileXBand{\fileXBSend}{I\string_STBY\string_2\string_OPE\string_R}
+		\SendGeneratedFileXBand{I\_STBY\_2\_OPE\_R}{redundant}
+		\VerifyTxStatusXBand{Modulation}
+		\CheckLookCortexHDR
+		%\SendGeneratedFileXBand{I\string_STBY\string_2\string_OPE\string_R}
+		%\VerifyTxStatus{Mode = Operational}{O\string_TX\string_STATUS = 1}
+		\ChangeTxStatusTo{I\string_OPE\string_2\string_STBY\string_R }{standby}
+		%\VerifyTxStatus{standby}{O\string_TX\string_STATUS = 0}
+		\VerifyTxStatusXBand{Standby}
+		%\WaitUntilTxFinishedOnCegse
+		\StopXB	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+
     % \SectionHeaderWithReset{RF measurements with the PXI Spectrum Analyzer}
 	% 	\VerifyTemperature{O\string_TX\string_TEMP1}{}
 	% 	\SendGeneratedFileXBand{I\_STBY\_2\_OPE\_R}{redundant}
